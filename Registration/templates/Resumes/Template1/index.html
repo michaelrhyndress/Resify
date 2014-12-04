@@ -1,0 +1,231 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>{{ s_user.first_name }} {{ s_user.last_name }}</title>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" rel="stylesheet">
+	<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow' rel='stylesheet' type='text/css'>
+	<link rel="shortcut icon" href="http://www.bidonmoving.com/Resify/Logo/Res_logo_NoCircle_Red.png">
+	<!-- Skill Bars -->
+	<link href="{% static 'Resumes/Template1/skillBars.css' %}" rel='stylesheet' type='text/css'>
+	<!-- Flat Layout -->
+	<link href="{% static 'Resumes/Template1/flatLayout.css' %}" rel='stylesheet' type='text/css'>
+	<!-- MOBILE -->
+	<link href="{% static 'Resumes/Template1/mobile.css' %}" rel='stylesheet' type='text/css'>
+	<!-- PRINT -->
+	<link href="{% static 'Resumes/Template1/print.css' %}" rel='stylesheet' type='text/css'>
+			
+	<script>
+	
+	var fullPageSize = 0;
+	
+	window.onload = function() {
+		// var element = document.getElementById('right-content');
+// 		var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
+// 		var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+// 		if ((is_chrome)&&(is_safari)) {is_safari=false;}
+// 		if(is_chrome){
+// 			element.className += " " + 'chrome';
+// 		}
+// 		if(is_safari){
+// 			element.className += " " + 'safari';
+// 		}
+		var webPageWidth = document.body.clientWidth;
+		var fullPage = document.getElementById('fullPage');
+		fullPageSize=fullPage;
+		if(webPageWidth > 699){
+			var leftPage = document.getElementById('left-content');
+			var rightPage = document.getElementById('right-content');
+			if(leftPage<rightPage){
+				var topDifference=fullPage.offsetHeight-rightPage.offsetHeight;
+				var fullSize = fullPage.offsetHeight + topDifference * 2 + 50;
+				fullPage.style.height = fullSize+"px";
+			}
+			else{
+				var footer = document.getElementById('footer1');
+				
+			}
+		}
+		else{
+			fullPage.style.height = fullPage+"px";
+		}
+	};
+
+	</script>
+
+</head>
+<body>
+	<div class="page" id="page">
+		<div class="content" id="fullPage">
+			
+			<div class="rectangle">
+				<h2>{{ s_user.first_name }} {{ s_user.last_name }}</h2>
+			</div>
+			<div class="triangle-l"></div> <!-- Left triangle -->
+			<div class="triangle-r"></div> <!-- Right triangle -->
+			<div class="info">
+				<div class="job-title">
+					<h2>{{s_user.userprofile.profession}}
+						{% if social_list %}
+							<div class="socials">
+								{% for social in social_list %}
+									{% if social.facebook %}
+										<!-- FACE BOOK -->
+										<a class="btn btn-default" href="{{social.facebook}}" target="_blank">
+											<i class="fa fa-facebook fa-lg fb"></i>
+										</a>
+										<!-- END FACE BOOK -->
+							
+									{% endif %}
+							
+									{% if social.twitter %}
+										<!-- TWITTER -->
+										<a class="btn btn-default" href="{{social.twitter}}" target="_blank">
+											<i class="fa fa-twitter fa-lg tw"></i>
+										</a>
+										<!-- END TWITTER -->
+									{% endif %}
+							
+									{% if social.linkedIn %}
+										<!-- Linked in-->
+										<a class="btn btn-default" href="{{social.linkedIn}}" target="_blank">
+										   <i class="fa fa-linkedin fa-lg in"></i>
+										</a>
+										<!-- END LINKED IN-->
+									{% endif %}
+								{% endfor%}
+							</div>
+						{% endif %}
+					</h2> <!-- JOB TITLE -->
+				</div>
+				<br />
+				<br />
+				<div class="left-content">
+					
+					<div class="available">
+						<h2 class="left-head" style="width:200px;"><i class="fa fa-bell"></i> Contact</h2>
+						<hr id="left">
+						<h4 class="info">Email</h4> <!-- Years attended -->
+						<h3>{{ s_user.email }}</h3>
+						<br>
+						<h4 class="info">Phone</h4> <!-- Years attended -->
+						<h3>{{ s_user.userprofile.phone_number }}</h3>
+					</div>
+					
+					<br><br>
+					<br><br>
+					
+					<!-- WITH PHP SWITCH TO BE LEFT RIGHT COLUMNS-->
+					{% if skill_list %}
+					<div class="skills">
+						<h2 class="left-head"><i class="fa fa-tasks"></i> Skill Set</h2>
+						<hr id="left">
+						
+						<div class="progress-bars">
+							{% for skill in skill_list %}
+							<br>
+								<div class="meterText" id="left-col">{{ skill.skill }}</div>
+								<div class="meter" title="{{ skill.skill }} ": "{{ skill.percentage }}%">
+									<span style="width: {{ skill.percentage }}%"></span>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+					{% endif %}
+					<br><br>
+					<br><br>
+					{% if accomp_list %}
+					<div class="accomplishment">
+						<h2 class="left-head"><i class="fa fa-check-circle-o"></i> Accomplishments</h2>
+						<hr id="left">
+						{% for accomp in accomp_list %}
+						<br>
+						<div class="accomplishment-text">
+							<h4 class="date">
+								{% if accomp.Accomplishment_from_date == accomp.Accomplishment_to_date %} 
+									{{accomp.Accomplishment_from_date}}
+								{% else %}
+									{{accomp.Accomplishment_from_date}}-{{accomp.Accomplishment_to_date}}
+								{% endif %}
+							</h4> <!-- Years worked -->
+							<h3 class="accomplishment-content">{{accomp.about}}</h3> <!-- content -->
+						</div>
+						{% endfor %}
+					</div>
+					{% endif %}	
+					<br><br>
+					<br><br>
+				</div> <!-- END left content -->
+				
+				<div id="right-content" class="right-content">
+					{% if s_user.userprofile.statement %}
+						<div class="personal" id="personal-section">
+							<h2 class="right-head" id="personalHead"><i class="fa fa-user"></i> Personal Statement</h2>
+							<hr id="right">
+							<p id="right" class="personal">{{ s_user.userprofile.statement }}</p>
+						</div>
+						<br><br>
+						<br><br>
+					{% endif %}
+					
+					{% if education_list %}
+						<div class="school">
+							<h2 class="right-head" id="schoolHead"><i class="fa fa-graduation-cap"></i> Education</h2>
+							<hr id="right">
+							{% for ed in education_list %}
+								<br>
+								<div class="school-text">
+									<h4 class="date">
+										{{ed.status}}<br>
+							
+										{% if ed.Education_from_date == ed.Education_to_date %} 
+											{{ed.Education_from_date}}
+										{% else %}
+											{{ed.Education_from_date}}-{{ed.Education_to_date}}
+										{% endif %}
+									</h4> <!-- Years attended -->
+									<h3>{{ ed.school }}</h3> <!-- Name -->
+									<h4>{{ ed.degree }}</h4> <!-- ADDRESS -->
+								</div>
+								<br><br>
+							{% endfor %}
+							<br><br>
+						</div>
+					{% endif %}
+						
+					{% if job_list %}
+						<div class="employment">
+							<h2 class="right-head" id="employmentHead"><i class="fa fa-briefcase"></i> Employment</h2>
+							<hr id="right">
+							{% for job in job_list %}
+								<br>					
+								<div class="employment-text">
+									<!-- Years worked -->
+									<h4 class="date">
+										{% if job.job_from_date == job.job_to_date %} 
+											{{job.job_from_date}}
+										{% else %}
+											{{job.job_from_date}}-{{job.job_to_date}}
+										{% endif %}
+									</h4>
+									<!-- Job title -->
+									<h3>{{job.position}}</h3>
+									<!-- EMPLOYER -->
+									<h4>{{job.company}}</h4> 
+									<!-- Job Description -->
+									<p>{{job.job_about}}</p>
+								</div>
+								<br><br>
+							{% endfor %}
+							<br><br>
+						</div>
+					{% endif %}
+				</div> <!-- END right content -->
+				<div class="footer" id="footer1">2014 &copy; Résify</div>
+			</div> <!-- END info-->
+		</div> <!-- /Content -->
+	</div> <!-- /Page wrapper -->
+</body>
+</html>

@@ -1,0 +1,180 @@
+{% extends "base_dashboard.html" %}
+{%block setup %}
+<div class="container-fluid">
+	
+	{% url "resify_home" as action_url %}
+	{% if form.errors %}
+		
+	{% endif %}
+	{{ form.non_field_errors }}
+	<form id="msform" action="{{action_url}}" method="post" accept-charset="utf-8">
+		{% csrf_token %}
+		<div class="tutorial-wrapper">
+			<ul id="progressbar">
+		  	  	<li class="point active"><i class="fa fa-user fa-sm" style="line-height: 2;"></i></li>
+		  		<li class="point"><i class="fa fa-briefcase fa-sm" style="line-height: 2;"></i></li>
+		  		<li class="point"><i class="fa fa-graduation-cap fa-sm" style="line-height: 2;"></i></li>
+				<li class="point"><i class="fa fa-lightbulb-o fa-sm" style="line-height: 2;"></i></li>
+		  		<li class="point"><i class="fa fa-phone fa-sm" style="line-height: 2;"></i></li>
+				<li class="point"><i class="fa fa-file-image-o" style="line-height: 2;"></i></li>
+			</ul>
+		</div>
+	
+		<fieldset id="fieldset0" class="field-active">
+			<h1 class="">Lets get started</h1>
+			<h2 class="fs-title">Personal Details</h2>
+			<h3 class="fs-subtitle">We will never sell it</h3>
+			{{ profile_form.handle.errors }}
+			<input type="text" id="handle" maxlength="15" name="handle" placeholder="Personal URL"/>
+			<span class="help-block url"></span>
+			{{ profile_form.profession.errors }}
+			<input type="text" maxlength="50" name="profession" placeholder="Profession/Field Of Study"/>
+			{{ profile_form.statement.errors }}
+			<textarea class="form-control" name="statement" placeholder="Personal Statement (Optional)" rows="10" style="resize:none;"></textarea>
+			<input type="button" id="next" name="next" class="next action-button" value="Next" />
+			<br>
+			{# <a href="/setup/skip">Skip Setup</a> #}
+		</fieldset>
+
+		<fieldset id="fieldset1">
+			<h2 class="fs-title">Experience</h2>
+			<h3 class="fs-subtitle">Most current work experience</h3>
+			{{ job_form.position.errors }}
+			<input type="text" maxlength="50" name="position" placeholder="Position" />
+			{{ job_form.company.errors }}
+			<input type="text" maxlength="50" name="company" placeholder="Company" />
+			<div class="form-inline">
+					{{ job_form.job_from_date.errors }}
+			        <select class="form-control to-from-field" name="job_from_date" placeholder="From: ">
+						<option selected="" disabled="disabled">From</option>
+						{% for x in year_choices %}
+						<option value="{{x}}">{{x}}</option>
+						{% endfor %}
+					<select/>
+					{{ job_form.job_to_date.errors }}
+			        <select class="form-control to-from-field" name="job_to_date" placeholder="To: "> 
+						<option selected="" disabled="disabled">To</option>
+						<option value="PRESENT">Present</option>
+						{% for x in year_choices %}
+						<option value="{{x}}">{{x}}</option>
+						{% endfor %}
+					</select>
+					<br>
+			</div>
+			<br>
+			{{ job_form.job_about.errors }}
+			<textarea class="form-control" name="job_about" placeholder="Description" rows="10" style="resize:none;"></textarea>
+			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
+			<input type="button" id="next" name="next" class="next action-button" value="Next" />
+		</fieldset>
+
+		<fieldset id="fieldset2">
+			<h2 class="fs-title">Education</h2>
+			<h3 class="fs-subtitle">Current or most recent</h3>
+			{{ education_form.status.errors }}
+	        <select class="form-control" name="status" placeholder="">
+				<option selected="" disabled="disabled">Status</option>
+				<option value="Graduated">Graduated</option>
+				<option value="Attending">Attending</option>
+				<option value="">Other</option>
+			<select/>
+			<br>
+			{{ education_form.school.errors }}
+			<input type="text" maxlength="50" name="school" placeholder="School/University" />
+			{{ education_form.degree.errors }}
+			<input type="text" maxlength="100" name="degree" placeholder="Degree" />
+			<div class="form-inline">
+				{{ education_form.job_from_date.errors }}
+			        <select class="form-control to-from-field" name="job_from_date" placeholder="From: ">
+						<option selected="" disabled="disabled">From</option>
+						{% for x in year_choices %}
+						<option value="{{x}}">{{x}}</option>
+						{% endfor %}
+					<select/>
+					{{ education_form.job_to_date.errors }}
+			        <select class="form-control to-from-field" name="job_to_date" placeholder="To: ">
+						<option selected="" disabled="disabled">To</option>
+						<option value="PRESENT">Present</option>
+						{% for x in year_choices %}
+						<option value="{{x}}">{{x}}</option>
+						{% endfor %}
+					</select>
+					<br>
+			</div>
+			<br>
+			{{ education_form.Education_History_about.errors }}
+			<textarea class="form-control" name="Education_History_about" placeholder="Description" rows="10" style="resize:none;"></textarea>
+			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
+			<input type="button" id="next" name="next" class="next action-button" value="Next" />
+		</fieldset>
+	
+		<fieldset id="fieldset3">
+			<h2 class="fs-title">Your Accomplishments</h2>
+			<h3 class="fs-subtitle">Highest valued accomplishment</h3>
+			{{ accomplishment_form.title.errors }}
+			<input type="text" maxlength="50" name="title" placeholder="Title" />
+			<div class="form-inline">
+				{{ accomplishment_form.Accomplishment_from_date.errors }}
+			        <select class="form-control to-from-field" name="Accomplishment_from_date" placeholder="From: ">
+						<option selected="" disabled="disabled">From</option>
+						{% for x in year_choices %}
+						<option value="{{x}}">{{x}}</option>
+						{% endfor %}
+					<select/>
+					{{ accomplishment_form.Accomplishment_to_date.errors }}
+			        <select class="form-control to-from-field" name="Accomplishment_to_date" placeholder="To: ">
+						<option selected="" disabled="disabled">To</option>
+						<option value="PRESENT">Present</option>
+						{% for x in year_choices %}
+						<option value="{{x}}">{{x}}</option>
+						{% endfor %}
+					</select>
+					<br>
+			</div>
+			<br>
+			{{ accomplishment_form.Accomplishments_about.errors }}
+			<textarea class="form-control" name="Accomplishments_about" placeholder="Description" rows="10" style="resize:none;"></textarea>
+			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
+			<input type="button" id="next" name="next" class="next action-button" value="Next" />
+		</fieldset>
+
+		<fieldset id="fieldset4">
+			<h2 class="fs-title">Contact Details</h2>
+			<h3 class="fs-subtitle"></h3>
+			{{ profile_form.phone_number.errors }}
+			<input type="tel" maxlength="30" name="phone_number" placeholder="Phone Number" />
+			<h3 class="fs-subtitle"></h3>
+			<h3 class="fs-subtitle">Your presence on the social network</h3>
+			{{ social_form.twitter.errors }}
+			<input type="text" name="twitter" placeholder="Twitter" />
+			{{ social_form.facebook.errors }}
+			<input type="text" name="facebook" placeholder="Facebook" />
+			{{ social_form.gplus.errors }}
+			<input type="text" name="gplus" placeholder="Google Plus" />
+			{{ social_form.linkedIn.errors }}
+			<input type="text" name="linkedIn" placeholder="LinkedIn" />
+			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
+			<input type="button" id="next" name="next" class="next action-button" value="Next" />
+		</fieldset>
+		
+		<fieldset id="fieldset5">
+			<h2 class="fs-title">Choose a template</h2>
+			<h3 class="fs-subtitle">Always many more to come</h3>
+			<div class="grid">
+				{{ template_form.template_name.errors }}
+				<select name="template_name" class="image-picker show-html">
+					<option value=""></option>
+					{% for template in template_list %}
+					
+					<option data-img-src="../static/img/templateIcons/{{template}}.jpg" value="{{template}}">{{template.readable_name}}</option>
+					
+					{% endfor %}
+				</select>
+			</div>
+			
+			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
+			<input type="submit" name="submit" class="submit action-button" value="Submit" />
+		</fieldset>
+	</form>
+</div>
+{%endblock%}

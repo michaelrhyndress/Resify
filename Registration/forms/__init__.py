@@ -1,0 +1,3 @@
+from register import RegistrationForm
+from authenticate import AuthenticationForm
+from initialSetupForm import UserForm, UserProfileForm, JobHistoryForm, EducationHistoryForm, AccomplishmentForm, SocialMediaForm, UserTemplateForm

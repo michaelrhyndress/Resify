@@ -1,0 +1,382 @@
+/* Reset */
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, font, img, ul, li {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ outline: 0;
+ font-size: 100%;
+ vertical-align: baseline;
+ background: transparent;
+}
+
+body{
+	line-height: 1;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+:focus {
+	outline: 0;
+}
+/*
+End Reset, start style
+*/
+body{
+	background-image: url(pattern.png);
+	background-repeat: repeat;
+	/*background-color:gray;*/
+	font-family: Georgia, Verdana, “Lucida Sans Unicode”, sans-serif;
+	font-size: 12px;
+	color:#414141;
+}
+
+h2 {
+    font-style: italic;
+    font-weight: normal;
+    line-height: 1.2em;
+}
+
+.page {
+	margin: 25px auto;
+	margin-left:20px;
+}
+
+.content {
+ clear: both;
+ margin: 0px auto;
+ width: 1000px;
+ background: #fff;
+ -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
+ -moz-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+  -khtml-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+ position: relative;
+ z-index: 90; /* the stack order: displayed under ribbon rectangle (100) */
+}
+
+.rectangle {
+ background: #7f9db9;
+ height: 50px;
+ width: 1030px;
+ position: relative;
+ left:-15px;
+ top: 30px;
+ float: left;
+ -moz-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+  -khtml-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+  -webkit-box-shadow: 0px 0px 4px rgba(0,0,0,0.55);
+ z-index: 2; /* the stack order: foreground */
+}
+
+.rectangle h2 {
+ font-size: 30px;
+ color: #fff;
+ padding-top: 6px;
+ text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+ text-align: center;
+}
+
+.triangle-l {
+	border-color: transparent #7d90a3 transparent transparent;
+	border-style:solid;
+	border-width:15px;
+	height:0px;
+	width:0px;
+	position:relative;
+	left:-30px;
+	top:65px;
+	z-index:-1;
+}
+.triangle-r {
+	border-color: transparent transparent transparent #7d90a3;
+	border-style:solid;
+	border-width:15px;
+	height:0px;
+	width:0px;
+	position:relative;
+	left:1000px;
+	top:35px;
+	z-index:-1;
+}
+
+.info {
+ 	padding: 60px 25px 35px 25px;
+}
+
+.info h2 {
+ 	font-size: 20px;
+}
+
+.info p {
+	text-align:justify;
+ 	font-size: 14px;
+ 	line-height: 22px;
+}
+
+.info p a {
+ 	color: #c4591e;
+ 	text-decoration: none;
+}
+
+.info p a:hover {
+ 	text-decoration: underline;
+}
+
+.footer{
+	margin-left:0px;
+	padding-top:50px;
+	bottom:0px;
+	text-align:center;
+	width:80px;
+	margin-left:450px;
+	display:inline-block;
+	position: absolute;
+}
+
+.job-title > h2{
+	font-size:20pt;
+}
+	
+
+hr{
+	border: 0px;
+	border-bottom: 3px dotted #ccc;
+	background: #fff;
+	width:450px;
+	font-weight:15px;
+}
+#left{
+	margin-left:0px;
+}
+#right{
+	margin-left:475px;
+}
+
+.right-head{
+	position:relative;
+	margin-left:475px;
+	text-align:right;
+}
+
+.left-content{
+	width:450px;
+	text-align:left;
+}
+.right-content{
+	
+	width:450px;
+	position:absolute;
+	top:176px;
+	margin-left: 20px;
+}
+
+.personal{
+	width:450px;
+}
+
+#personalHead{
+	width:200px;
+}
+
+.employment-text, .school-text, .personal-text, .available, .accomplishment-text{
+	font-family: 'PT Sans Narrow', sans-serif;
+	line-height:25px;
+}
+.accomplishment-text > h3{
+	font-size:18pt;
+	margin:0 auto;
+	text-align:center;
+}
+.accomplishment-text > h4{
+	font-size:11pt;
+	margin:0 auto;
+	text-align:center;
+}
+.accomplishment-text > .date{
+	position:relative;
+	padding:0px;
+	width:100%;
+	margin:0 auto;
+	background-color:#74767A;
+	color:white;
+	border-radius:5px;
+	border-bottom-right-radius:0px;
+	border-bottom-left-radius:0px;
+	text-align:center;
+	-webkit-text-shadow: 1px 1px 0 #000000;
+	-moz-text-shadow: 1px 1px 0 #000000;
+	text-shadow: 1px 1px 0 #000000;
+	text-align:center;
+}
+
+.accomplishment-text > h3, .accomplishment-content{
+	font-size:14pt;
+	font-weight:normal;
+	text-align:left;
+	padding:0px;
+}
+.accomplishment-text > h4{
+	font-size:11pt;
+}
+.accomplishment-text > .date{
+	position:relative;
+	padding:0px;
+	width:100px;
+	margin-left:0px;
+	background-color:#74767A;
+	color:white;
+	border-radius:5px;
+	margin:0 auto;
+	text-align:center;
+	-webkit-text-shadow: 1px 1px 0 #000000;
+	-moz-text-shadow: 1px 1px 0 #000000;
+	text-shadow: 1px 1px 0 #000000;
+	text-align:center;
+}
+
+#employmentHead{
+	width:145px;
+}
+.employment-text > h3{
+	width:350px;
+	margin-left:475px;
+	font-size:18pt;
+}
+
+.employment-text > p{
+	width:350px;
+	margin-left:475px;
+	font-size:11pt;
+}
+
+.employment-text > h4{
+	width:350px;
+	margin-left:475px;
+	font-size:12pt;
+}
+.employment-text > .date{
+	position:absolute;
+	padding:0px;
+	width:100px;
+	margin-left:825px;
+	background-color:#74767A;
+	color:white;
+	border-radius:5px;
+	text-align:center;
+	-webkit-text-shadow: 1px 1px 0 #000000;
+	-moz-text-shadow: 1px 1px 0 #000000;
+	text-shadow: 1px 1px 0 #000000;
+}
+
+#schoolHead{
+	width:124px;
+}
+.school-text > h3{
+	width:350px;
+	margin-left:475px;
+	font-size:18pt;
+}
+.school-text > h4{
+	width:350px;
+	margin-left:475px;
+	font-size:11pt;
+}
+.school-text > .date{
+	position:absolute;
+	padding:0px;
+	width:100px;
+	margin-left:825px;
+	background-color:#74767A;
+	color:white;
+	border-radius:5px;
+	text-align:center;
+	-webkit-text-shadow: 1px 1px 0 #000000;
+	-moz-text-shadow: 1px 1px 0 #000000;
+	text-shadow: 1px 1px 0 #000000;
+}
+
+.available > h3{
+	font-size:18pt;
+}
+
+.available > .info{
+	position:absolute;
+	padding:0px;
+	width:100px;
+	margin-left:350px;
+	background-color:#74767A;
+	color:white;
+	border-radius:5px;
+	text-align:center;
+	-webkit-text-shadow: 1px 1px 0 #000000;
+	-moz-text-shadow: 1px 1px 0 #000000;
+	text-shadow: 1px 1px 0 #000000;
+}
+
+.available > h4{
+	font-size:11pt;
+}
+
+/*
+	SOCIAL MEDIA BUTTONS
+*/
+.socials{
+	float:right;
+	margin-right:30px;
+}
+
+.btn-default {
+color: #333;
+background-color: #fff;
+border-color: #ccc;
+}
+
+.btn {
+display: inline-block;
+padding: 6px 12px;
+margin-bottom: 0;
+font-size: 14px;
+font-weight: normal;
+line-height: 1.428571429;
+text-align: center;
+white-space: nowrap;
+vertical-align: middle;
+cursor: pointer;
+border: 1px solid transparent;
+border-radius: 4px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+-o-user-select: none;
+user-select: none;
+}
+
+.btn-default {
+color: #333;
+background-color: #fff;
+border-color: #ccc;
+}
+
+.btn-default:hover{
+	background-color:#D6D6D6;
+}
+
+.tw{
+	color:#00aced;
+}
+
+.fb{
+	color:#3B5998;
+}
+
+.in{
+	color:#007bb6;
+}
+/*
+	END SOCIAL MEDIA BUTTONS
+*/

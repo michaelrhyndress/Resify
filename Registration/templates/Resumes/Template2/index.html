@@ -1,0 +1,231 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>{{ s_user.first_name }} {{ s_user.last_name }}</title>
+
+<link rel="stylesheet" media="all" href="{% static 'css/bootstrap.css' %}" type="text/css">
+<link rel="stylesheet" media="all" href="{% static 'Resumes/Template2/layout.css' %}" type="text/css">
+
+<script src="{% static 'js/vendor/jquery-1.11.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}" type="text/javascript"></script>
+</head>
+<body>
+
+<header id="header" class=""> <!-- TOP -->
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <hr class="empty">
+				<hr class="empty">
+                <p class="name">{{ s_user.first_name }} {{ s_user.last_name }}</p>
+                <p class="profession">{{s_user.userprofile.profession}}</p>
+                <p class="personal ">{{ s_user.userprofile.statement}}</p>
+            </div>
+        </div>
+		<section class="main">
+		{# <a class="arrow-wrap scrollToBottom" href="#profile"> #}
+		{#     <span class="arrow"></span> #}
+		{# </a> #}
+		 </section>
+         <hr id="nonMobileBreak" class="empty">
+		<hr id="nonMobileBreak" class="empty">
+    </div>
+</header>
+<!-- end Header -->
+	<!-- left Nav -->
+	<nav id="slow" class="slow hidden-sm hidden-xs">
+	    <ul>
+	        	<li class=""><a href="#contact">Contact</a></li>
+			{% if job_list %}
+	        	<li class=""><a href="#work-experience">Work experience</a></li>
+			{% endif %}
+			{% if education_list %}
+	        	<li class=""><a href="#education">Education</a></li>
+			{% endif %}
+			{% if skill_list %}
+	        	<li class=""><a href="#skill-sets">Skills</a></li>
+			{% endif %}
+			{% if accomp_list %}
+	        	<li class=""><a href="#accomplishments">Accomplishments</a></li>
+			{% endif %}
+	    </ul>
+	</nav>
+<!-- Profile -->
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col col-sm-offset-5">
+                <ul>
+                    <li class="title" list-style-image: url('img/X.png') !important;><span class="glyphicon glyphicon-bell"></span>Contact</li>
+                    <li>
+                        <span class="heading">Email</span>
+                        <p><strong><a href="mailto:{{s_user.email}}?Subject=Your%20online%20resume">{{s_user.email}}</a></strong></p>
+                    </li>
+					{% if s_user.userprofile.phone_number %}
+                    <li>
+                        <span class="heading">Phone Number</span>
+                        <p><strong><a href="tel:{{ parsed_phone_number }}">{{ s_user.userprofile.phone_number }}</a></strong></p>
+                    </li>
+					{% endif %}
+					
+					{% for social in social_list %}
+						{% if social.facebook %}
+		                    <li>
+		                        <span class="heading">LinkedIn Profile</span>
+		                        <p><strong><a href="{{social.facebook}}">{{social.facebook}}</a></strong></p>
+		                    </li>
+						{% endif %}
+						{% if social.twitter %}
+		                    <li>
+		                        <span class="heading">LinkedIn Profile</span>
+		                        <p><strong><a href="{{social.twitter}}">{{social.twitter}}</a></strong></p>
+		                    </li>
+						{% endif %}
+						{% if social.linkedIn %}
+		                    <li>
+		                        <span class="heading">LinkedIn Profile</span>
+		                        <p><strong><a href="{{social.linkedIn}}">{{social.linkedIn}}</a></strong></p>
+		                    </li>
+						{% endif %}
+					{% endfor%}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end Profile -->
+
+<!-- Work experience -->
+<section id="work-experience" class="work-experience">
+    <div class="container">
+        <div class="row">
+            <div class="col col-sm-offset-5">
+                <ul>
+                    <li class="title"><span class="glyphicon glyphicon-briefcase"></span>Work experience</li>
+
+					{% for job in job_list %}
+                    <li>
+                        <span class="heading">
+							{% comment %}
+							  Only display To and From if they are different
+							{% endcomment %}
+							{% if job.job_from_date == job.job_to_date %} 
+								{{job.job_from_date}}
+							{% else %}
+								{{job.job_from_date}}-{{job.job_to_date}}
+							{% endif %}
+						</span>
+                        <p><strong>{{job.position}}</strong></p>
+                        <p><strong>{{job.company}}</strong></p>
+                        <p class="description">{{job.job_about}}</p>
+                    </li>
+					{% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end Work experience -->
+    
+<!-- Education -->
+<section id="education" class="education">
+    <div class="container">
+        <div class="row">
+            <div class="col col-sm-offset-5">
+                <ul>
+                    <li class="title"><span class="glyphicon glyphicon-book"></span>Education</li>
+					{% for ed in education_list %}
+	                    <li>
+                           <span class="heading">
+   							{% comment %}
+   							  Only display To and From if they are different
+   							{% endcomment %}
+   								{% if ed.Education_from_date == ed.Education_to_date %} 
+   									{{ed.Education_from_date}}
+   								{% else %}
+   									{{ed.Education_from_date}}-{{ed.Education_to_date}}
+   								{% endif %}
+   							</span>
+	                        <p><strong>{{ed.status}}</strong></p>
+	                        <p><strong>{{ed.school}}</strong></p>
+							<p>{{ed.degree}}</p>
+							<p class="description">{{ed.about}}</p>
+	                    </li>
+					{% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end Education -->
+    
+<!-- Professional skills -->
+{% if skill_list %}
+<section id="skill-sets" class="skill-sets">
+    <div class="container">
+        <div class="row">
+            <div class="col col-sm-offset-5">
+                <ul>
+                    <li class="title"><span class="glyphicon glyphicon-tasks"></span>Skill Set</li>
+					
+					{% for skill in skill_list %}
+	                    <li>
+	                        <p>{{skill.skill}}<span class="annotation pull-right">{{skill.percentage}}%</span></p>
+	                        <div class="progress">
+	                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{skill.percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.percentage}}%;"></div>
+	                        </div>
+	                    </li>
+					{% endfor%}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+<!-- end Professional skills -->
+    
+<!-- Interests -->
+{% if accomp_list %}
+<section id="accomplishments" class="accomplishments">
+    <div class="container">
+        <div class="row">
+            <div class="col col-sm-offset-5">
+                <ul>
+                    <li class="title"><span class="glyphicon glyphicon-ok"></span>Accomplishments</li>
+
+					{% for accomp in accomp_list %}
+                    <li>
+						<p><strong>
+							{% if accomp.Accomplishment_from_date == accomp.Accomplishment_to_date %} 
+								{{accomp.Accomplishment_from_date}}
+							{% else %}
+								{{accomp.Accomplishment_from_date}}-{{accomp.Accomplishment_to_date}}
+							{% endif %}
+						</strong></p>
+                        <p class="description">{{accomp.about}}</p>
+                    </li>
+					{% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<hr id="mobileBreak" class="empty">
+<hr id="mobileBreak" class="empty">
+<hr id="mobileBreak" class="empty">
+<hr id="mobileBreak" class="empty">
+<hr class="empty">
+<div class="footer">2014 &copy; Résify</div>
+<!-- end Interests -->
+
+<!-- Java Script -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+<script src="{% static 'Resumes/Template2/bootstrap-progressbar.js' %}"></script>
+<script src="{% static 'Resumes/Template2/slow.js' %}"></script>
+
+</body></html>
