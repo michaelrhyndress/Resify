@@ -1,133 +1,454 @@
+
+
+/*I love me some border-box*/
 * {
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-}
-.page-container {
-	height: auto;
-	position: absolute;
-	z-index: 100;
-	top: 0px;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: 0;
+    box-sizing: border-box;
 }
 
-.nav-container {
-	position: absolute;
-	top: 0;
-	left: auto;
-	left: 0px;
-	width: 75px;
-	letter-spacing: 1px;
+/*This just stops me getting horizontal scrolling if anything overflows the width*/
+body {
+    overflow-x: hidden;
+}
+/*Just removing default browser padding/margin*/
+html,
+body {
+    padding: 0;
+    margin: 0;
+    color: black;
+}
+span.descriptive-text{
+	font-size: 12px;
+	color: #BABABA;
+	font-weight: 300;
+}
+/*span.large-label{
+	position:relative;
+	font-size: 26px;
+	color: #3D3D3D;
+	font-weight: 300;
+	padding:25px 0px;
+}*/
+.checkbox-label{
+	text-align:center !important;
+}
+/*Flexbox gives us the flexiness we need. The top just stays put as there is no scrolling on the body due to the page never exceeding viewport height*/
+
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place and padded with negative margin and padding*/
+.Container {
+	display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+	display: -ms-flexbox;      /* TWEENER - IE 10 */
+	display: -webkit-flex;     /* NEW - Chrome */
+	display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    overflow: scroll;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Left,
+.Middle,
+.Right {
+    overflow: auto;
+    height: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+	transition: all .25s cubic-bezier(.165,.84,.44,1),color .7s ease-out,opacity 1ms linear;
+}
+.Right {
+    padding:0px;
+	height:100%;
+	box-shadow: 0px 0px 20px black; 
+}
+.Left-content {
+	margin-top:60px;
+	padding:15px;
 }
 
-.nav-container {
-	background-color: rgba(0,0,0,0.3);
-	bottom: 0;
-	float: none;
-	font-weight: 500;
-	font-size: 10px;
-	height: 100%;
-	text-transform: uppercase;
-	top: 0;
-	z-index: 203;
-}
-
-.nav-container .nav-container-item {
-	height: 25%;
-	background-color: rgba(66,66,66,0.8);
-	position: relative;
-}
-
-.nav-container .nav-container-item a {
-	width: 100%;
-	height: 100%;
+.Top-menu{
+	background-color:#1f2126;
+	width:40%;
+	color:#fff;
+	font-size: 18px;
+	height:50px;
+	position:fixed;
+	z-index:1000;
 	text-align: center;
-	color: #fff;
-	display: table;
-	background: 0;
-	z-index: 10;
 }
-
-a, a:link, a:visited {
-	text-decoration: none;
-}
-
-a{
-	cursor: pointer;
-}
-
-.sidebar-container {
-	position: relative;
+.Top-menu>i{
 	float: left;
-	width: 20%;
+	color: #464A51;
+	padding:15px;
+	height:50px;
+	width:50px;
+	cursor:pointer;
+	
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
+	-ms-transition: -ms-transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
+	transition: transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
+}
+.Top-menu>i:hover{
+	background-color: #464A51;
+	color:white;
+}
+.Top-menu>.activeIcon{
+	border-bottom:solid 3px red;
+	color: white;	
 }
 
-.sidebar-container {
-	z-index: 201;
-	top: 0;
-	right: 0;
-	width:75px;
-	height: 100%;
-	background-color: #000;
+#webView{
+	transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
 }
 
-.sidebar-container .inner {
+#webView>iframe{
+   	top:0;
+   	left: 0;
+   	width: 100%;
+   	height: 100%;
+	border:none;
+	padding:0px;
+	margin:0px;
+}
+
+/*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
+.Left::-webkit-scrollbar,
+.Middle::-webkit-scrollbar,
+.Right::-webkit-scrollbar {
+    display: none;
+}
+/*  Left and Right are set sizes while the Middle is set to flex one so it occupies all remaining space. This could be set as a width too if prefereable, perhaps using calc.*/
+.Left {
+    width: 40%;
+}
+
+.Right {
+    width: 60%;
+}
+
+.input-label{
+	float: left;
+	display: inline-block;
+	font-size: 12px;
+	color: #BABABA;
+	font-weight: 300;
+	padding:12px 0px;
+	width:70px;
+	text-align:left;
+}
+.input-box{
+	border: solid 1px white;
+/*	border-bottom: solid 1px #464A51;
+*/	padding:10px;
+	width:80%;
+}
+.input-fieldset{
+	border:solid 1px white;
+	padding:0px;
+	margin-bottom: 10px;
+}
+
+.textarea-box{
+	border: solid 1px white;
+	padding:10px;
+	width:80%;
+	max-width:550px;
+	padding-bottom:20px;
+	resize: none;
+}
+.form-inline>.half-box{
+	width:40%;
+}
+.form-control{
+	width:70%;
+}
+.content-divider{
+	border: solid 1px white;
+}
+.half-box{
+	width:40%;
+}
+.clear-btn{
+	position:absolute;
+	right:10px;
+	top:10px;
+	background-color:rgba(255,255,255,.3);
+	border:solid 1px white;
+	color: #444;
+	width:90px;
+	height:35px;
+}
+.clear-btn:hover{
+	transition: all 1s ease;
+	background-color:rgba(255,255,255,.6);
+	border:solid 1px black;
+}
+
+#autosaving{
+	background-color:transparent;
+	border:none;
+}
+
+
+/* btn */
+.menu-toggle {
+	position: fixed;
+	display:  inline-block;
+	width: 30px;
+	height: 30px;
+	right: 65px;
+	bottom:15px;
+	z-index: 10000;
+	width:50px;
+	height:50px;
+}
+
+.menu-toggle.badge{
+	background-color:rgba(255,255,255,.7);
+	border: solid 1px #444;
+	border-radius:50px;
+	-moz-box-shadow: 10px 10px 5px #888;
+	-o-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 2px 2px 5px #4F4F4F;
+}
+
+.menu-toggle span {
+	margin:0 auto;
 	position: relative;
-	width: 100%;
-	height: 100%;
-	max-height: 1200px;
-	background-position: top left;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-color: #000;
+	top: 19px; /* set lower if no badge*/
 }
-
-.nav-container .nav-container-item a span .nav-icon {
-	background-position: center center;
-	background-repeat: no-repeat;
+.menu-toggle span:before, .menu-toggle span:after {
+	position: absolute;
+	content: '';
+}
+.menu-toggle span, .menu-toggle span:before, .menu-toggle span:after {
+	width: 30px;
+	height: 6px;
+	background-color: #444;
 	display: block;
-	font-size: 25px;
-	height: 25px;
-	margin: 0 auto 10px;
-	width: 25px;
+}
+.menu-toggle span:before {
+	margin-top: -8px;
+}
+.menu-toggle span:after {
+	margin-top: 8px;
 }
 
+/* example 5 */
+.menu-x span {
+	-webkit-transition-duration: 0s;
+	-webkit-transition-delay: .2s;
+	-ms-transition-duration: 0s;
+	-ms-transition-delay: .2s;
+	-o-transition-duration: 0s;
+	-o-transition-delay: .2s;
+	transition-duration: 0s;
+	transition-delay: .2s;
+}
+.menu-x-close span {
+	background-color: rgba(0,0,0,0.0);
+	-webkit-transition-delay: .2s;
+}
+.menu-x span:before {
+	-ms-transition-property: margin, -ms-transform;
+	-ms-transition-duration: .2s;
+	-ms-transition-delay: .2s, 0;
+	-webkit-transition-property: margin, -webkit-transform;
+	-webkit-transition-duration: .2s;
+	-webkit-transition-delay: .2s, 0;
+	-o-transition-property: margin, -o-transform;
+	-o-transition-duration: .2s;
+	-o-transition-delay: .2s, 0;
+	transition-property: margin, transform;
+	transition-duration: .2s;
+	transition-delay: .2s, 0;
+}
+.menu-x-close span:before {
+	margin-top: 0;
+	-webkit-transform: rotate(45deg);
+	-webkit-transition-delay: 0, .2s;
+	-ms-transform: rotate(45deg);
+	-ms-transition-delay: 0, .2s;
+	-o-transition-property: margin, transform;
+	-o-transition-duration: .2s;
+	transition-delay: .2s, 0;
+	transform: rotate(45deg);
+	transition-delay: 0, .2s;
+}
+.menu-x span:after {
+	-webkit-transition-property: margin, -webkit-transform;
+	-webkit-transition-duration: .2s;
+	-webkit-transition-delay: .2s, 0;
+	-ms-transition-property: margin, -ms-transform;
+	-ms-transition-duration: .2s;
+	-ms-transition-delay: .2s, 0;
+	-o-transition-property: margin, -o-transform;
+	-o-transition-duration: .2s;
+	-o-transition-delay: .2s, 0;
+	transition-property: margin, transform;
+	transition-duration: .2s;
+	transition-delay: .2s, 0;
+}
+.menu-x-close span:after {
+	margin-top: 0;
+	-webkit-transform: rotate(-45deg);
+	-webkit-transition-delay: 0, .2s;
+	-ms-transform: rotate(-45deg);
+	-ms-transition-delay: 0, .2s;
+	-o-transform: rotate(-45deg);
+	-o-transition-delay: 0, .2s;
+	transform: rotate(-45deg);
+	transition-delay: 0, .2s;
+}
+/* / Menu X Transition */
 
-.nav-container .nav-container-item a .nav-item-content {
-	display: table-cell;
-	vertical-align: middle;
+.mobile-only{
+	display:none;
 }
 
-
-.sidebar-container .inner {
-    background-image: url('../img/menu-shades.png');
-    background-position: right top;
+.panelIcon{
+	cursor:pointer;
+	padding-right:20px;
+	height:50px;
+	width:50px;
 }
 
-.nav-container div.selected {
-    background-color: rgb(23,132,189) !important;
+.panel-body {
+	padding: 5px;
 }
 
-.content-container {
-float: left;
-width: 55%;
-height: 100%;
-background: #fff;
-color: #1c302f;
-overflow-y: auto;
-margin-left: 0;
-z-index: auto;
+a.add-item, .collapse-toggle{
+	text-decoration:none;
+	cursor:pointer;
 }
 
-.icon{
-	font-size: 35px;
+@media (min-width: 1001px){
+	.Top-menu{
+		left: 0px;
+	}
 }
 
+@media (max-width: 1000px){
+	
+	h2, .h2{
+		font-size:1.4em;
+	}
+	
+	.Right{
+		display:none;
+	}
+	
+	.Left{
+		width:90%;
+		width:100%;
+	}
+	.Left-content{
+		margin:0px;
+	}
+	
+	.Container {
+		display:block;
+	}
+	
+	.input-label{
+		float: left;
+	}
+	.half-box{
 
-/* Edit Resume Formating*/
-div.name{
-	text-align: center;
+	}
+	
+	.Top-menu{
+		position: fixed;
+		right:0px;
+		background-color:#1f2126;
+		width:50px;
+		height:100%;
+		color:#fff;
+		font-size: 18px;
+		z-index:1000;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	.Top-menu>i{
+		float: left;
+		color: #464A51;
+		padding:15px;
+		height:50px;
+		width:50px;
+		cursor:pointer;
+		margin-top:7%;
+	}
+
+	.Top-menu>i:hover{
+		background-color: #464A51;
+		color:white;
+	}
+	.Top-menu>.activeIcon{
+		border:0px;
+		color: white;	
+	}
+	.mobile-only{
+		display:block;
+	}
+	.textarea-box{
+		text-align: normal;
+		width: calc(100%-70px);
+	}
+	.input-box{
+		width: calc(100%-70px);
+	}
+	#mobile-iframe{
+	    padding:0px;
+		height:100%;
+		box-shadow: 0px 0px 20px black; 
+		width:100%;
+		height:100%;
+	}
+	#preview-section{
+		transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+		position:absolute;
+		width: 100%;
+		height:100%;
+		left:0px;
+		top:0px;
+	}
+
+	#preview-section>iframe{
+	   	top:0;
+	   	left: 0;
+	   	width: 100%;
+	   	height: 100%;
+		border:none;
+		padding:0px;
+		margin:0px;
+	}
+	
+	.menu-toggle.invisible  {
+		-webkit-transform: translate3d(0,96px,0);
+		-moz-transform: translate3d(0,96px,0);
+		-o-transform: translate3d(0,96px,0);
+		transform: translate3d(0,96px,0);
+		-webkit-transition: -webkit-transform .4s,opacity 3s;
+		-moz-transition: -moz-transform .4s,opacity 3s;
+		-o-transition: -o-transform .4s,opacity 3s;
+		transition: transform .4s,opacity 3s;
+		opacity: 0;
+		overflow: hidden;
+	}
+
+	.menu-toggle.visible {
+		-webkit-transform: translate3d(0, -15px,0);
+		-moz-transform: translate3d(0,-15px,0);
+		-o-transform: translate3d(0,-15px,0);
+		transform: translate3d(0,-15px,0);
+		-webkit-transition: -webkit-transform .3s,opacity .3s;
+		-moz-transition: -moz-transform .3s,opacity .3s;
+		-o-transition: -o-transform .3s,opacity .3s;
+		 transition: transform .3s,opacity .3s;
+	}
+	
 }
-

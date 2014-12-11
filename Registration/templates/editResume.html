@@ -1,74 +1,314 @@
 {% extends "base_dashboard.html" %}
 {% block content %} 
 
-		<div class="page-container clearfix">
-
-	    <div class="sidebar-container">
-	        <div class="inner">
-				&nbsp;
-	        </div>
-	    </div>
-	    <div class="nav-container">
-	        <div class="nav-container-item selected">
-	            <a href="">
-					<span class="nav-item-content">
-						<span class="icon fa fa-pencil-square-o"></span><br>
-						<span class="nav-item-text"> Resume</span>
-					</span>
-				</a>
-	            <span class="hover-bar"></span>
-	        </div>
-		
-	        <div class="nav-container-item">
-	            <a href="https://saintlucifers.ticketleap.com/tickets/details" data-ga-interaction-id="event-about">
-					<span class="nav-item-content">
-						<span class="icon fa fa-search reverse"></span><br>
-						<span class="nav-item-text"> Search</span>
-					</span>
-				</a>
-	            <span class="hover-bar"></span>
-	        </div>
-        
-	        <div class="nav-container-item">
-	            <a href="https://saintlucifers.ticketleap.com/tickets/get-there/" data-ga-interaction-id="event-get-there">
-					<span class="nav-item-content">
-						<span class="icon fa fa-line-chart"></span><br>
-						<span class="nav-item-text"> Analytics</span>
-					</span>
-				</a>
-	            <span class="hover-bar"></span>
-	        </div>
-        
-	        <div class="nav-container-item"> 
-	            <a href="https://saintlucifers.ticketleap.com/tickets/dates" data-ga-interaction-id="event-tickets">
-					<span class="nav-item-content">
-						<span class="icon fa fa-th"></span><br>
-						<span class="nav-item-text"> More</span>
-					</span>
-				</a>
-	            <span class="hover-bar"></span>
-	        </div>
-	    </div><!-- END NAVBAR -->
-		
-		<div class="content-container clearfix">
-			<div class="name">
-				<span contenteditable="true">{{user.get_full_name}}'s Resume</span>
+<html class="no-js">
+    <head>
+        <meta charset="utf-8">
+        <title>Edit Resume</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+    {# <div class="Top">{{ s_user.first_name }} {{ s_user.last_name }}</div> #}
+    <div class="Container">
+        <div class="Left">
+			<a href="#" id="menu-toggle" class="menu-toggle badge menu-x menu-x-close mobile-only visible"><span></span></a>
+			<div class="Top-menu">
+				<i id="personal" class="fa fa-user activeIcon fa-md"></i>
+				<i id="experience" class="fa fa-briefcase fa-md"></i>
+				<i id="education" class="fa fa-graduation-cap fa-md"></i>
+				<i id="accomplishments" class="fa fa-lightbulb-o fa-lg"></i>
+				<i id="skills" class="fa fa-tasks fa-lg"></i>
+				<i id="contact" class="fa fa-phone fa-lg"></i>
+				<i id="template" class="fa fa-file-image-o fa-md"></i>
+				<i id="preview" class="fa fa-eye fa-md mobile-only"></i>
+				<i id="settings" class="fa fa-cog fa-md"></i>
+				{# <i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> #}
 			</div>
-				<!-- Nav tabs -->
-				<ul class="nav nav-tabs" id="myTab" role="tablist">
-				  <li class="active"><a href="#home" role="tab" data-toggle="tab">Home</a></li>
-				  <li><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
-				  <li><a href="#messages" role="tab" data-toggle="tab">Messages</a></li>
-				  <li><a href="#settings" role="tab" data-toggle="tab">Settings</a></li>
-				</ul>
-
-				<!-- Tab panes -->
-				<div class="tab-content">
-				  <div class="tab-pane active" id="home">Home</div>
-				  <div class="tab-pane" id="profile">Profile</div>
-				  <div class="tab-pane" id="messages">Messages</div>
-				  <div class="tab-pane" id="settings">Settings</div>
-				</div>
+			
+			<div class="Left-content">
+				<form id="full-form" action="{{action_url}}" method="post" accept-charset="utf-8">
+					{% csrf_token %}
+					<section id="personal-section">
+						<h2 class="fs-title">Personal Details</h2>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Name</label>
+							
+							<input type="text" id="first_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="First" value="{{s_user.first_name}}"/>
+							<input type="text" id="last_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="Last" value="{{s_user.last_name}}"/>
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">URL</label>
+							<input type="text" id="handle" class="input-box" maxlength="15" name="handle" placeholder="Personal URL" value="{{s_user.userprofile.handle}}" autofocus/>
+							<span class="help-block url"></span>
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Profession</label>
+							
+							<input type="text" id="profession-edit" class="input-box directEdit" maxlength="50" placeholder="What do you do?" value="{{s_user.userprofile.profession}}" maxlength="50" />
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Statement</label>
+							<textarea id="personal-edit" class="textarea-box directEdit" placeholder="Let's talk about you.">{{s_user.userprofile.statement}}</textarea>
+						</div>
+						<hr>
+					</section>
 				
+					<section id="experience-section">
+						<h2 class="fs-title">Work Experience</h2>
+						<div id="experience-info">
+						    
+								{% for job in job_list %}
+							        <div class="info-item">
+										<hr>
+										<div class="input-block">
+											 <a class="pull-left"><font class="panelIcon"><i id="collapse{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+											 <span id="collapse{{forloop.counter}}-toggle" class="collapse-toggle">{{job.position}}</span>
+											 <a class="pull-right delete-item" id="{{job.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+										</div>
+					                    <hr>
+							            <div id="collapse{{forloop.counter}}" class="collapsable-item">
+							                <div class="panel-body">							                    
+												<div class="input-block">
+													<label class="input-label">Position</label>
+													<input type="text" id="position{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="position" placeholder="Position" value="{{job.position}}"/>
+												</div>
+												<hr>
+												<div class="input-block">
+													<label class="input-label">Employer</label>
+													<input type="text" id="company{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="company" placeholder="Company" value="{{job.company}}"/>
+												</div>
+												<hr>
+												<div class="input-block">
+													<label class="input-label">Date</label>
+													<div class="form-inline">
+												        <select id="job_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date" placeholder="From: ">
+															<option disabled="disabled">From</option>
+															{% for x in year_choices %}
+																<option selected="" value="{{x}}">{{x}}</option>
+															{% endfor %}
+														<select/>
+												        <select id="job_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date" placeholder="To: ">
+															<option disabled="disabled">To</option>
+															<option value="PRESENT">Present</option>
+															{% for x in year_choices %}
+															<option value="{{x}}">{{x}}</option>
+															{% endfor %}
+														</select>
+														<script>
+															$("#job_from_date{{forloop.counter}}-edit").val("{{job.job_from_date}}");
+															$("#job_to_date{{forloop.counter}}-edit").val("{{job.job_to_date}}");
+														</script>
+														<br>
+													</div>
+												</div>
+												<hr>
+												<div class="input-block">
+													<label class="input-label">Description</label>
+													<textarea id="job_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="job_about" placeholder="Description">{{job.job_about}}</textarea>
+												</div>
+							                </div>
+							            </div>
+							        </div>
+								{% endfor %}
+								<a class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>
+						</div>
+					</section>
+				
+					<section id="education-section">
+						{% for job in job_list %}
+							<label class="input-label">Status</label>
+					        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="status" placeholder="">
+								<option selected="" disabled="disabled">Status</option>
+								<option value="Graduated">Graduated</option>
+								<option value="Attending">Attending</option>
+								<option value="">Other</option>
+							<select/>
+							<hr>
+							<label class="input-label">School</label>
+							<input id="school{{forloop.counter}}-edit" type="text" class="input-box directEdit" maxlength="50" name="school" placeholder="School/University" />
+							<hr>
+							<label class="input-label">Degree</label>
+							<input id="degree{{forloop.counter}}-edit" type="text" maxlength="100" class="input-box directEdit" name="degree" placeholder="Degree" />
+							<hr>
+							<label class="input-label">School</label>
+								<div class="form-inline">
+							        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date" placeholder="From: ">
+										<option selected="" disabled="disabled">From</option>
+										{% for x in year_choices %}
+										<option value="{{x}}">{{x}}</option>
+										{% endfor %}
+									<select/>
+							        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date" placeholder="To: ">
+										<option selected="" disabled="disabled">To</option>
+										<option value="PRESENT">Present</option>
+										{% for x in year_choices %}
+										<option value="{{x}}">{{x}}</option>
+										{% endfor %}
+									</select>
+									<br>
+								</div>
+								<hr>
+								<div class="input-block">
+									<label class="input-label">Description</label>
+									<textarea id="about{{forloop.counter}}-edit" class="textarea-box directEdit" name="Education_History_about" placeholder="Description" placeholder="Statement">{{s_user.userprofile.statement}}</textarea>
+									<hr>
+								</div>
+								<hr>
+						{% endfor %}
+					</section>
+				
+					<section id="accomplishments-section">
+						<h2 class="fs-title">Accomplishments</h2>
+					</section>
+				
+					<section id="skills-section">
+						<h2 class="fs-title">Your Skill Set</h2>
+						<div class="slider"></div>
+
+						<script>
+						$('.slider').noUiSlider({
+							start: [ 0 ],
+							range: {
+								'min': 0,
+								'max': 100
+							}
+						});
+						</script>
+					</section>
+				
+					<section id="contact-section">
+						<h2 class="fs-title">Contact Info.</h2>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Phone #</label>
+							<input type="email" class="input-box" value="{{ s_user.userprofile.phone_number }}"></input>
+							<hr>
+						</div>
+						<div class="input-block">
+							<label class="input-label">Facebook</label>
+							<input type="url" class="input-box" value="{{social.facebook}}"></input>
+							<hr>
+						</div>
+						<div class="input-block">
+							<label class="input-label">Twitter</label>
+							<input type="url" class="input-box" value="{{social.twitter}}"></input>
+							<hr>
+						</div>
+						<div class="input-block">
+							<label class="input-label">LinkedIn</label>
+							<input type="url" class="input-box" value="{{social.linkedIn}}"></input>
+							<hr>
+						</div>
+					</section>
+				
+					<section id="template-section">
+						<h2 class="fs-title">Choose A Template</h2>
+						<hr>
+						<div class="grid">
+							<select name="template_name" id="select_template" class="image-picker show-html">
+								<option value=""></option>
+								{% for template in template_list %}
+									<option {% if template == s_user.user_template.template_name %}selected=""{%endif%} data-img-src="../static/img/templateIcons/{{template}}.jpg" value="{{template}}">{{template.readable_name}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						<hr>
+					</section> <!-- /Template Section -->
+				
+					<section id="preview-section">
+						<iframe id="mobile-iframe" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Your browser doesn't support iframes.</iframe>
+					</section> <!-- Preview Section -->
+					
+					<section id="settings-section">
+						<h2 class="fs-title">Settings</h2>
+						<hr>
+						<div class="input-block">
+							<label class="input-label checkbox-label">
+								<input type="checkbox" name="is_public" {% if s_user.is_public == True %} checked {% endif %} />
+							</label>
+							<label class="input-box">Public profile? <span class="descriptive-text">| Allow others to view your resume.</span></label>
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Created</label>
+							<label class="input-box">{{s_user.created_date}} <span class="descriptive-text">| Your Resume's birthday!</span></label>
+							<hr>
+						</div>
+						<div class="input-block">
+							<label class="input-label">Modified</label>
+							<label class="input-box">{{s_user.modified_date}} <span class="descriptive-text">| Your last update.</span></label>
+						</div>
+						<hr>
+						<br><br>
+						<h2 class="fs-title">Account Information</h2>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Email</label>
+							<input type="email" id="email-edit" class="input-box directEdit" placeholder="Email Address" value="{{s_user.email}}" maxlength="255"/>
+							<hr>
+						</div>
+						<div class="input-block">
+							<label class="input-label">Password</label>
+							<input name="password" class="input-box" placeholder="Change Password" type="password" id="password" pattern=".{6,}" />
+							<hr>
+						</div>
+					</section> <!-- Preview Section -->
+				
+				</div>				
+			</div><!-- /Left -->
+		</form>
+
+        <div id="webView" class="Right">
+			<button id="fullscreen-btn" class="clear-btn">Fullscreen</button>
+			
+			<iframe id="resume" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Your browser doesn't support iframes.</iframe>
 		</div>
+    </div> <!-- / CONTAINTER -->
+    </body>
+		<script>
+		var originalHandle = "{{s_user.userprofile.handle}}";
+		$("#handle").change(function() {
+			var handle = $('#handle').val();
+			if(originalHandle !== handle){
+				checkHandle(handle);
+			}
+			else{
+				$('#handle').css("border",'solid 1px white');
+			}
+		});
+		
+		function checkHandle(handle, flag) {
+			handle=handle.replace(/\s/g,''); 
+
+			$.ajax({
+				async : false,
+		        url : "/check_handle", // the endpoint
+		        type : "POST", // http method
+		        data : {
+					handle : handle,
+					'csrfmiddlewaretoken': '{{csrf_token}}'
+				},
+		        // handle a successful response
+		        success : function(json) {
+					if(json == 0){
+						$('#handle').css("border",'solid 1px green');
+						flag=0;
+						//Success: 0
+					}else{
+						$('#handle').css("border",'solid 1px red');
+						alert("That URL is taken");
+						flag=1;
+						//Failed: 1
+					}
+		        }
+			});
+			return flag;
+		};
+	</script>
+</html>
+
 {% endblock %}

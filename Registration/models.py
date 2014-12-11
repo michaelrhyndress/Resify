@@ -1,4 +1,6 @@
 from django.db import models
+from datetime import datetime    
+
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
@@ -56,6 +58,8 @@ class User(AbstractBaseUser):
     accept_terms = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     passed_setup = models.BooleanField(default=False)
+    created_date = models.DateField(auto_now_add=True, default=datetime.now)
+    modified_date = models.DateField(auto_now=True, default=datetime.now)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
@@ -155,13 +159,13 @@ class Job_History(models.Model):
     class Meta:
         verbose_name='job history'
         verbose_name_plural='job history'
-        ordering = ['user']
+        ordering = ['-job_from_date']
     def __str__(self):
         return self.position
         
         
 class Skills(models.Model):
-    name=models.CharField(max_length=30, blank=True, default="")
+    name=models.CharField(max_length=30, blank=True, unique=True, default="")
     # percentage=models.PositiveSmallIntegerField(max_length=100)
     class Meta:
         verbose_name='skill'
@@ -177,7 +181,7 @@ class User_Skills(models.Model):
     class Meta:
         verbose_name='user skill'
         verbose_name_plural='user skills'
-        ordering = ['user']
+        ordering = ['-percentage']
     def __str__(self):
         return self.user.email
         
@@ -198,7 +202,7 @@ class Education_History(models.Model):
     class Meta:
         verbose_name='education history'
         verbose_name_plural='education history'
-        ordering = ['user']
+        ordering = ['-Education_from_date']
     def __str__(self):
         return self.school
         
@@ -211,6 +215,6 @@ class Accomplishments(models.Model):
     class Meta:
         verbose_name='accomplishment'
         verbose_name_plural='accomplishments'
-        ordering = ['user']
+        ordering = ['-Accomplishment_from_date']
     def __str__(self):
         return self.user.email

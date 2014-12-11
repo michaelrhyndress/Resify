@@ -4,6 +4,7 @@ from Registration.views import Registration, Resume, Homepage, Login
 
 urlpatterns = patterns('',
     url(r'^register$', Registration.as_view(), name="register"),
+    url(r'^check_handle$', 'Registration.views.checkURL', name='check_handle'),
     url(r'^(?P<handle>\w+)/$', Resume.as_view(), name="resify_resume"),
     url(r'^$', Homepage.as_view(), name="resify_home"),
     url(r'^login$', Login.as_view(), name='login'),

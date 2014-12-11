@@ -8,6 +8,10 @@
 	{% endif %}
 	{{ form.non_field_errors }}
 	<form id="msform" action="{{action_url}}" method="post" accept-charset="utf-8">
+		<div style="color:white;" id="autosaving">
+			<i class="fa fa-spinner fa-spin"></i>
+			Auto Saving
+		</div>
 		{% csrf_token %}
 		<div class="tutorial-wrapper">
 			<ul id="progressbar">
@@ -25,7 +29,10 @@
 			<h2 class="fs-title">Personal Details</h2>
 			<h3 class="fs-subtitle">We will never sell it</h3>
 			{{ profile_form.handle.errors }}
-			<input type="text" id="handle" maxlength="15" name="handle" placeholder="Personal URL"/>
+			<div class="input-group input-group-sm">
+				<span id="handle_addon" class="input-group-addon" style="height:20px;">@</span>
+				<input type="text" id="handle" maxlength="15" name="handle" placeholder="Personal URL" style="margin-bottom:0px; border-left:none; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 0px; border-top-left-radius: 0px;"/>
+			</div>
 			<span class="help-block url"></span>
 			{{ profile_form.profession.errors }}
 			<input type="text" maxlength="50" name="profession" placeholder="Profession/Field Of Study"/>
@@ -162,7 +169,7 @@
 			<h3 class="fs-subtitle">Always many more to come</h3>
 			<div class="grid">
 				{{ template_form.template_name.errors }}
-				<select name="template_name" class="image-picker show-html">
+				<select name="template_name" id="select_template" class="image-picker show-html">
 					<option value=""></option>
 					{% for template in template_list %}
 					
@@ -173,8 +180,92 @@
 			</div>
 			
 			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
-			<input type="submit" name="submit" class="submit action-button" value="Submit" />
+			<input type="submit" id="forms_delete_save_button" class="submit action-button" value="Submit" />
 		</fieldset>
 	</form>
 </div>
+<script>
+	$( document ).ready(function() {
+		$("#autosaving").hide();
+	
+		$('#msform').sayt({'autosave': false, 'autorecover': true, 'days': 3});
+	});
+	/*
+	 * On change save with spinner
+	 */
+	$( "#msform" ).change(function() {
+		function show_saving(t){
+		      $("#autosaving").show();
+			  window.setTimeout( hide_saving, t );
+		};
+		function hide_saving(){
+		      $("#autosaving").hide();
+		};
+		$('#msform').sayt({'savenow': true});
+		show_saving(1000);
+		return false;
+	});
+
+	/*
+	 * To erase a forms cookie
+	 */
+	$('#forms_delete_save_button').click(function()
+	{
+		if(checkHandle() == 1){
+			$('#handle').css("color",'red');
+			alert("The URL you selected is already in use.")
+			$('.fa-user').click();
+			return false;
+		}
+		if( !$('#select_template').val() ) {
+			alert("Please select a template!")
+			return false;
+		}
+		else{
+			$('#msform').sayt({'erase': true});
+		}	
+	});
+	
+	/*
+	 * On Change of Handle
+	 */
+	
+	$("#handle").change(function() {
+		checkHandle();
+	});
+
+	function checkHandle(flag) {
+		var handle = $('#handle').val();
+		handle=handle.replace(/\s/g,''); 
+		
+		$.ajax({
+				async : false,
+		        url : "/check_handle", // the endpoint
+		        type : "POST", // http method
+		        data : {
+					handle : handle,
+					'csrfmiddlewaretoken': '{{csrf_token}}'
+				},
+		        // handle a successful response
+		        success : function(json) {
+					if(json == 0){
+						$('#handle_addon').css("color",'green');
+						flag=0;
+						//Success: 0
+					}else{
+						$('#handle_addon').css("color",'red');
+						flag=1;
+						//Failed: 1
+					}
+		        }// ,
+// 		 	    // handle a non-successful response
+// 		        error : function(xhr,errmsg,err) {
+// 					alert("failed");
+// 		            console.log(xhr.status + ": " + xhr.responseText);// provide a bit more info about the error to the console
+// 		        }
+		});
+		return flag;
+	};
+	
+</script>
 {%endblock%}

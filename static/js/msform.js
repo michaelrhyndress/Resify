@@ -158,14 +158,3 @@ $(".previous").click(function(){
 });
 
 
-
-$( document ).ready(function() {
-    $(".image-picker").imagepicker();
-	
-	$("#handle").on('input', function(){
-		var handle=$("#handle").val();
-		handle=handle.replace(/\s/g,''); 
-		$(".url").html("Resify.info/"+handle);
-	});
-	
-  });

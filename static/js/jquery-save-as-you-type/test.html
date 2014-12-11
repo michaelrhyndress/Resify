@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<link href="../../css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	</body>
+	<i class="fa fa-spinner fa-spin"></i>
+		<form id="test_form">
+			<input name="first" id="field1"></input>
+
+			<input name="second" id="field2"></input>
+
+			<input name="third" id="field3"></input>
+		</form>
+		<button id="forms_delete_save_button" class="default">Default</button>
+		
+	</body>
+		<script src="../vendor/jquery-2.1.1.min.js"></script>
+		<script src="source/sayt.min.jquery.js"></script>
+		<script src="dependencies/jquery-cookie.js"></script>
+		<script>
+			$(".fa-spinner").hide();
+			$('#test_form').sayt({'autosave': false, 'autorecover': true, 'days': 7});
+			
+			if($('#test_form').sayt({'checksaveexists': true}) == true)
+			{
+				console.log('Form data has been saved.');
+			}
+			/*
+			 * To erase a forms cookie
+			 */
+			$('#forms_delete_save_button').click(function()
+			{
+				$('#test_form').sayt({'erase': true});
+		
+				console.log('Form cookie was deleted.');
+				return false;
+			});
+			$( "#test_form" ).change(function() {
+				function show_saving(t){
+				      $(".fa-spinner").show();
+					  window.setTimeout( hide_saving, t );
+				};
+				function hide_saving(){
+				      $(".fa-spinner").hide();
+				};
+				$('#test_form').sayt({'savenow': true});
+				
+				show_saving(1000);
+				console.log('Form data has been saved.');
+				return false;
+			});
+			
+			
+		</script>
+</html>

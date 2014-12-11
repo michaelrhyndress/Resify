@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import datetime
 import django.utils.timezone
 from django.conf import settings
 
@@ -22,7 +23,7 @@ class Migration(migrations.Migration):
                 ('about', models.TextField(default=b'', blank=True)),
             ],
             options={
-                'ordering': ['user'],
+                'ordering': ['-Accomplishment_from_date'],
                 'verbose_name': 'accomplishment',
                 'verbose_name_plural': 'accomplishments',
             },
@@ -33,14 +34,14 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('school', models.CharField(default=b'', max_length=50, blank=True)),
-                ('status', models.CharField(default=b'', max_length=9, choices=[(b'', b''), (b'Graduated', b'Graduated'), (b'Attending', b'Attending')])),
+                ('status', models.CharField(blank=True, max_length=9, choices=[(b'', b''), (b'Graduated', b'Graduated'), (b'Attending', b'Attending')])),
                 ('Education_from_date', models.CharField(default=b'', max_length=4, blank=True)),
                 ('Education_to_date', models.CharField(default=b'', max_length=7, blank=True)),
                 ('degree', models.CharField(default=b'', max_length=100, blank=True)),
                 ('about', models.TextField(default=b'', blank=True)),
             ],
             options={
-                'ordering': ['user'],
+                'ordering': ['-Education_from_date'],
                 'verbose_name': 'education history',
                 'verbose_name_plural': 'education history',
             },
@@ -57,7 +58,7 @@ class Migration(migrations.Migration):
                 ('job_about', models.TextField(default=b'', blank=True)),
             ],
             options={
-                'ordering': ['user'],
+                'ordering': ['-job_from_date'],
                 'verbose_name': 'job history',
                 'verbose_name_plural': 'job history',
             },
@@ -67,7 +68,7 @@ class Migration(migrations.Migration):
             name='Skills',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('name', models.CharField(default=b'', max_length=30, blank=True)),
+                ('name', models.CharField(default=b'', unique=True, max_length=30, blank=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -83,6 +84,7 @@ class Migration(migrations.Migration):
                 ('facebook', models.URLField(default=b'', blank=True)),
                 ('twitter', models.URLField(default=b'', blank=True)),
                 ('gplus', models.URLField(default=b'', blank=True)),
+                ('linkedIn', models.URLField(default=b'', blank=True)),
             ],
             options={
                 'ordering': ['user'],
@@ -127,7 +129,7 @@ class Migration(migrations.Migration):
                 ('skill', models.ForeignKey(to='Registration.Skills')),
             ],
             options={
-                'ordering': ['user'],
+                'ordering': ['-percentage'],
                 'verbose_name': 'user skill',
                 'verbose_name_plural': 'user skills',
             },
@@ -175,6 +177,8 @@ class Migration(migrations.Migration):
                 ('accept_terms', models.BooleanField(default=False)),
                 ('is_admin', models.BooleanField(default=False)),
                 ('passed_setup', models.BooleanField(default=False)),
+                ('created_date', models.DateField(default=datetime.datetime.now, auto_now_add=True)),
+                ('modified_date', models.DateField(default=datetime.datetime.now, auto_now=True)),
             ],
             options={
                 'abstract': False,

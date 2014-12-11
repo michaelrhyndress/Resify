@@ -8,6 +8,7 @@ from django.views.generic import View
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.template import RequestContext, Template, Context
 from django.utils.timezone import now
+
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
 from Registration.models import Job_History, User, Education_History, Skills, User_Skills, SocialMedia
 from Registration.models import Accomplishments, Template
@@ -55,9 +56,7 @@ class Registration(View):
                 if user.is_active:
                     django_login(request, user)
                     # return redirect(user.handle)
-        return render_to_response('form.html', {
-                    'form': form,
-                }, context_instance=RequestContext(request))
+        return redirect('/');
 
 
 class Resume(View):
@@ -83,10 +82,20 @@ class Resume(View):
             'accomp_list' : accomplishments_list,
             'social_list' : socialMedia_list,
         }
+        #if logged in
+        if request.user.is_authenticated():
+            #Check if it is the right user
+            if s_user.email == request.user.email:
+                #render Resume
+                return render(request, template, c)
         
-        if not s_user.is_public: # Check if page is private
-            return render(request, 'private.html')
-            
+        # Check if page is private
+        if not s_user.is_public:
+            if not s_user.is_active:
+                #if private render private
+                return render(request, 'private.html')
+        
+        #render Resume
         return render(request, template, c)
 
         
@@ -102,21 +111,44 @@ class Homepage(View):
     def get(self, request, *args, **kwargs):
         # if user is logged in send them to logged in view
         if request.user.is_authenticated():
+            YEAR_CHOICES = []
+            template_list = list(Template.objects.all())
+        
+            for r in xrange((now().year), 1900, -1):
+                YEAR_CHOICES.append(r)
+                
             if(request.user.passed_setup is False):
                 #USER SETUP     
-                YEAR_CHOICES = []
-                template_list = list(Template.objects.all())
-            
-                for r in xrange((now().year), 1900, -1):
-                    YEAR_CHOICES.append(r)
             
                 c = {
                     'year_choices' : YEAR_CHOICES,
                     'template_list' : template_list,
                 }
                 return render(request, 'setup.html', c)#Setup form
-            else:
-                return render(request, 'editResume.html')
+            else: #User passed Setup
+                s_user = get_object_or_404(User, email=request.user.email)
+                job_list = list(Job_History.objects.filter(user__email=s_user.email))
+                education_list = list(Education_History.objects.filter(user__email=s_user.email))
+                skill_list = list(User_Skills.objects.filter(user__email=s_user.email))
+                accomplishments_list =list(Accomplishments.objects.filter(user__email=s_user.email))
+                socialMedia_list =list(SocialMedia.objects.filter(user__email=s_user.email))
+                #get user template
+                template = str(s_user.user_template.template_name)
+                template= os.path.join('Resumes',template,'index.html')
+        
+                #make context
+                c = {
+                    's_user' : s_user,
+                    'job_list' : job_list,
+                    'education_list' : education_list,
+                    'parsed_phone_number' : re.sub(r'\W+', '', s_user.userprofile.phone_number),
+                    'skill_list' : skill_list,
+                    'accomp_list' : accomplishments_list,
+                    'social_list' : socialMedia_list,
+                    'year_choices' : YEAR_CHOICES,
+                    'template_list' : template_list,
+                }
+                return render(request, 'editResume.html', c)
                 
         # render homepage if not logged in
         else:
@@ -223,7 +255,23 @@ class Homepage(View):
         else:
             return redirect('/')
         
-        
+def checkURL(request):
+    if request.user.is_authenticated():
+        if request.is_ajax():
+            handle = request.POST.get('handle', False)
+            print "Testing"
+            if handle:
+                count = User.objects.filter(userprofile__handle=handle).count()
+                if count != 0:
+                    res = "1" #If it exists
+                else:
+                    res = "0" #If it DOES NOT exist
+                return HttpResponse(res)
+            else:
+                return HttpResponse("")
+        else:
+            return HttpResponse("Failed")
+            
 def logout(request):
     """
     Log out view
