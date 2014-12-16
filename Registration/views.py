@@ -259,7 +259,6 @@ def checkURL(request):
     if request.user.is_authenticated():
         if request.is_ajax():
             handle = request.POST.get('handle', False)
-            print "Testing"
             if handle:
                 count = User.objects.filter(userprofile__handle=handle).count()
                 if count != 0:

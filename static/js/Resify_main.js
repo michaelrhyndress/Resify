@@ -124,27 +124,38 @@ $(document).ready(function(){
 		}
 	});
 	
-	$('.add-item').click(function(){
-		var parentEl = $(this).parent(); //<div class="panel-group" id="accordion">
-		var item = $(this).parent().prev();
-		parentEl.append(item.html());
-		alert(item.html());
-		//appendTo
-	});
-	
-	$('.collapse-toggle').click(function(){
+	$('#full-form').on('click', '.collapse-toggle', function(){
 		var itemID = $(this).attr('id');
 		var itemToHide = itemID.substr(0, itemID.indexOf('-'));
 		var icon = $("#"+itemID+".delete-item").parents(".info-item");
 		$('#'+itemToHide).slideToggle();
-		$("#"+itemID+".collapse-toggle ").toggleClass("fa-plus-square fa-minus-square");
-		
+		$("i#"+itemID+".collapse-toggle ").toggleClass("fa-plus-square fa-minus-square");
+		/** ADD INTO LAYOUT OF <li> IN TEMPLATE **/	
 	});	
 	
-	$('.delete-item').click(function(){
+	$('#full-form').on('click', '.add-item', function(){
+		var number = $(this).attr('id'); //Last count
+		var parentEl = $(this).parent(); // gets div.info-item which is the main container
+		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
+		var templateClone = template.clone(true); //Clone Template
+		
+		// var templateClone = jQuery.extend({}, template)
+		
+		var searchFor = $(templateClone).find("*[id*='{counter}']");
+		$(searchFor).each(function() { //Replaces counter with number
+			var id = $(this).attr('id');
+			var newId = id.replace('{counter}', number+"New");
+			$(this).attr('id', newId);
+		});
+		$(this).before(templateClone.html());//Place into page
+		number++;
+		$(this).attr('id', number);
+	});
+	
+	$('#full-form').on('click', '.delete-item', function(){
 		var itemID = $(this).attr('id');
 		var iframe = $("#resume, #mobile-iframe");
-		$("#"+itemID+".delete-item").parents(".info-item").fadeOut("fast"); //Hide the box
+		$("#"+itemID+".delete-item").parents(".info-item").remove(); //Hide the box
 		iframe.contents().find('#'+itemID).remove();
 		amounts.push({ action: "delete", id: itemID });
 		// for (i = 0; i < amounts.length; ++i) {
@@ -152,8 +163,13 @@ $(document).ready(function(){
 // 		}
 	});	
 	
+	$('#full-form').on('click', '.cancelInputAfter', function(){
+		$(this).next('input').val("");
+		$(this).prev('i').addClass("fa-bell-o");
+		$(this).prev('i').html(" Save and refresh to add again");
+		$(this).hide();
+	});
 });
-
 
 /*
 	IDEA: Make stack to for removed information

@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -10,19 +9,30 @@
 		<title>R&#233;sify | R&#233;sum&#233;s a business can't resist</title>
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		 <meta name="author" content="Michael Rhyndress | RHYNO Web Design">
 		<!-- JQUERY -->
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-			
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="{% "js/vendor/jquery-2.1.1.min.js" }%"><\/script>')</script>
+		<script src="{% static 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+		
+		<script src="{% static 'js/vide/jquery.vide.js' %}"></script>
+		<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
 		<!-- LOGIN FORM -->
 		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'SystemFiles/Login/css/form.css' %}" media="screen" />
+		<link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet">
+		<link href="{% static 'SystemFiles/Login/css/circle.css' %}" rel="stylesheet">
 
 <!-- HOMEPAGE BACKGROUND IMAGE -->
-<link rel="stylesheet" type="text/css" href="{% static 'SystemFiles/vegas/jquery.vegas.css' %}">
-<script type="text/javascript" src="{% static 'SystemFiles/vegas/jquery.vegas.min.js' %}"></script>
+{# <link rel="stylesheet" type="text/css" href="{% static 'SystemFiles/vegas/jquery.vegas.css' %}"> #}
+{# <script type="text/javascript" src="{% static 'SystemFiles/vegas/jquery.vegas.min.js' %}"></script> #}
 
  <script>
 $( function() {
+	$(".slide2").hide();
+	$(".slide3").hide();
+	$(".slide4").hide();
+	
 	$('#register-block').hide();
 	$('#recover-block').hide();
 	var last="login"
@@ -41,265 +51,1115 @@ $( function() {
 		return true;
 	});
 	
+	setTimeout(function(){
+		$("a#learn.button").animate({top:-200, opacity: 1}, 600, function() {
+		});
+	}, 600);  
+		
+		var flips = 0;
+		$('.flip').click(function(){
+			if(flips == 4){
+				return true;
+			}
+			if(flips != 4){
+				flips++;
+		        $(this).parent().find('.card').toggleClass('flipped');
+				if(flips == 1){
+					if($("#boring-percent").hasClass("p0")){
+						$("#boring-percent").removeClass("p0");
+						var initial = $("#boring-percent > span").text();
+						initial = initial.replace("%", "");
+						$("#boring-percent > span").text("0");
+						for(var i=0; i < initial; i++){
+							setTimeout(function(){
+								var value = parseInt($("#boring-percent > span").text(), 10) + 1;
+								$("#boring-percent").addClass("p"+initial);
+								$("#boring-percent > span").text(value+"%");
+							}, (i * 25));  
+						}
+						setTimeout(function(){
+							$(".slide1").first().hide();
+							$(".slide2").first().show();
+							setTimeout(function(){
+								$(".slide1").first().hide();
+								$(".slide2").first().show();
+							}, 50000); 
+						}, 500);  
+					}
+				} //if flip == 1
+				if(flips == 2){
+					setTimeout(function(){
+						$(".slide1").hide();
+						$(".slide2").show();
+						$(".slide3").show();
+					}, 500);  	
+				}
+				if(flips == 3){
+					setTimeout(function(){
+						$(".slide2").hide();
+						$(".slide4").show();
+					}, 500);  	
+				}
+			} //if flip != 4
+		        return false;
+	    });
+		
 });
+</script>
 
-// 	$.vegas('overlay, {
-// 		src:'{% static 'SystemFiles/vegas/overlays/12.png' %}',
-// 	  	opacity:0.1
-// 	});
-// 	$.vegas( 'slideshow', {
-// 		preload: true,
-// 		delay: 1000,
-// 		backgrounds: [
-// 			{ src: '{% static 'SystemFiles/vegas/images/blackwhitebackground.png' %}'},
-// 			// { src: '{% static 'SystemFiles/vegas/images/Background1.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background2.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background3.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background4.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background5.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background6.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background7.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background9.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background10.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background11.png' %}'},
-// 			{ src: '{% static 'SystemFiles/vegas/images/Background12.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/Background13.png' %}'},
-// // 			{ src: '{% static 'SystemFiles/vegas/images/BackgroundFinal.png' %}'}
-// 		],
-// 		  walk:function(step) {
-// 		    if(step == 1){
-// 				$.vegas('overlay', {
-// 					src:'{% static 'SystemFiles/vegas/overlays/12.png' %}',
-// 				  	opacity:0.1
-// 				});
-// 		    	$.vegas('stop');
-// 		    }
-// 		  }
-// 	} )( 'overlay' ); //Anything over the pictures
-// } );
-// </script>
+
+
+<style>
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+*{
+	-webkit-transition: all 1s ease-in-out;
+	  -moz-transition: all 1s ease-in-out;
+	  -o-transition: all 1s ease-in-out;
+	  transition: all 1s ease-in-out;
+	  padding:0px;
+	  margin:0px;
+}
+.navbar-default{
+	background-color:transparent;
+	border-color:transparent;
+	color:white;
+}
+.black-text {
+	color:black;
+}
+.white-text{
+	color:white;
+}
+.text-muted {
+    color: #888787;
+}
+
+header .stand-out{
+	color:#e9f0f5;
+	font-size:1.1em;
+}
+
+header .fancy{
+	font-size:1.5em;
+}
+
+header{
+	 height: 100%;
+}
+
+.text-primary {
+    color: white;
+}
+
+.fa-inverse {
+	color: #245A7A;
+}
+
+.img-centered {
+    margin: 0 auto;
+}
+
+.bg-light-gray {
+    background-color: #f7f7f7;
+}
+
+.bg-darkest-gray {
+    background-color: #222;
+}
+
+.bg-dark-blue {
+	background-color: #245A7A;
+	color:white;
+}
+
+.bg-light-blue {
+	background-color: #e9f0f5;
+	color:black;
+}
+
+header {
+	z-index:3;
+    text-align: center;
+    color: #fff;
+    background-attachment: scroll;
+	background-position: center center;
+    background-repeat: none;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+#darken{
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+    position: absolute;
+	height:100%;
+	width:100%;
+    background-color: #000;
+    top: 0;
+    left: 0;
+	opacity: 0.7;
+	z-index: 0;
+}
+
+header .intro-text {
+    padding-bottom: 50px;
+	padding-top: 50px;
+	position: relative;
+}
+
+header .intro-text .intro-lead-in {
+    margin-bottom: 25px;
+	
+    font-size: 22px;
+    font-style: italic;
+    line-height: 22px;
+}
+
+header .intro-text .intro-heading {
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 50px;
+	padding-top:20px;
+}
+
+.navbar .transparent .navbar-inverse .navbar-inner {
+   background-color: transparent;
+   position: absolute;
+}
+.navbar-inverse{
+    background-color: transparent;
+}
+
+.navbar{
+	background-color: transparent;
+	position: absolute;
+	width: 100%;
+	margin-bottom:0px;
+	border-color: transparent;
+}
+
+.navbar-nav>li>a {
+padding-top: 20px;
+padding-bottom: 20px;
+}
+
+.navbar-inverse .navbar-toggle {
+	border-color: #ccc;
+	width: auto;
+	height: auto;
+}
+
+
+section{
+	padding-top: 50%;
+	min-height:100%;
+}
+
+.container{
+	top: 50%;
+}
+
+
+@media(min-width:768px) {
+    header .intro-text {
+        padding-top: 100px;
+        padding-bottom: 200px;
+    }
+	
+	
+	header .stand-out{
+		font-size:1.1em;
+	}
+	
+    header .intro-text .intro-lead-in {
+        margin-bottom: 25px;
+        font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-size: 40px;
+        font-style: italic;
+        line-height: 40px;
+    }
+
+    header .intro-text .intro-heading {
+        margin-bottom: 50px;
+        text-transform: uppercase;
+        font-family: 'Lato', Arial, Helvetica, sans-serif;
+        font-size: 65px;
+        font-weight: 700;
+        line-height: 75px;
+		padding-top:30px;
+    }
+}
+
+
+
+section h2.section-heading {
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 40px;
+}
+
+section h3.section-subheading {
+    margin-bottom: 75px;
+    text-transform: none;
+    font-family: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 16px;
+    font-style: italic;
+    font-weight: 400;
+	line-height:1.3;
+}
+
+@media(min-width:768px) {
+    section {
+        padding: 150px 0;
+    }
+	.navbar-default{
+		background-color:black;
+		border-color:black;
+		color:white;
+	}
+}
+
+.service-heading {
+    margin: 15px 0;
+    text-transform: none;
+}
+
+
+@media(min-width:767px) {
+
+.timeline {
+    position: relative;
+    padding: 0;
+    list-style: none;
+}
+
+
+.timeline:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 40px;
+    width: 2px;
+    margin-left: -1.5px;
+    background-color: #f1f1f1;
+}
+
+.timeline>li {
+    position: relative;
+    margin-bottom: 50px;
+    min-height: 50px;
+}
+
+.timeline>li:before,
+.timeline>li:after {
+    content: " ";
+    display: table;
+}
+
+.timeline>li:after {
+    clear: both;
+}
+
+.timeline>li .timeline-panel {
+    float: right;
+    position: relative;
+    width: 100%;
+    padding: 0 20px 0 100px;
+    text-align: left;
+}
+
+.timeline>li .timeline-panel:before {
+    right: auto;
+    left: -15px;
+    border-right-width: 15px;
+    border-left-width: 0;
+}
+
+.timeline>li .timeline-panel:after {
+    right: auto;
+    left: -14px;
+    border-right-width: 14px;
+    border-left-width: 0;
+}
+
+.timeline>li .timeline-image {
+    z-index: 100;
+    position: absolute;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    margin-left: 0;
+    border: 7px solid #f1f1f1;
+    border-radius: 100%;
+    text-align: center;
+    color: #fff;
+    background-color: #245A7A;
+}
+
+.timeline>li .timeline-image h4 {
+    margin-top: 12px;
+    font-size: 10px;
+    line-height: 14px;
+}
+
+.timeline>li.timeline-inverted>.timeline-panel {
+    float: right;
+    padding: 0 20px 0 100px;
+    text-align: left;
+}
+
+.timeline>li.timeline-inverted>.timeline-panel:before {
+    right: auto;
+    left: -15px;
+    border-right-width: 15px;
+    border-left-width: 0;
+}
+
+.timeline>li.timeline-inverted>.timeline-panel:after {
+    right: auto;
+    left: -14px;
+    border-right-width: 14px;
+    border-left-width: 0;
+}
+
+.timeline>li:last-child {
+    margin-bottom: 0;
+}
+
+.timeline .timeline-heading h4 {
+    margin-top: 0;
+    color: inherit;
+}
+
+.timeline .timeline-heading h4.subheading {
+    text-transform: none;
+}
+
+.timeline .timeline-body>p,
+.timeline .timeline-body>ul {
+    margin-bottom: 0;
+}
+}
+
+@media(min-width:1200px) {
+    .timeline>li {
+        min-height: 170px;
+    }
+
+    .timeline>li .timeline-panel {
+        padding: 0 20px 20px 100px;
+    }
+
+    .timeline>li .timeline-image {
+        width: 170px;
+        height: 170px;
+        margin-left: -85px;
+    }
+
+    .timeline>li .timeline-image h4 {
+        margin-top: 40px;
+    }
+
+    .timeline>li.timeline-inverted>.timeline-panel {
+        padding: 0 100px 20px 20px;
+    }
+}
+
+@media(max-width:768px) {
+    section {
+        padding: 100px 0;
+    }
+	.navbar{
+		position:fixed;
+	}
+	.navbar-header, .navbar-inverse, .navbar-inner, .navbar-form {
+		background-color: rgba(0,0,0,.6) !important;
+	}
+	
+	.navbar-inverse, .navbar-collapse, .navbar-inner, .navbar-form {
+		font-size:16px;
+		color:white;
+		text-align:center;
+	}
+	.navbar-inner{
+		background-color: rgba(0,0,0,.6);
+	}
+	.navbar-collapse{
+		background-color: rgba(0,0,0,.8);
+		max-height:100% !important;
+		min-height: 100%;
+		width: 100%;
+		position: fixed;
+	}
+	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+		border-color: #245A7A;
+	}
+	li{
+		border-color: #245A7A;
+	}
+	.navbar-inverse .navbar-nav>li>a {
+		color: white;
+	}
+}
+section#contact {
+    background-color: #222;
+    background-image: url(../../static/img/map-image.png);
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+section#contact .section-heading {
+    color: #fff;
+}
+
+section#contact .form-group {
+    margin-bottom: 25px;
+}
+
+section#contact .form-group input,
+section#contact .form-group textarea {
+    padding: 20px;
+}
+
+section#contact .form-group input.form-control {
+    height: auto;
+}
+
+section#contact .form-group textarea.form-control {
+    height: 236px;
+}
+
+section#contact .form-control:focus {
+    border-color: #245A7A;
+    box-shadow: none;
+}
+
+section#contact::-webkit-input-placeholder {
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    color: #bbb;
+}
+
+section#contact:-moz-placeholder {
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    color: #bbb;
+}
+
+section#contact::-moz-placeholder {
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    color: #bbb;
+}
+
+section#contact:-ms-input-placeholder {
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 700;
+    color: #bbb;
+}
+
+section#contact .text-danger {
+    color: #e74c3c;
+}
+
+footer {
+    padding: 25px 0;
+    text-align: center;
+}
+
+footer span.copyright {
+    text-transform: uppercase;
+    text-transform: none;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 40px;
+	color:black;
+}
+
+footer ul.quicklinks {
+    margin-bottom: 0;
+    text-transform: uppercase;
+    text-transform: none;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 40px;
+}
+
+ul.social-buttons {
+    margin-bottom: 0;
+}
+
+ul.social-buttons li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    outline: 0;
+    color: #fff;
+    background-color: #222;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+    background-color: #245A7A;
+}
+
+body {
+    webkit-tap-highlight-color: #245A7A;
+}	
+
+a#learn{
+	position: relative;
+	margin-top:200px;
+	opacity:0;
+}
+
+a.button, a.invert-button, a.plain-button{
+	max-width: 150px;
+}
+
+.fa-desktop{
+	left: -10px;
+	position: relative;
+}
+
+.fa-mobile{
+	position: relative;
+	left: 28px;
+	top: -112px;
+}
+p{
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.9);
+	line-height: 22px;
+	letter-spacing: 1.2px;
+	max-width: 350px;
+	margin: 0 auto;
+	padding-bottom: 30px;
+}
+.flip {
+  -webkit-perspective: 800;
+   width: 100%;
+   height:100%;
+}
+.flip .card.flipped {
+  -webkit-transform: rotatex(180deg);
+  
+}
+.flip .card {
+  width: 100%;
+  height: 100%;
+  -webkit-transform-style: preserve-3d;
+  -webkit-transition: 0.5s;
+}
+.flip .card .face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  -webkit-backface-visibility: hidden ;
+  z-index: 2;
+    font-family: Georgia;
+    font-size: 3em;
+    text-align: center;
+    line-height: 200px;
+}
+.flip .card .front {
+  position: absolute;
+  z-index: 1;
+    background: black;
+    color: white;
+    cursor: pointer;
+}
+.flip .card .back {
+  -webkit-transform: rotatex(-180deg);
+    background: blue;
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+.center-on-page{
+	position:absolute;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.percent-circle{
+	width: 150px;
+	margin: 0 auto;
+}
+
+.row {
+ margin-left: 0px; 
+ margin-right: 0px;
+}
+
+.bar{
+	-webkit-transition: all 1s ease-in;
+	  -moz-transition: all 1s ease-in;
+	  -o-transition: all 1s ease-in;
+	  transition: all 1s ease-in;
+}
+
+#lightning-bolt{
+	-ms-transform: rotate(30deg); /* IE 9 */
+	-webkit-transform: rotate(30deg);
+	-o-transform: rotate(30deg); /* Chrome, Safari, Opera */
+	transform: rotate(30deg);
+	top: 6px;
+	left: 19px;
+	font-size:25px;
+}
+
+#smile-icon{
+	margin-top:10px;
+	font-size:26px;
+	-ms-transform: rotate(-35deg); /* IE 9 */
+	-webkit-transform: rotate(-35deg);
+	-o-transform: rotate(-35deg); /* Chrome, Safari, Opera */
+	transform: rotate(-35deg);
+}
+
+</style>
+
 	</head>
-	<body style="position:absolute; z-index:0;">
-		<div class="background-div" style="margin: 0px; padding: 0px; position: fixed; left: 0px; top: 0px; width: 100%; height: 100%; opacity: 0.1; background-image: url(http://localhost:8000/static/SystemFiles/vegas/overlays/12.png);"></div>
-		<img class="background-image" src="/static/SystemFiles/vegas/images/Background12.png" style="position: fixed; width: 100%; height: 100%; bottom: auto; left: 0px; right: auto;">
-		<script>
-		  // window.fbAsyncInit = function() {
-		  //   FB.init({
-		  //     appId      : '1551034371776291',
-		  //     xfbml      : true,
-		  //     version    : 'v2.1'
-		  //   });
-		  // };
-		  //
-		  // (function(d, s, id){
-		  //    var js, fjs = d.getElementsByTagName(s)[0];
-		  //    if (d.getElementById(id)) {return;}
-		  //    js = d.createElement(s); js.id = id;
-		  //    js.src = "//connect.facebook.net/en_US/sdk.js";
-		  //    fjs.parentNode.insertBefore(js, fjs);
-		  //  }(document, 'script', 'facebook-jssdk'));
+	<body id="page-top" class="index">
+	    <!-- Navigation -->
+		<div class="navbar transparent navbar-inverse navbar-static-top">
+	    <nav class="navbar-inner">
+	        <div class="container">
+	            <!-- Brand and toggle get grouped for better mobile display -->
+	            <div class="navbar-header page-scroll">
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+	                
+	            </div>
+
+	            <!-- Collect the nav links, forms, and other content for toggling -->
+	            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+	                <ul class="nav navbar-nav navbar-left">
+	                    <li class="hidden">
+	                        <a href="#page-top"></a>
+	                    </li>
+	                    <li>
+	                        <a class="page-scroll" href="#how">Why R&#233;sify?</a>
+	                    </li>
+	                    <li>
+	                        <a class="page-scroll" href="#services">Services</a>
+	                    </li>
+
+	                </ul>
+	                <ul class="nav navbar-nav navbar-right">
+	                    <li class="hidden">
+	                        <a href="#page-top"></a>
+	                    </li>
+	                    <li>
+	                        <a class="page-scroll" href="#business">Business</a>
+	                    </li>
+	                    <li>
+	                        <a href="login">Sign In</a>
+	                    </li>
+	                    <li>
+	                        <a href="register">Sign Up</a>
+	                    </li>
+	                </ul>
+	            </div>
+	            <!-- /.navbar-collapse -->
+	        </div>
+	        <!-- /.container-fluid -->
+	    </nav>
+	</div>
+	    <header>
+			<div id="darken"></div>
+	        <div class="container">
+	            <div class="intro-text">
+					<div class="header">
+						R&#233;sify
+					</div>
+					<h1 class="fancy"><span>GET RECOGNIZED. <font style="white-space:nowrap">GET HIRED.</font></span></h1>
+	                <div class="intro-heading text-muted">It's Nice To Meet <i class="stand-out">You</i></div>
+					<a href="#how" class="page-scroll button" id="learn">Learn More</a>
+	            </div>
+	        </div>
+	    </header>
 		
+	    <section id="how">
+	        <div class="container">
+				<div class="flip"> 
+			        <div class="card"> 
+			            <div class="face front"> 
+		  		            <div class="row" id="question">
+		  		                <div class="col-lg-12 text-center">
+									<div class="slide1">
+			  		                    <h2 class="section-heading black-text">Ask Yourself.</h2>
+			  		                    <h3 class="section-subheading text-muted">Does your r&#233;sum&#233; represent you well enough?</h3>
+										<a href="" class="plain-button" id="flip">Click Here</a>
+									</div>
+									<div class="slide2">
+			  		                    <h2 class="section-heading black-text">The Sad Truth.. 
+											<span class="fa-stack fa-1x">
+						                        <i class="fa fa-file fa-stack-1x black-text"></i>
+						                        <i style="margin-top:15px;" class="fa fa-trash-o fa-stack-1x"></i>
+						                    </span>
+										</h2>
+			  		                    <h3 class="section-subheading text-muted">Many companies use Talent-Management Software to screen resumes. Roughly half are discarded and never seen by the employer.</h3>
+										<a href="" class="plain-button" id="flip">Continue</a>
+									</div> <!-- /SLIDE 2-->
+									<div class="slide4">
+			  		                    <h2 class="section-heading black-text">Sign Up Today! </h2>
+			  		                    <h3 class="section-subheading text-muted">Did we mention it is Free?</h3>
+										<a href="register" class="plain-button" id="signUp">Sign Up</a>
+									</div><!-- END Slide 4-->
+		  		                </div>					
+		  		            </div>
+		  				  </div> <!-- /Front -->
+			              <div class="face back"> 
+ 		  		            <div class="row" id="question">
+ 		  		                <div class="col-lg-12 text-center">
+									<div class="slide1">
+	 		  		                    <h2 class="section-heading black-text">Or is it plain like all the rest...
+										<span class="fa-stack fa-1x">
+					                        <i class="fa fa-file fa-stack-1x black-text"></i>
+					                        <i style="margin-top:10px; font-size:26px" class="fa fa-users fa-stack-1x"></i>
+					                    </span>
+										</h2>
+	 		  		                    <h3 class="section-subheading text-muted">A large percentage of r&#233;sum&#233;s get thrown out because they failed to catch the employer's attention.</h3>
+										<div class="center-on-page">
+											<div class="percent-circle">
+								                <div id="boring-percent" class="c100 p0 large">
+								                    <span>80%</span>
+								                    <div class="slice">
+								                        <div class="bar"></div>
+								                        <div class="fill"></div>
+								                    </div>
+								                </div>
+											</div>
+										</div>
+									</div><!-- END Slide 1-->
+									<div class="slide3">
+			  		                    <h2 class="section-heading black-text">We're Here To Help. 
+										<span class="fa-stack fa-1x">
+					                        <i class="fa fa-file fa-stack-1x black-text"></i>
+					                        <i id="smile-icon" class="fa fa-smile-o fa-stack-1x"></i>
+					                    </span>
+										</h2>
+			  		                    <h3 class="section-subheading text-muted">R&#233;sify your r&#233;sum&#233; to maximize your chances of getting the job. We offer tools to minimize the chance that Talent-Management Software will throw your r&#233;sum&#233; in the trash. Mix that with our modest, sleek templates and you have that much less to worry about.</h3>
+										<a href="" class="plain-button" id="flip">Continue</a>
+									</div><!-- END Slide 3-->
+ 		  		                </div>					
+ 		  		            </div>
+			            </div>  <!-- / Back-->
+			        </div> 	<!-- / Card -->	
+				</div>	<!-- / Flip-->			
+			</div>			
+	    </section>
 		
-		// This is called with the results from from FB.getLoginStatus().
-		  function statusChangeCallback(response) {
-		    console.log('statusChangeCallback');
-		    console.log(response);
-		    // The response object is returned with a status field that lets the
-		    // app know the current login status of the person.
-		    // Full docs on the response object can be found in the documentation
-		    // for FB.getLoginStatus().
-		    if (response.status === 'connected') {
-		      // Logged into your app and Facebook.
-		      testAPI();
-		    } else if (response.status === 'not_authorized') {
-		      // The person is logged into Facebook, but not your app.
-		      document.getElementById('status').innerHTML = 'Please log ' +
-		        'into this app.';
-		    } else {
-		      // The person is not logged into Facebook, so we're not sure if
-		      // they are logged into this app or not.
-		      document.getElementById('status').innerHTML = 'Please log ' +
-		        'into Facebook.';
-		    }
-		  }
+	    <!-- Services Section -->
+	    <section id="services" class="bg-dark-blue">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-12 text-center">
+	                    <h2 class="section-heading">What We Do.</h2>
+	                    <h3 class="section-subheading"></h3>
+	                </div>
+	            </div>
+	            <div class="row text-center">
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+	                        <i class="fa fa-cubes fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Structure</h4>
+	                    <p class="">The most important part of your r&#233;sum&#233; is the content. That's why we handle the structure so that you can concentrate on making your r&#233;sum&#233; perfect. Need to add something? No worries. Edit and save knowing that we will take care of the rest.</p>
+	                </div>
+	                <div class="col-md-4">
+	                    {# <span class="fa-stack fa-4x"> #}
+ {# 	                        <i class="fa fa-circle fa-stack-2x text-primary"></i> #}
+ {# 	                        <i class="fa fa-desktop fa-xsm fa-stack-1x fa-inverse pull-left"></i> #}
+ {# 							<i class="fa fa-mobile fa-sm fa-stack-1x fa-inverse pull-right"></i> #}
+ {# 	                    </span> #}
+	                    <span class="fa-stack fa-4x">
+							<i class="fa fa-circle fa-stack-2x text-primary"></i>
+ 	                        <i class="fa fa-cloud fa-stack-1x fa-inverse"></i>
+ 	                        <i id="lightning-bolt" class="fa fa-bolt fa-xsm fa-stack-1x  text-primary pull-left"></i>
+ 							<i class="fa fa-mobile fa-sm fa-stack-1x fa-inverse pull-right"></i>
+ 	                    </span>
+	                    <h4 class="service-heading">Intuitive Design</h4>
+	                    <p class="">Your resume is hosted on the cloud so you can update, edit, or print anytime, anywhere, from any device. Edit your resume in real time so that you know exactly how it will look to employers.</p>
+	                </div>
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+	                        <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Privacy</h4>
+	                    <p class="">With other free services, you're the product that's being bought and sold. Our intent is to provide an easier way for you to improve your r&#233;sum&#233; and hopefully obtain a job or career. NOT to data mine or steal your information for unethical companies to feed you advertisements every second of every day.</p>
+	                </div>
 
-		  // This function is called when someone finishes with the Login
-		  // Button.  See the onlogin handler attached to it in the sample
-		  // code below.
-		  function checkLoginState() {
-		    FB.getLoginStatus(function(response) {
-		      statusChangeCallback(response);
-		    });
-		  }
-
-		  window.fbAsyncInit = function() {
-		  FB.init({
-		    appId      : '1551034371776291',
-		    cookie     : true,  // enable cookies to allow the server to access 
-		                        // the session
-		    xfbml      : true,  // parse social plugins on this page
-		    version    : 'v2.1' // use version 2.1
-		  });
-
-		  // Now that we've initialized the JavaScript SDK, we call 
-		  // FB.getLoginStatus().  This function gets the state of the
-		  // person visiting this page and can return one of three states to
-		  // the callback you provide.  They can be:
-		  //
-		  // 1. Logged into your app ('connected')
-		  // 2. Logged into Facebook, but not your app ('not_authorized')
-		  // 3. Not logged into Facebook and can't tell if they are logged into
-		  //    your app or not.
-		  //
-		  // These three cases are handled in the callback function.
-
-		  FB.getLoginStatus(function(response) {
-		    statusChangeCallback(response);
-		  });
-
-		  };
-
-		  // Load the SDK asynchronously
-		  (function(d, s, id) {
-		    var js, fjs = d.getElementsByTagName(s)[0];
-		    if (d.getElementById(id)) return;
-		    js = d.createElement(s); js.id = id;
-		    js.src = "//connect.facebook.net/en_US/sdk.js";
-		    fjs.parentNode.insertBefore(js, fjs);
-		  }(document, 'script', 'facebook-jssdk'));
-
-		  // Here we run a very simple test of the Graph API after login is
-		  // successful.  See statusChangeCallback() for when this call is made.
-		  function testAPI() {
-		    console.log('Welcome!  Fetching your information.... ');
-		    FB.api('/me', function(response) {
-		      console.log('Successful login for: ' + response.name);
-		      document.getElementById('status').innerHTML =
-		        'Thanks for logging in, ' + response.name + '!';
-		    });
-		  }
-		</script>
-	<wrapper>
-	<div id="main">
-		<div class="background"></div>
-			<div class="homepage">
-				<div class="header">
-					R&#233;sify
-					<h1 style="font-size:20px; -webkit-text-stroke: 1px black;
-					   color: white;"> BE RECOGNIZED, GET HIRED </h1>
-				</div>
-			
-				<div id="login-block" class="field-block">
-					<form action="{% url 'resify_login' %}" name="login" id="login" method="post" accept-charset="utf-8">
-						<div class="input-group email-input">
-							<span class="input-group-addon"><span class="entypo-mail icon"></span></span>
-							<input name="username" type="text" class="form-control" type="email" id="email" placeholder="Email Address" required/>
-						</div>
-						<div class="input-group password-input">
-							<span class="input-group-addon"><span class="entypo-lock icon"></span>&nbsp</span>
-							<input name="password" class="form-control" placeholder="Password" type="password" id="password" required />
-							<span class="input-group-addon addon-right" id="forgot-pass"><span id="recover"  class="button entypo-help icon"></span>&nbsp</span>
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+	                        <i class="fa fa-usd fa-stack-1x fa-inverse"></i>
 							
-						</div>
-						{% csrf_token %}
-						<div class="field-block">
-							<a class="button" id="register">Register</a>
-							<button id="login" class="login">Login</button>
-						</div>
-					</form>				
-				</div><!-- /login fields -->
-				
-				
-				<div id="register-block" class="field-block">
-					<form action="{% url 'register' %}" name="register" id="register" method="post" accept-charset="utf-8">
-						{% csrf_token %}
-						<input type="hidden" name="type" id="type" value='Register'>
+	                    </span>
+	                    <h4 class="service-heading">Our Price</h4>
+	                    <p class="">R&#233;sify is, and will remain, a free service. Everything we do is for you.</p>
+	                </div>
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+	                        <i class="fa fa-file-pdf-o  fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Export to PDF</h4>
+	                    <p class="">You can export your r&#233;sum&#233; to PDF format or even send a copy as an attachment via our website from any device. It's that easy.</p>
+	                </div>
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x text-primary"></i>
+	                        <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Careers</h4>
+	                    <p class="">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
 
-						<div class="input-group name-input">
-							<span class="input-group-addon"><span class="entypo-user icon"></span></span>
-							<!-- FIRST NAME -->
-							<input class="form-control half-control" name="first_name" placeholder="First Name" type="text" id="first" name="first_name" pattern=".{1,35}" maxlength="35" required />
-					
-							<!-- LAST NAME -->
-							<input style="padding-left:15px" class="form-control half-control" name="last_name" placeholder="Last Name" type="text" id="last" name="last_name" pattern=".{1,35}" maxlength="35" required />
-				
-						</div> <!-- /FullName group -->
-				
-						<div class="input-group email-input">
-							<span class="input-group-addon"><span class="entypo-mail icon"></span></span>
-							<input class="form-control" name="email" placeholder="Email" type="email" id="email" name="email" maxlength="255" required />
-						</div> <!-- /EMAIL -->
-		
-						<div class="input-group password-input">
-							<span class="input-group-addon"><span class="entypo-lock-open icon">&nbsp</span></span>
-							<input class="form-control" name="password" placeholder="Password" type="password" id="password" pattern=".{6,}" required autocomplete="off"/>
-						</div> <!-- FIRST PASSWORD -->
-				
-						<div class="input-group password-input">
-							<span class="input-group-addon"><span class="entypo-lock icon">&nbsp</span></span>
-							<input class="form-control" name="password2" placeholder="Password repeat" type="password" id="passwordRepeat" pattern=".{6,}" required autocomplete="off" />
-						</div> <!-- SECOND PASSWORD -->
-				
-						<div class="input-group checkbox-input">
-							<div class="checkbox">
-						
-								<input type="checkbox" id="termsAgree" name="accept_terms"/>
-								<label for="termsAgree" class="tick"><span>I agree with <a href="#">Terms &amp; Conditions</a></span></label>
-							</div>
-						</div> <!-- CHECKBOX -->
+	    <!-- Sponsored by Aside -->
+	    {# <aside class="clients"> #}
+	    {#     <div class="container"> #}
+	    {#         <div class="row"> #}
+	    {#             <div class="col-md-3 col-sm-6"> #}
+	    {#                 <a href="#"> #}
+	    {#                     <img src="img/logos/envato.jpg" class="img-responsive img-centered" alt=""> #}
+	    {#                 </a> #}
+	    {#             </div> #}
+	    {#             <div class="col-md-3 col-sm-6"> #}
+	    {#                 <a href="#"> #}
+	    {#                     <img src="img/logos/designmodo.jpg" class="img-responsive img-centered" alt=""> #}
+	    {#                 </a> #}
+	    {#             </div> #}
+	    {#             <div class="col-md-3 col-sm-6"> #}
+	    {#                 <a href="#"> #}
+	    {#                     <img src="img/logos/themeforest.jpg" class="img-responsive img-centered" alt=""> #}
+	    {#                 </a> #}
+	    {#             </div> #}
+	    {#             <div class="col-md-3 col-sm-6"> #}
+	    {#                 <a href="#"> #}
+	    {#                     <img src="img/logos/creative-market.jpg" class="img-responsive img-centered" alt=""> #}
+	    {#                 </a> #}
+	    {#             </div> #}
+	    {#         </div> #}
+	    {#     </div> #}
+	    {# </aside> #}
 
-						<!-- Send button -->
-						<a class="button" id="login">Back</a>
-						<button id="register-submit" class="">Register</button>
-					</form>
-				</div><!-- /register fields -->
-				
-				
-				<!-- RECOVER FIELDS -->
-				<div id="recover-block" class="field-block">
-					<form action="{% static 'SystemFiles/Validate.php' %}" name="reset" id="reset" method="post">
-						<div class="input-group email-input">
-							<span class="input-group-addon"><span class="entypo-mail icon"></span></span>
-							<input class="form-control"  name="email" placeholder="Your email" type="email" id="email" required/>
-						</div>
-						<!-- Email input -->
-						<p class="small"><span class="entypo-clock"></span>Check your email in about 10 minutes.</p>
-						{% csrf_token %}
-						<div class="field-block">
-							<a class="button" id="login">Back</a>
-							<button id="login" class="login">Send Email</button>
-						</div>
-					</form>
-				</div><!-- RECOVER FIELDS-->
-				
-				
-				<!-- Modal -->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-				      <div class="modal-header">
-				        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-				        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-				      </div>
-				      <div class="modal-body">
-				        ...
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				      </div>
-				    </div>
-				  </div>
-				</div>
-			</div><!-- /homepage -->					
+	    <footer>
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-md-4">
+	                    <span class="copyright">Copyright &copy; R&#233;sify 2014</span>
+	                </div>
+	                <div class="col-md-4">
+	                    <ul class="list-inline social-buttons">
+	                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+	                        </li>
+	                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+	                        </li>
+	                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+	                        </li>
+	                    </ul>
+	                </div>
+	                <div class="col-md-4">
+	                    <ul class="list-inline quicklinks">
+	                        <li><a href="#">Privacy Policy</a>
+	                        </li>
+	                        <li><a href="#">Terms of Use</a>
+	                        </li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </footer>
+	<wrapper>
+	{# <div id="main"> #}
+	{# 	<div class="background"></div> #}
+	{# 		<div class="homepage"> #}
+	{# 			<div class="header"> #}
+	{# 				R&#233;sify #}
+	{# 				<h1 style="font-size:20px; -webkit-text-stroke: 1px black; #}
+	{# 				   color: white;"> BE RECOGNIZED, GET HIRED </h1> #}
+	{# 			</div> #}
+	{#  #}
+	{# 			<div id="login-block" class="field-block"> #}
+	{# 				<form action="{% url 'resify_login' %}" name="login" id="login" method="post" accept-charset="utf-8"> #}
+	{# 					<div class="input-group email-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-mail icon"></span></span> #}
+	{# 						<input name="username" type="text" class="form-control" type="email" id="email" placeholder="Email Address" required/> #}
+	{# 					</div> #}
+	{# 					<div class="input-group password-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-lock icon"></span>&nbsp</span> #}
+	{# 						<input name="password" class="form-control" placeholder="Password" type="password" id="password" required /> #}
+	{# 						<span class="input-group-addon addon-right" id="forgot-pass"><span id="recover"  class="button entypo-help icon"></span>&nbsp</span> #}
+	{#  #}
+	{# 					</div> #}
+	{# 					{% csrf_token %} #}
+	{# 					<div class="field-block"> #}
+	{# 						<a class="button" id="register">Register</a> #}
+	{# 						<button id="login" class="login">Login</button> #}
+	{# 					</div> #}
+	{# 				</form> #}
+	{# 			</div><!-- /login fields --> #}
+	{#  #}
+	{#  #}
+	{# 			<div id="register-block" class="field-block"> #}
+	{# 				<form action="{% url 'register' %}" name="register" id="register" method="post" accept-charset="utf-8"> #}
+	{# 					{% csrf_token %} #}
+	{# 					<input type="hidden" name="type" id="type" value='Register'> #}
+	{#  #}
+	{# 					<div class="input-group name-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-user icon"></span></span> #}
+	{# 						<!-- FIRST NAME --> #}
+	{# 						<input class="form-control half-control" name="first_name" placeholder="First Name" type="text" id="first" name="first_name" pattern=".{1,35}" maxlength="35" required /> #}
+	{#  #}
+	{# 						<!-- LAST NAME --> #}
+	{# 						<input style="padding-left:15px" class="form-control half-control" name="last_name" placeholder="Last Name" type="text" id="last" name="last_name" pattern=".{1,35}" maxlength="35" required /> #}
+	{#  #}
+	{# 					</div> <!-- /FullName group --> #}
+	{#  #}
+	{# 					<div class="input-group email-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-mail icon"></span></span> #}
+	{# 						<input class="form-control" name="email" placeholder="Email" type="email" id="email" name="email" maxlength="255" required /> #}
+	{# 					</div> <!-- /EMAIL --> #}
+	{#  #}
+	{# 					<div class="input-group password-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-lock-open icon">&nbsp</span></span> #}
+	{# 						<input class="form-control" name="password" placeholder="Password" type="password" id="password" pattern=".{6,}" required autocomplete="off"/> #}
+	{# 					</div> <!-- FIRST PASSWORD --> #}
+	{#  #}
+	{# 					<div class="input-group password-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-lock icon">&nbsp</span></span> #}
+	{# 						<input class="form-control" name="password2" placeholder="Password repeat" type="password" id="passwordRepeat" pattern=".{6,}" required autocomplete="off" /> #}
+	{# 					</div> <!-- SECOND PASSWORD --> #}
+	{#  #}
+	{# 					<div class="input-group checkbox-input"> #}
+	{# 						<div class="checkbox"> #}
+	{#  #}
+	{# 							<input type="checkbox" id="termsAgree" name="accept_terms"/> #}
+	{# 							<label for="termsAgree" class="tick"><span>I agree with <a href="#">Terms &amp; Conditions</a></span></label> #}
+	{# 						</div> #}
+	{# 					</div> <!-- CHECKBOX --> #}
+	{#  #}
+	{# 					<!-- Send button --> #}
+	{# 					<a class="button" id="login">Back</a> #}
+	{# 					<button id="register-submit" class="">Register</button> #}
+	{# 				</form> #}
+	{# 			</div><!-- /register fields --> #}
+	{#  #}
+	{#  #}
+	{# 			<!-- RECOVER FIELDS --> #}
+	{# 			<div id="recover-block" class="field-block"> #}
+	{# 				<form action="{% static 'SystemFiles/Validate.php' %}" name="reset" id="reset" method="post"> #}
+	{# 					<div class="input-group email-input"> #}
+	{# 						<span class="input-group-addon"><span class="entypo-mail icon"></span></span> #}
+	{# 						<input class="form-control"  name="email" placeholder="Your email" type="email" id="email" required/> #}
+	{# 					</div> #}
+	{# 					<!-- Email input --> #}
+	{# 					<p class="small"><span class="entypo-clock"></span>Check your email in about 10 minutes.</p> #}
+	{# 					{% csrf_token %} #}
+	{# 					<div class="field-block"> #}
+	{# 						<a class="button" id="login">Back</a> #}
+	{# 						<button id="login" class="login">Send Email</button> #}
+	{# 					</div> #}
+	{# 				</form> #}
+	{# 			</div><!-- RECOVER FIELDS--> #}
+	{#  #}
+	{#  #}
+	{# 			<!-- Modal --> #}
+	{# 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> #}
+	{# 			  <div class="modal-dialog"> #}
+	{# 			    <div class="modal-content"> #}
+	{# 			      <div class="modal-header"> #}
+	{# 			        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button> #}
+	{# 			        <h4 class="modal-title" id="myModalLabel">Modal title</h4> #}
+	{# 			      </div> #}
+	{# 			      <div class="modal-body"> #}
+	{# 			        ... #}
+	{# 			      </div> #}
+	{# 			      <div class="modal-footer"> #}
+	{# 			        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> #}
+	{# 			        <button type="button" class="btn btn-primary">Save changes</button> #}
+	{# 			      </div> #}
+	{# 			    </div> #}
+	{# 			  </div> #}
+	{# 			</div> #}
+	{# 		</div> #}<!-- /homepage -->			
 
 		<!-- *************************** -->
 		<!-- END LOGIN FORM HERE            -->
 		<!-- *************************** -->
-	</main>
-	<footer>
-	</footer>
+	{# </main> #}
+{# 	<footer> #}
+{# 	</footer> #}
 	</body>
 	<script>
+	
+	$(document).ready(function(){
+		$("header").vide({
+		    webm: '../../static/video/interview',
+		    poster: '../../static/video/interview.jpg',
+		}, {
+			loop: false,
+			posterType: "jpg"
+		});
+		
+		$('.navbar-collapse ul li a').click(function() {
+		    $('.navbar-toggle:visible').click();
+		});		
+		
+		
+	});
+	
+	
+	$(function() {
+	  $('a[href*=#]:not([href=#])').click(function() {
+	    if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+	      var target = $(this.hash);
+	      target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+	      if (target.length) {
+	        $('html,body').animate({
+	          scrollTop: target.offset().top
+	        }, 1000);
+	        return false;
+	      }
+	    }
+	  });
+	});
+	
 	</script>
 </html>

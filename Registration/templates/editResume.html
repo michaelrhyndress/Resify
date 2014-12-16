@@ -65,12 +65,12 @@
 							        <div class="info-item">
 										<hr>
 										<div class="input-block">
-											 <a class="pull-left"><font class="panelIcon"><i id="collapse{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
-											 <span id="collapse{{forloop.counter}}-toggle" class="collapse-toggle">{{job.position}}</span>
+											 <a class="pull-left"><font class="panelIcon"><i id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+											 <span id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle">{{job.position}}</span>
 											 <a class="pull-right delete-item" id="{{job.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 										</div>
 					                    <hr>
-							            <div id="collapse{{forloop.counter}}" class="collapsable-item">
+							            <div id="collapse_experience{{forloop.counter}}" class="collapsable-item">
 							                <div class="panel-body">							                    
 												<div class="input-block">
 													<label class="input-label">Position</label>
@@ -88,7 +88,7 @@
 												        <select id="job_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date" placeholder="From: ">
 															<option disabled="disabled">From</option>
 															{% for x in year_choices %}
-																<option selected="" value="{{x}}">{{x}}</option>
+																<option value="{{x}}">{{x}}</option>
 															{% endfor %}
 														<select/>
 												        <select id="job_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date" placeholder="To: ">
@@ -113,52 +113,75 @@
 							                </div>
 							            </div>
 							        </div>
+									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 								{% endfor %}
-								<a class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>
-						</div>
-					</section>
+							</div>
+						</section>
 				
 					<section id="education-section">
-						{% for job in job_list %}
-							<label class="input-label">Status</label>
-					        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="status" placeholder="">
-								<option selected="" disabled="disabled">Status</option>
-								<option value="Graduated">Graduated</option>
-								<option value="Attending">Attending</option>
-								<option value="">Other</option>
-							<select/>
-							<hr>
-							<label class="input-label">School</label>
-							<input id="school{{forloop.counter}}-edit" type="text" class="input-box directEdit" maxlength="50" name="school" placeholder="School/University" />
-							<hr>
-							<label class="input-label">Degree</label>
-							<input id="degree{{forloop.counter}}-edit" type="text" maxlength="100" class="input-box directEdit" name="degree" placeholder="Degree" />
-							<hr>
-							<label class="input-label">School</label>
-								<div class="form-inline">
-							        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date" placeholder="From: ">
-										<option selected="" disabled="disabled">From</option>
-										{% for x in year_choices %}
-										<option value="{{x}}">{{x}}</option>
-										{% endfor %}
-									<select/>
-							        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date" placeholder="To: ">
-										<option selected="" disabled="disabled">To</option>
-										<option value="PRESENT">Present</option>
-										{% for x in year_choices %}
-										<option value="{{x}}">{{x}}</option>
-										{% endfor %}
-									</select>
-									<br>
-								</div>
-								<hr>
-								<div class="input-block">
-									<label class="input-label">Description</label>
-									<textarea id="about{{forloop.counter}}-edit" class="textarea-box directEdit" name="Education_History_about" placeholder="Description" placeholder="Statement">{{s_user.userprofile.statement}}</textarea>
-									<hr>
-								</div>
-								<hr>
-						{% endfor %}
+						<h2 class="fs-title">Education History</h2>
+						<div id="education-info">
+							{% for ed in education_list %}
+								<div class="info-item">
+										<hr>
+										<div class="input-block">
+											 <a class="pull-left"><font class="panelIcon"><i id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+											 <span id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle">{{ed.school}}</span>
+											 <a class="pull-right delete-item" id="{{ed.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+										</div>
+					                    <hr>
+							            <div id="collapse_education{{forloop.counter}}" class="collapsable-item">
+							                <div class="panel-body">							                    
+												<div class="input-block">
+													<label class="input-label">Status</label>
+											        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="status">
+														<option selected="" disabled="disabled">Status</option>
+														<option value="Graduated">Graduated</option>
+														<option value="Attending">Attending</option>
+														<option value="">Other</option>
+													</select>
+												</div>
+												<hr>
+												<div class="input-block">
+													<label class="input-label">School</label>
+													<input type="text" id="school{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="school" placeholder="School" value="{{ed.school}}"/>
+												</div>
+												<hr>
+												<div class="input-block">
+													<label class="input-label">Degree</label>
+													<input type="text" id="degree{{forloop.counter}}-edit" class="input-box directEdit" maxlength="100" name="degree" placeholder="Degree" value="{{ed.degree}}"/>
+												</div>
+												<hr>
+												<div class="input-block">
+													<label class="input-label">Date</label>
+													<div class="form-inline">
+												        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date" placeholder="From: ">
+															<option disabled="disabled">From</option>
+															{% for x in year_choices %}
+																<option value="{{x}}">{{x}}</option>
+															{% endfor %}
+														<select/>
+												        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date" placeholder="To: ">
+															<option disabled="disabled">To</option>
+															<option value="PRESENT">Present</option>
+															{% for x in year_choices %}
+															<option value="{{x}}">{{x}}</option>
+															{% endfor %}
+														</select>
+														<script>
+															$("#status{{forloop.counter}}-edit").val("{{ed.status}}");
+															$("#Education_from_date{{forloop.counter}}-edit").val("{{ed.Education_from_date}}");
+															$("#Education_to_date{{forloop.counter}}-edit").val("{{ed.Education_to_date}}");
+														</script>
+														<br>
+													</div>
+												</div>
+							                </div>
+							            </div>
+							        </div>
+									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+								{% endfor %}
+							</div>
 					</section>
 				
 					<section id="accomplishments-section">
@@ -185,24 +208,37 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Phone #</label>
-							<input type="email" class="input-box" value="{{ s_user.userprofile.phone_number }}"></input>
-							<hr>
+							<input type="tel" class="input-box" value="{{ s_user.userprofile.phone_number }}"></input>
 						</div>
-						<div class="input-block">
-							<label class="input-label">Facebook</label>
-							<input type="url" class="input-box" value="{{social.facebook}}"></input>
+						<hr>
+						{% for social in social_list %}
+							<div class="input-block">
+								<label class="input-label">Facebook</label>
+								{% if social.facebook %}
+									<i class="input-box fa fa-check-circle-o" id="facebookCheck"></i>
+									<a class="cancelInputAfter"><font class=""><i class="fa fa-times fa-lg"></i></font></a>
+									
+								{% else %}	
+									<fb:login-button class="input-box" id="facebookLogin" scope="public_profile,email" onlogin="checkLoginState();">
+									Connect
+									</fb:login-button>
+									<i class="input-box fa" id="facebookCheck" style="display:none;"></i>
+									<a class="cancelInputAfter" style="display:none;"><font class=""><i class="fa fa-times fa-lg"></i></font></a>
+								{% endif %}
+								<input type="hidden" id="facebookLink" name="facebook" value="{{social.facebook}}"></input>
+							</div>
 							<hr>
-						</div>
-						<div class="input-block">
-							<label class="input-label">Twitter</label>
-							<input type="url" class="input-box" value="{{social.twitter}}"></input>
+							<div class="input-block">
+								<label class="input-label">Twitter</label>
+								<input type="url" name="twitter" class="input-box" value="{{social.twitter}}"></input>
+							</div>
 							<hr>
-						</div>
-						<div class="input-block">
-							<label class="input-label">LinkedIn</label>
-							<input type="url" class="input-box" value="{{social.linkedIn}}"></input>
-							<hr>
-						</div>
+							<div class="input-block">
+								<label class="input-label">LinkedIn</label>
+								<input type="url" name="linkedIn" class="input-box" value="{{social.linkedIn}}"></input>
+							</div>
+						{% endfor %}
+						<hr>
 					</section>
 				
 					<section id="template-section">
@@ -268,9 +304,63 @@
 			<iframe id="resume" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Your browser doesn't support iframes.</iframe>
 		</div>
     </div> <!-- / CONTAINTER -->
+	
+	
+	<!-- TEMPLATES -->
+	<div id="experience-info-template" class="template">
+		<div class="info-item">
+			<hr>
+			<div class="input-block">
+				 <a class="pull-left"><font class="panelIcon"><i id="collapse_experience{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+				 <span id="collapse_experience{counter}-toggle" class="collapse-toggle">New Job</span>
+				 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+			</div>
+		    <hr>
+		    <div id="collapse_experience{counter}" class="collapsable-item">
+		        <div class="panel-body">							                    
+					<div class="input-block">
+						<label class="input-label">Position</label>
+						<input type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="position" placeholder="Position"/>
+					</div>
+					<hr>
+					<div class="input-block">
+						<label class="input-label">Employer</label>
+						<input type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="company" placeholder="Company"/>
+					</div>
+					<hr>
+					<div class="input-block">
+						<label class="input-label">Date</label>
+						<div class="form-inline">
+					        <select id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date" placeholder="From: ">
+								<option disabled="disabled">From</option>
+								{% for x in year_choices %}
+									<option value="{{x}}">{{x}}</option>
+								{% endfor %}
+							<select/>
+					        <select id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date" placeholder="To: ">
+								<option disabled="disabled">To</option>
+								<option value="PRESENT">Present</option>
+								{% for x in year_choices %}
+								<option value="{{x}}">{{x}}</option>
+								{% endfor %}
+							</select>
+							<br>
+						</div>
+					</div>
+					<hr>
+					<div class="input-block">
+						<label class="input-label">Description</label>
+						<textarea id="job_about{counter}-edit" class="textarea-box directEdit" name="job_about" placeholder="Description"></textarea>
+					</div>
+		        </div>
+		    </div>
+		</div>
+	</div><!-- / TEMPLATES -->
+	
     </body>
 		<script>
 		var originalHandle = "{{s_user.userprofile.handle}}";
+		
 		$("#handle").change(function() {
 			var handle = $('#handle').val();
 			if(originalHandle !== handle){
@@ -308,6 +398,80 @@
 			});
 			return flag;
 		};
+		
+  		// This is called with the results from from FB.getLoginStatus().
+  		  function statusChangeCallback(response) {
+  		    console.log('statusChangeCallback');
+  		    console.log(response);
+  		    // The response object is returned with a status field that lets the
+  		    // app know the current login status of the person.
+  		    // Full docs on the response object can be found in the documentation
+  		    // for FB.getLoginStatus().
+  		    if (response.status === 'connected') {
+  		      // Logged into your app and Facebook.
+  		      testAPI();
+  		    } else if (response.status === 'not_authorized') {
+  		      // The person is logged into Facebook, but not your app.
+  		      document.getElementById('status').innerHTML = 'Please log ' +
+  		        'into this app.';
+  		    } else {
+  		      // The person is not logged into Facebook, so we're not sure if
+  		      // they are logged into this app or not.
+  		      document.getElementById('status').innerHTML = 'Please log ' +
+  		        'into Facebook.';
+  		    }
+  		  }
+
+  		  // This function is called when someone finishes with the Login
+  		  // Button.  See the onlogin handler attached to it in the sample
+  		  // code below.
+  		  function checkLoginState() {
+  		    FB.getLoginStatus(function(response) {
+  		      statusChangeCallback(response);
+  		    });
+  		  }
+
+  		  window.fbAsyncInit = function() {
+			  FB.init({
+			    appId      : '1551034371776291',
+			    cookie     : true,  // enable cookies to allow the server to access 
+			                        // the session
+			    xfbml      : true,  // parse social plugins on this page
+			    version    : 'v2.1' // use version 2.1
+			  });
+			  // FB.getLoginStatus(function(response) {
+			  //   statusChangeCallback(response);
+			  // });
+  		  };
+
+  		  // Load the SDK asynchronously
+  		  (function(d, s, id) {
+  		    var js, fjs = d.getElementsByTagName(s)[0];
+  		    if (d.getElementById(id)) return;
+  		    js = d.createElement(s); js.id = id;
+  		    js.src = "//connect.facebook.net/en_US/sdk.js";
+  		    fjs.parentNode.insertBefore(js, fjs);
+  		  }(document, 'script', 'facebook-jssdk'));
+
+  		  // Here we run a very simple test of the Graph API after login is
+  		  // successful.  See statusChangeCallback() for when this call is made.
+  		  function testAPI() {
+		    document.getElementById('facebookCheck').innerHTML =
+		        'loading...';
+  		    FB.api('/me', function(response) {
+		    	document.getElementById('facebookCheck').innerHTML =
+		        '';
+				document.getElementById('facebookCheck').className += " fa-check-circle-o";
+				$(".fb_iframe_widget").hide();
+				$(".cancelInputAfter").removeAttr("style");
+				$("#facebookCheck").removeAttr("style");
+				$("#facebookLink").val(response.link);
+				//response.link gets URL
+  		    });
+			
+  		  }
+		  
+		
 	</script>
 </html>
 

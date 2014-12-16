@@ -306,6 +306,9 @@ WebKit inertia scrolling is being added here for any present/future devices that
 }
 /* / Menu X Transition */
 
+.cancelInputAfter{
+	cursor:pointer;
+}
 .mobile-only{
 	display:none;
 }
@@ -324,6 +327,10 @@ WebKit inertia scrolling is being added here for any present/future devices that
 a.add-item, .collapse-toggle{
 	text-decoration:none;
 	cursor:pointer;
+}
+
+.template{
+	display:none;
 }
 
 @media (min-width: 1001px){

@@ -41,6 +41,10 @@
 			<input type="button" id="next" name="next" class="next action-button" value="Next" />
 			<br>
 			{# <a href="/setup/skip">Skip Setup</a> #}
+			<fb:login-button size="large" class="input-box" id="facebookLogin" scope="public_profile,email" onlogin="checkLoginState();">
+			Easy Setup!
+			</fb:login-button>
+			<div id="facebookEvent"></div>
 		</fieldset>
 
 		<fieldset id="fieldset1">
@@ -92,14 +96,14 @@
 			<input type="text" maxlength="100" name="degree" placeholder="Degree" />
 			<div class="form-inline">
 				{{ education_form.job_from_date.errors }}
-			        <select class="form-control to-from-field" name="job_from_date" placeholder="From: ">
+			        <select class="form-control to-from-field" name="Education_from_date" placeholder="From: ">
 						<option selected="" disabled="disabled">From</option>
 						{% for x in year_choices %}
 						<option value="{{x}}">{{x}}</option>
 						{% endfor %}
 					<select/>
 					{{ education_form.job_to_date.errors }}
-			        <select class="form-control to-from-field" name="job_to_date" placeholder="To: ">
+			        <select class="form-control to-from-field" name="Education_to_date" placeholder="To: ">
 						<option selected="" disabled="disabled">To</option>
 						<option value="PRESENT">Present</option>
 						{% for x in year_choices %}
@@ -109,8 +113,6 @@
 					<br>
 			</div>
 			<br>
-			{{ education_form.Education_History_about.errors }}
-			<textarea class="form-control" name="Education_History_about" placeholder="Description" rows="10" style="resize:none;"></textarea>
 			<input type="button" name="previous" id="back" class="previous action-button" value="Previous" />
 			<input type="button" id="next" name="next" class="next action-button" value="Next" />
 		</fieldset>
@@ -173,7 +175,7 @@
 					<option value=""></option>
 					{% for template in template_list %}
 					
-					<option data-img-src="../static/img/templateIcons/{{template}}.jpg" value="{{template}}">{{template.readable_name}}</option>
+					<option {% if forloop.first %}selected {% endif %}data-img-src="../static/img/templateIcons/{{template}}.jpg" value="{{template}}">{{template.readable_name}}</option>
 					
 					{% endfor %}
 				</select>
@@ -266,6 +268,114 @@
 		});
 		return flag;
 	};
+	
+// This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    
+    if (response.status === 'connected') {
+		FB.login(function(response) {
+		   // handle the response
+		 }, {
+		   scope: 'user_education_history,user_about_me,user_location,user_work_history', 
+		   return_scopes: true
+		 });
+		 testAPI();
+
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+	  FB.init({
+	    appId      : '1551034371776291',
+	    cookie     : true,  // enable cookies to allow the server to access 
+	                        // the session
+	    xfbml      : true,  // parse social plugins on this page
+	    version    : 'v2.2' // use version 2.1
+	  });
+	  // FB.getLoginStatus(function(response) {
+	  //   statusChangeCallback(response);
+	  // });
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    document.getElementById('facebookEvent').innerHTML =
+        'loading...';
+		$(".fb_iframe_widget").hide();
+    FB.api('/me?field=work', function(response) {
+		var d = new Date();
+		var currentYear = d.getFullYear();
+		var createHandle = response.first_name+response.id.substring(12, response.id.length);
+		$("input[name='handle']").val(createHandle);
+		$("input[name='handle']").trigger('keyup');
+		$("input[name='handle']").trigger( "change" );
+		$("textarea[name='statement']").val(response.bio);
+		$("input[name='profession']").val(response.work[0].position.name);
+		$("input[name='position']").val(response.work[0].position.name);
+		$("input[name='company']").val(response.work[0].employer.name);
+		$("textarea[name='job_about']").val(response.work[0].description);
+		$("select[name='job_from_date']").val(response.work[0].start_date.split('-')[0]);
+		//if no "end_date" then make present
+		if(!response.work[0].end_date){
+			$("select[name='job_to_date']").val('PRESENT');
+		}
+		else{
+			$("select[name='job_to_date']").val(response.work[0].end_date.split('-')[0]);
+		}
+		
+		$("input[name='school']").val(response.education[response.education.length-1].school.name);
+		if(!response.education[response.education.length-1].concentration){
+			$("input[name='degree']").val(response.education[response.education.length-1].concentration[0].name);
+		}
+		else{
+			$("input[name='degree']").val(response.education[response.education.length-1].concentration[0].name);
+		}
+		
+		if(currentYear > response.education[response.education.length-1].year.name){
+			$("select[name='status']").val("Graduated");
+			$("Education_to_date").val(response.education[response.education.length-1].year.name);
+			$("Education_from_date").val(response.education[response.education.length-1].year.name - 4);
+		}
+		if(currentYear <= response.education[response.education.length-1].year.name){
+			$("select[name='status']").val("Attending");
+			$("select[name='Education_to_date']").val("PRESENT");
+			$("select[name='Education_from_date']").val( response.education[response.education.length-1].year.name - 4 );
+		}
+		
+		$("input[name='facebook']").val(response.link);		
+   	 	document.getElementById('facebookEvent').innerHTML =
+        '<i class="fa fa-bell-o"></i> Some information still needs attention!';
+    });
+	
+  }
 	
 </script>
 {%endblock%}

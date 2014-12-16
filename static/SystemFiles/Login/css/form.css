@@ -43,23 +43,14 @@ input:-webkit-autofill:focus {
     -webkit-text-fill-color: white;
 }
 
-body {
-	width:100%;
-	height:100%;
-	background:url("bg.jpg") 0 0 repeat;
-	margin:0;
-	padding:0;
-	overflow: hidden;
-}
-
-.homepage{
+/*.homepage{
 	width:400px;
     position: fixed;
     top: 50%;
     left: 50%;
     margin-top: -200px;
     margin-left: -200px;
-}
+}*/
 
 
 /*footer Starts*/
@@ -87,9 +78,53 @@ button, a.button {
 	text-decoration: none;
 	text-transform: uppercase;
 	text-align: center;
+	z-index:1000;
 }
 button:hover, a.button:hover {
 	background: #fff;
+	color: #222;
+}
+a.invert-button {
+	cursor:pointer;
+	display: inline-block;
+	width: 49%;
+	height:50px;
+	line-height:50px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	background: #fff;
+	border: solid 2px #222;
+	color: #222;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+a.invert-button:hover {
+	background: #222;
+	color: #fff;
+}
+a.plain-button {
+	cursor:pointer;
+	display: inline-block;
+	width: 49%;
+	height:50px;
+	line-height:50px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	background: transparent;
+	border: solid 2px transparent;
+	color: #222;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+a.plain-button{
+	border-color: #222;
+	background: transparent;
 	color: #222;
 }
 
@@ -98,12 +133,15 @@ button:hover, a.button:hover {
 	padding: 0 0 50px 0;
 	text-align: center;
 	color: #222;
-	font-size: 40px;
+	font-size: 4em;
 	width: auto;
 	position: relative;
 	margin: 0 auto;
 	text-shadow: 1px 1px #797979;
    -webkit-text-stroke: 1px black;
+	-moz-text-stroke: 1px black;
+	-o-text-stroke: 1px black;
+	text-stroke: 1px black;
    color: white;
    text-shadow:
        3px 3px 0 #000,
@@ -113,14 +151,7 @@ button:hover, a.button:hover {
        1px 1px 0 #000;
 	   padding:0px;
 }
-.header h1 {
-	font-family: 'Lato', Arial, Helvetica, sans-serif;
-	font-size: 11px;
-	text-shadow: none;
-	color: #bbb;
-	letter-spacing: 1px;
-	font-weight: normal;
-}
+
 
 .field-block{
 	width: 250px;

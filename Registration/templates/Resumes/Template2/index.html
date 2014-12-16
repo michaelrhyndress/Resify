@@ -96,6 +96,7 @@
 </section>
 <!-- end Profile -->
 
+{% if job_list %}
 <!-- Work experience -->
 <section id="work-experience" class="work-experience">
     <div class="container">
@@ -124,8 +125,10 @@
         </div>
     </div>
 </section>
+{% endif %}
 <!-- end Work experience -->
     
+{% if education_list %}
 <!-- Education -->
 <section id="education" class="education">
     <div class="container">
@@ -145,7 +148,6 @@
 	                        <p id="status{{forloop.counter}}"><strong>{{ed.status}}</strong></p>
 	                        <p id="school{{forloop.counter}}"><strong>{{ed.school}}</strong></p>
 							<p id="degree{{forloop.counter}}">{{ed.degree}}</p>
-							<p id="about{{forloop.counter}}" class="description">{{ed.about}}</p>
 	                    </li>
 					{% endfor %}
                 </ul>
@@ -153,6 +155,7 @@
         </div>
     </div>
 </section>
+{% endif %}
 <!-- end Education -->
     
 <!-- Professional skills -->
@@ -181,7 +184,7 @@
 <!-- end Professional skills -->
     
 <!-- Interests -->
-{% if accomp_list %}
+{% if accomp_list  %}
 <section id="accomplishments" class="accomplishments">
     <div class="container">
         <div class="row">
