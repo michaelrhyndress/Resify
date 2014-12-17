@@ -1,0 +1,325 @@
+@import url(http://fonts.googleapis.com/css?family=Lobster); /* Lobster font for headings */
+@import url(http://fonts.googleapis.com/css?family=Lato); /* Lato font for the content */
+
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 100%;
+	font-family: 'Lato', Arial, Helvetica, sans-serif; /* Edit this if you want to match the font with your template design. IF you change it to your font, don't forget to delete the @import above */
+	vertical-align: baseline;
+	line-height: normal;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	color:white;
+	cursor-color:white;
+}
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+
+
+input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px #245A7A inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: white;
+}
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px #245A7A inset;
+    -webkit-text-fill-color: white;
+}
+
+
+#main{
+    position:relative;
+	height:100%;
+    z-index:1;
+    background: rgba(0,0,0,0.8);
+    box-shadow: 0 3px 3px rgba(0,0,0,0.2);
+	width:100%;
+}
+
+button, a.button {
+	cursor:pointer;
+	display: inline-block;
+	width: 100%;
+	height:50px;
+	line-height:50px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	background-color: #245A7A;
+	border: solid 2px white;
+	color: #fff;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+button:hover, a.button:hover {
+	background: #fff;
+	color: #222;
+}
+a.invert-button {
+	cursor:pointer;
+	display: inline-block;
+	width: 49%;
+	height:50px;
+	line-height:50px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	background: #fff;
+	border: solid 2px #222;
+	color: #222;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+a.invert-button:hover {
+	background: #222;
+	color: #fff;
+}
+a.plain-button {
+	cursor:pointer;
+	display: inline-block;
+	width: 49%;
+	height:50px;
+	line-height:50px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	font-size: 16px;
+	background: transparent;
+	border: solid 2px transparent;
+	color: #222;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+a.plain-button{
+	border-color: #222;
+	background: transparent;
+	color: #222;
+}
+a.no-border {
+	border: solid 2px transparent;
+	
+}
+a.no-border:hover {
+	background-color:transparent;
+	color:white;
+}
+a.small-text {
+	font-size:12px;
+}
+
+.header {
+	font-family: 'Lobster', cursive;
+	padding: 0 0 50px 0;
+	text-align: center;
+	color: #222;
+	font-size: 3em;
+	width: auto;
+	position: relative;
+	margin: 0 auto;
+	text-shadow: 1px 1px #797979;
+   color: white;
+   text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+	   padding: 25px;
+}
+
+.field-block{
+	width: 125px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	margin: 10px auto;
+	cursor: auto;
+}
+
+.field-block input{
+	color:white;
+	background-color:#245A7A;
+	font-size:16px;
+}
+
+.field-block .field {
+	position: relative;
+	width: 100%;
+	clear: both;
+	float: left;
+}
+
+.form-control{
+	-webkit-appearance: none; 
+	max-width: 450px;
+	outline: none;
+	font-size: 24px;
+	border-radius:0px;
+	border-left:0px;
+	border: 1px solid #245A7A;
+	margin:0 auto;
+	text-align:center;
+	background-color:#245A7A;
+	color:white;
+	height: 45px;
+	box-shadow: none;
+}
+.form-control:focus{
+	-webkit-appearance: none; 
+	outline: none;
+}
+
+.checkbox-input{
+	position:relative;
+	width: 250px;
+	font-family: 'Lato', Arial, Helvetica, sans-serif;
+	margin: 10px auto;
+	cursor: auto;
+	color:white;
+	margin:0 auto;
+}
+
+ul.errorlist{
+	display:inline-block;
+	font-size:16px;
+	list-style: none;
+}
+
+.close {
+	float: right;
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 1;
+	color: #000;
+	/* text-shadow: 0 1px 0 #fff; */
+	opacity: .2;
+}
+
+.error-container{
+	display: inline-block;
+	width:300px;
+}
+
+.alert-error{
+	box-shadow: inset 0px 0px 10px 0px #ABABAB,3px 5px 5px -100px #DDDDDD;
+	-webkit-box-shadow: inset 0px 0px 10px 0px #ABABAB,3px 5px 5px -100px #DDDDDD;
+	-moz-box-shadow: inset 0px 0px 10px 0px #ABABAB,3px 5px 5px -100px #DDDDDD;
+	-o-box-shadow: inset 0px 0px 10px 0px #ABABAB,3px 5px 5px -100px #DDDDDD;
+	padding:5px;
+	border:solid 2px white;
+	max-width: 400px;
+	margin:15px auto 0 auto;
+}
+
+
+
+footer {
+    padding: 0px 0;
+    text-align: center;
+}
+
+footer span.copyright {
+    text-transform: uppercase;
+    text-transform: none;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 40px;
+	color:white;
+}
+
+footer ul.quicklinks {
+	text-align:right;
+    margin-bottom: 0;
+    text-transform: none;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    line-height: 40px;
+}
+
+ul.social-buttons {
+    margin-bottom: 0;
+}
+
+ul.social-buttons li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+	border:solid 1px white;
+    font-size: 20px;
+    line-height: 40px;
+    outline: 0;
+    color: #fff;
+    background-color: #245A7A;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+    background-color: #245A7A;
+}
+
+a {
+	color: #fff;
+	text-decoration: none;
+}
+a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+#register{
+	position:relative;
+	top:0px;
+	padding:0px;
+	
+}
+
+section{
+	margin-top: -50px;
+}
+
+@media (max-width: 992px) {
+	.container{
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	footer ul.quicklinks{
+		text-align:center;
+	}
+}
+@media (min-height: 650px) {
+	footer{
+		width:100%;
+		bottom:0px;
+	}
+	.col-md-12{
+		padding:0px;
+	}
+}
+
+@media (max-height: 649px){
+	section{
+		margin-top: 0px;
+		padding: 0px 0px;
+	}
+}
+
+
+

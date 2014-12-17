@@ -89,7 +89,6 @@ STATICFILES_DIRS = (
 LOGIN_URL = 'resify_login'
 LOGOUT_URL = 'resify_logout'
 LOGIN_REDIRECT_URL = '/'
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 AUTH_USER_MODEL = 'Registration.User'
 

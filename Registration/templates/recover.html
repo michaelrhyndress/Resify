@@ -4,20 +4,18 @@
 
 {% block heading %}
 	<div class="header">
-		Sign In
+		Recover
 	</div>
 {% endblock %}
 
 {% block content %}
-		<form action="{% url 'resify_login' %}" name="login" id="login" method="post" accept-charset="utf-8">
+		<form action="{% url 'recover' %}" name="login" id="login" method="post" accept-charset="utf-8">
 			
 				<input name="username" type="text" class="form-control" type="email" id="email" placeholder="Email Address" required autofocus/>
 
-				<input name="password" class="form-control" placeholder="Password" type="password" id="password" required />
-
 			{% csrf_token %}
 			<div class="field-block">
-				<button type="submit" id="login" class="login">Login</button>
+				<button type="submit" id="login" class="login">Send Email</button>
 			</div>
 		</form>
 		<div class="field-block">

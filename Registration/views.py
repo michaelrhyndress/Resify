@@ -33,6 +33,8 @@ class Login(View):
         }, context_instance=RequestContext(request))
     
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return Homepage.as_view()(self.request)
         form = AuthenticationForm()
         return render_to_response('login.html', {
         'form': form,
@@ -42,8 +44,10 @@ class Login(View):
     
 class Registration(View):
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            return Homepage.as_view()(self.request)
         form = RegistrationForm()
-        return render_to_response('form.html', {
+        return render_to_response('registration.html', {
                 'form': form,
             }, context_instance=RequestContext(request))
         
@@ -55,10 +59,31 @@ class Registration(View):
             if user is not None:
                 if user.is_active:
                     django_login(request, user)
-                    # return redirect(user.handle)
-        return redirect('/');
+                    return HttpResponseRedirect("/")
+        #NOT VALID, SEND ERROR TO PAGE
+        return render_to_response('registration.html', {
+            'form': form,
+        }, context_instance=RequestContext(request))
 
-
+# class Recover(View):
+#     def get(self, request, *args, **kwargs):
+#         if request.user.is_authenticated():
+#             return Homepage.as_view()(self.request)
+#         form = RecoverForm()
+#         return render_to_response('recover.html', {
+#                 'form': form,
+#             }, context_instance=RequestContext(request))
+#
+#     def post(self, request, *args, **kwargs):
+#         form = RecoverForm(data=request.POST)
+#         if form.is_valid():
+#             #CREATE RANDOM Send MAIL
+#             return HttpResponseRedirect("passwordChange")
+#         #NOT VALID, SEND ERROR TO PAGE
+#         return render_to_response('registration.html', {
+#             'form': form,
+#         }, context_instance=RequestContext(request))
+        
 class Resume(View):
     def get(self, request, handle):
         #get user
@@ -90,10 +115,8 @@ class Resume(View):
                 return render(request, template, c)
         
         # Check if page is private
-        if not s_user.is_public:
-            if not s_user.is_active:
-                #if private render private
-                return render(request, 'private.html')
+        if not s_user.is_public or not s_user.is_active:
+            return render(request, 'private.html')
         
         #render Resume
         return render(request, template, c)
