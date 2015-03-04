@@ -107,7 +107,7 @@ $(document).ready(function(){
 	/* END BUTTON ACTIONS*/
 	
 	/* Directly edit resume */
-	$(".directEdit").keyup(function(){
+	$('#full-form').on('keyup', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
 		var iframe = $("#resume, #mobile-iframe");
 		if(elementId != ''){
@@ -115,7 +115,7 @@ $(document).ready(function(){
 			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
 		}
 	});
-	$("select.directEdit").change(function(){
+	$('#full-form').on('change', 'select.directEdit', function(){
 		var elementId = $(this).attr('id');
 		var iframe = $("#resume, #mobile-iframe");
 		if(elementId != ''){
@@ -134,20 +134,36 @@ $(document).ready(function(){
 	});	
 	
 	$('#full-form').on('click', '.add-item', function(){
+		var iframe = $("#resume, #mobile-iframe");
 		var number = $(this).attr('id'); //Last count
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
 		var templateClone = template.clone(true); //Clone Template
-		
-		// var templateClone = jQuery.extend({}, template)
-		
 		var searchFor = $(templateClone).find("*[id*='{counter}']");
-		$(searchFor).each(function() { //Replaces counter with number
+		$(searchFor).each(function() { //Replaces id counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', number+"New");
+			var newId = id.replace('{counter}', "_New_"+number);
 			$(this).attr('id', newId);
 		});
+		var searchFor = $(templateClone).find("*[name*='{counter}']");//Replaces name counter with number
+		$(searchFor).each(function() { //Replaces counter with number
+			var nameAttr = $(this).attr('name');
+			var newNameAttr = nameAttr.replace('{counter}', number);
+			$(this).attr('name', newNameAttr);
+		});
 		$(this).before(templateClone.html());//Place into page
+		
+		//Insert into Resume
+		var inResume = iframe.contents().find('#'+parentEl.attr('id')+"-template");
+		var resumeClone = inResume.clone(true); //Clone Template
+		var searchFor = $(resumeClone).find("*[id*='{counter}']");
+		$(searchFor).each(function() { //Replaces counter with number
+			var id = $(this).attr('id');
+			var newId = id.replace('{counter}', "_New_"+number);
+			$(this).attr('id', newId);
+		});
+		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
+		$(blankSpot).before(resumeClone.html());
 		number++;
 		$(this).attr('id', number);
 	});
@@ -170,6 +186,8 @@ $(document).ready(function(){
 		$(this).hide();
 	});
 });
+
+//Take experience-info-template and put it into ul experience-info before #blank-"experience"
 
 /*
 	IDEA: Make stack to for removed information

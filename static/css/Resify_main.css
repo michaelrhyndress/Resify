@@ -96,7 +96,7 @@ WebKit inertia scrolling is being added here for any present/future devices that
 	color:white;
 }
 .Top-menu>.activeIcon{
-	border-bottom:solid 3px red;
+	border-bottom:solid 3px rgb(63, 138, 255);
 	color: white;	
 }
 

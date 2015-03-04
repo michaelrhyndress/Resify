@@ -107,7 +107,7 @@
 					
 					{% for job in job_list %}
 					
-                    <li id="{{job.id}}" class="experience-info-item">
+                    <li id="Job_{{job.id}}" class="experience-info-item">
                         <span class="heading">
 							{% if job.job_from_date == job.job_to_date %} 
 								<font id="job_from_date{{forloop.counter}}">{{job.job_from_date}}</font>{% if user.is_authenticated %}-<font id="job_to_date{{forloop.counter}}">{{job.job_to_date}}</font>{% endif %}
@@ -120,6 +120,7 @@
                         <p id="job_about{{forloop.counter}}" class="description">{{job.job_about}}</p>
                     </li>
 					{% endfor %}
+					<li id="blank-experience-info" class="blank-item"></li>
                 </ul>
             </div>
         </div>
@@ -127,7 +128,20 @@
 </section>
 {% endif %}
 <!-- end Work experience -->
+
+
+<div id="experience-info-template" class="template">
+    <li id="{counter}" class="experience-info-item">
+        <span class="heading">
+				<font id="job_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="job_to_date{counter}"></font>{% endif %}
+		</span>
+        <p id="position{counter}"><strong></strong></p>
+        <p id="company{counter}"><strong></strong></p>
+        <p id="job_about{counter}" class="description"></p>
+    </li>
+</div>
     
+
 {% if education_list %}
 <!-- Education -->
 <section id="education" class="education">
@@ -136,8 +150,10 @@
             <div class="col col-sm-offset-5">
                 <ul id="education-info">
                     <li class="title"><span class="glyphicon glyphicon-book"></span>Education</li>
+					
 					{% for ed in education_list %}
-	                    <li class="education-info-item">
+					
+	                    <li id="Ed_{{ed.id}}" class="education-info-item">
                            <span class="heading">
    								{% if ed.Education_from_date == ed.Education_to_date %} 
    									<font id="Education_from_date{{forloop.counter}}">{{ed.Education_from_date}}</font>{% if user.is_authenticated %}-<font id="Education_to_date{{forloop.counter}}">{{ed.Education_to_date}}</font>{% endif %}
@@ -150,12 +166,24 @@
 							<p id="degree{{forloop.counter}}">{{ed.degree}}</p>
 	                    </li>
 					{% endfor %}
+					<li id="blank-education-info" class="blank-item"></li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
 {% endif %}
+
+<div id="education-info-template" class="template">
+    <li id="{counter}" class="education-info-item">
+        <span class="heading">
+				<font id="Education_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Education_to_date{counter}"></font>{% endif %}
+		</span>
+		<p id="status{counter}"><strong></strong></p>
+		<p id="school{counter}"><strong></strong></p>
+		<p id="degree{counter}"></p>
+    </li>
+</div>
 <!-- end Education -->
     
 <!-- Professional skills -->

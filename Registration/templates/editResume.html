@@ -60,38 +60,38 @@
 					<section id="experience-section">
 						<h2 class="fs-title">Work Experience</h2>
 						<div id="experience-info">
-						    
+						    {% if job_list %}
 								{% for job in job_list %}
 							        <div class="info-item">
 										<hr>
 										<div class="input-block">
 											 <a class="pull-left"><font class="panelIcon"><i id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
-											 <span id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle">{{job.position}}</span>
-											 <a class="pull-right delete-item" id="{{job.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+											 <span id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle">{% if job.position %}{{job.position}}{% else %}New Job{% endif %}</span>
+											 <a class="pull-right delete-item" id="Job_{{job.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 										</div>
 					                    <hr>
 							            <div id="collapse_experience{{forloop.counter}}" class="collapsable-item">
 							                <div class="panel-body">							                    
 												<div class="input-block">
 													<label class="input-label">Position</label>
-													<input type="text" id="position{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="position" placeholder="Position" value="{{job.position}}"/>
+													<input type="text" id="position{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="position-{{forloop.counter}}" placeholder="Position" value="{{job.position}}"/>
 												</div>
 												<hr>
 												<div class="input-block">
 													<label class="input-label">Employer</label>
-													<input type="text" id="company{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="company" placeholder="Company" value="{{job.company}}"/>
+													<input type="text" id="company{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="company-{{forloop.counter}}" placeholder="Company" value="{{job.company}}"/>
 												</div>
 												<hr>
 												<div class="input-block">
 													<label class="input-label">Date</label>
 													<div class="form-inline">
-												        <select id="job_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date" placeholder="From: ">
+												        <select id="job_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date-{{forloop.counter}}" placeholder="From: ">
 															<option disabled="disabled">From</option>
 															{% for x in year_choices %}
 																<option value="{{x}}">{{x}}</option>
 															{% endfor %}
 														<select/>
-												        <select id="job_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date" placeholder="To: ">
+												        <select id="job_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date-{{forloop.counter}}" placeholder="To: ">
 															<option disabled="disabled">To</option>
 															<option value="PRESENT">Present</option>
 															{% for x in year_choices %}
@@ -108,79 +108,86 @@
 												<hr>
 												<div class="input-block">
 													<label class="input-label">Description</label>
-													<textarea id="job_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="job_about" placeholder="Description">{{job.job_about}}</textarea>
+													<textarea id="job_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="job_about-{{forloop.counter}}" placeholder="Description">{{job.job_about}}</textarea>
 												</div>
 							                </div>
 							            </div>
 							        </div>
 									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 								{% endfor %}
+								{# {% if not job_list %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %} #}	{% else %}
+								<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>
+							{% endif %}
 							</div>
 						</section>
 				
 					<section id="education-section">
 						<h2 class="fs-title">Education History</h2>
 						<div id="education-info">
-							{% for ed in education_list %}
-								<div class="info-item">
-										<hr>
-										<div class="input-block">
-											 <a class="pull-left"><font class="panelIcon"><i id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
-											 <span id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle">{{ed.school}}</span>
-											 <a class="pull-right delete-item" id="{{ed.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
-										</div>
-					                    <hr>
-							            <div id="collapse_education{{forloop.counter}}" class="collapsable-item">
-							                <div class="panel-body">							                    
-												<div class="input-block">
-													<label class="input-label">Status</label>
-											        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="status">
-														<option selected="" disabled="disabled">Status</option>
-														<option value="Graduated">Graduated</option>
-														<option value="Attending">Attending</option>
-														<option value="">Other</option>
-													</select>
-												</div>
-												<hr>
-												<div class="input-block">
-													<label class="input-label">School</label>
-													<input type="text" id="school{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="school" placeholder="School" value="{{ed.school}}"/>
-												</div>
-												<hr>
-												<div class="input-block">
-													<label class="input-label">Degree</label>
-													<input type="text" id="degree{{forloop.counter}}-edit" class="input-box directEdit" maxlength="100" name="degree" placeholder="Degree" value="{{ed.degree}}"/>
-												</div>
-												<hr>
-												<div class="input-block">
-													<label class="input-label">Date</label>
-													<div class="form-inline">
-												        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date" placeholder="From: ">
-															<option disabled="disabled">From</option>
-															{% for x in year_choices %}
-																<option value="{{x}}">{{x}}</option>
-															{% endfor %}
-														<select/>
-												        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date" placeholder="To: ">
-															<option disabled="disabled">To</option>
-															<option value="PRESENT">Present</option>
-															{% for x in year_choices %}
-															<option value="{{x}}">{{x}}</option>
-															{% endfor %}
+							{% if education_list %}
+								{% for ed in education_list %}
+									<div class="info-item">
+											<hr>
+											<div class="input-block">
+												 <a class="pull-left"><font class="panelIcon"><i id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+												 <span id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle">{% if ed.school %}{{ed.school}}{% else %}New Record{% endif %}</span>
+												 <a class="pull-right delete-item" id="Ed_{{ed.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+											</div>
+						                    <hr>
+								            <div id="collapse_education{{forloop.counter}}" class="collapsable-item">
+								                <div class="panel-body">							                    
+													<div class="input-block">
+														<label class="input-label">Status</label>
+												        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="status-{{forloop.counter}}">
+															<option selected="" disabled="disabled">Status</option>
+															<option value="Graduated">Graduated</option>
+															<option value="Attending">Attending</option>
+															<option value="">Other</option>
 														</select>
-														<script>
-															$("#status{{forloop.counter}}-edit").val("{{ed.status}}");
-															$("#Education_from_date{{forloop.counter}}-edit").val("{{ed.Education_from_date}}");
-															$("#Education_to_date{{forloop.counter}}-edit").val("{{ed.Education_to_date}}");
-														</script>
-														<br>
 													</div>
-												</div>
-							                </div>
-							            </div>
-							        </div>
+													<hr>
+													<div class="input-block">
+														<label class="input-label">School</label>
+														<input type="text" id="school{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="school-{{forloop.counter}}" placeholder="School" value="{{ed.school}}"/>
+													</div>
+													<hr>
+													<div class="input-block">
+														<label class="input-label">Degree</label>
+														<input type="text" id="degree{{forloop.counter}}-edit" class="input-box directEdit" maxlength="100" name="degree-{{forloop.counter}}" placeholder="Degree" value="{{ed.degree}}"/>
+													</div>
+													<hr>
+													<div class="input-block">
+														<label class="input-label">Date</label>
+														<div class="form-inline">
+													        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date-{{forloop.counter}}" placeholder="From: ">
+																<option disabled="disabled">From</option>
+																{% for x in year_choices %}
+																	<option value="{{x}}">{{x}}</option>
+																{% endfor %}
+															<select/>
+													        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date-{{forloop.counter}}" placeholder="To: ">
+																<option disabled="disabled">To</option>
+																<option value="PRESENT">Present</option>
+																{% for x in year_choices %}
+																<option value="{{x}}">{{x}}</option>
+																{% endfor %}
+															</select>
+															<script>
+																$("#status{{forloop.counter}}-edit").val("{{ed.status}}");
+																$("#Education_from_date{{forloop.counter}}-edit").val("{{ed.Education_from_date}}");
+																$("#Education_to_date{{forloop.counter}}-edit").val("{{ed.Education_to_date}}");
+															</script>
+															<br>
+														</div>
+													</div>
+								                </div>
+								            </div>
+								        </div>
+										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+									{% endfor %}
+								{%else%}
 									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
-								{% endfor %}
+								{%endif%}
 							</div>
 					</section>
 				
@@ -199,6 +206,7 @@
 								'min': 0,
 								'max': 100
 							}
+
 						});
 						</script>
 					</section>
@@ -295,6 +303,7 @@
 					</section> <!-- Preview Section -->
 				
 				</div>				
+				
 			</div><!-- /Left -->
 		</form>
 
@@ -307,6 +316,7 @@
 	
 	
 	<!-- TEMPLATES -->
+	
 	<div id="experience-info-template" class="template">
 		<div class="info-item">
 			<hr>
@@ -320,24 +330,24 @@
 		        <div class="panel-body">							                    
 					<div class="input-block">
 						<label class="input-label">Position</label>
-						<input type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="position" placeholder="Position"/>
+						<input type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="position-{counter}" placeholder="Position"/>
 					</div>
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Employer</label>
-						<input type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="company" placeholder="Company"/>
+						<input type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="company-{counter}" placeholder="Company"/>
 					</div>
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Date</label>
 						<div class="form-inline">
-					        <select id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date" placeholder="From: ">
+					        <select id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date-{counter}" placeholder="From: ">
 								<option disabled="disabled">From</option>
 								{% for x in year_choices %}
 									<option value="{{x}}">{{x}}</option>
 								{% endfor %}
 							<select/>
-					        <select id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date" placeholder="To: ">
+					        <select id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date-{counter}" placeholder="To: ">
 								<option disabled="disabled">To</option>
 								<option value="PRESENT">Present</option>
 								{% for x in year_choices %}
@@ -350,12 +360,71 @@
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Description</label>
-						<textarea id="job_about{counter}-edit" class="textarea-box directEdit" name="job_about" placeholder="Description"></textarea>
+						<textarea id="job_about{counter}-edit" class="textarea-box directEdit" name="job_about-{counter}" placeholder="Description"></textarea>
 					</div>
 		        </div>
 		    </div>
 		</div>
-	</div><!-- / TEMPLATES -->
+	</div>
+	
+	<div id="education-info-template" class="template">
+		<div class="info-item">
+				<hr>
+				<div class="input-block">
+					 <a class="pull-left"><font class="panelIcon"><i id="collapse_education{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+					 <span id="collapse_education{counter}-toggle" class="collapse-toggle">New Record</span>
+					 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+				</div>
+                <hr>
+	            <div id="collapse_education{counter}" class="collapsable-item">
+	                <div class="panel-body">							                    
+						<div class="input-block">
+							<label class="input-label">Status</label>
+					        <select id="status{counter}-edit" class="form-control directEdit" name="status-{counter}">
+								<option selected="" disabled="disabled">Status</option>
+								<option value="Graduated">Graduated</option>
+								<option value="Attending">Attending</option>
+								<option value="">Other</option>
+							</select>
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">School</label>
+							<input type="text" id="school{counter}-edit" class="input-box directEdit" maxlength="50" name="school-{counter}" placeholder="School"/>
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Degree</label>
+							<input type="text" id="degree{counter}-edit" class="input-box directEdit" maxlength="100" name="degree-{counter}" placeholder="Degree"/>
+						</div>
+						<hr>
+						<div class="input-block">
+							<label class="input-label">Date</label>
+							<div class="form-inline">
+						        <select id="Education_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date-{counter}" placeholder="From: ">
+									<option disabled="disabled">From</option>
+									{% for x in year_choices %}
+										<option value="{{x}}">{{x}}</option>
+									{% endfor %}
+								<select/>
+						        <select id="Education_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date-{counter}" placeholder="To: ">
+									<option disabled="disabled">To</option>
+									<option value="PRESENT">Present</option>
+									{% for x in year_choices %}
+									<option value="{{x}}">{{x}}</option>
+									{% endfor %}
+								</select>
+								<br>
+							</div>
+						</div>
+	                </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+			
+			
+	<!-- / TEMPLATES -->
 	
     </body>
 		<script>
