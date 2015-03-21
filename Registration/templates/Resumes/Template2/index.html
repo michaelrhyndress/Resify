@@ -127,8 +127,8 @@
     </div>
 </section>
 {% endif %}
-<!-- end Work experience -->
 
+<!-- Start experience template -->
 
 <div id="experience-info-template" class="template">
     <li id="{counter}" class="experience-info-item">
@@ -141,6 +141,7 @@
     </li>
 </div>
     
+<!-- END Work experience -->	
 
 {% if education_list %}
 <!-- Education -->
@@ -174,6 +175,8 @@
 </section>
 {% endif %}
 
+<!-- Start experience template -->
+
 <div id="education-info-template" class="template">
     <li id="{counter}" class="education-info-item">
         <span class="heading">
@@ -184,7 +187,8 @@
 		<p id="degree{counter}"></p>
     </li>
 </div>
-<!-- end Education -->
+
+<!-- END Education -->
     
 <!-- Professional skills -->
 {% if skill_list %}
@@ -211,16 +215,16 @@
 {% endif %}
 <!-- end Professional skills -->
     
-<!-- Interests -->
+<!-- Accomplishments -->
 {% if accomp_list  %}
 <section id="accomplishments" class="accomplishments">
     <div class="container">
         <div class="row">
             <div class="col col-sm-offset-5">
-                <ul id="accomplishment-info">
+                <ul id="accomplishments-info">
                     <li class="title"><span class="glyphicon glyphicon-ok"></span>Accomplishments</li>
 					{% for accomp in accomp_list %}
-                    <li class="accomplishment-info-item">
+                    <li id="accomplishments_{{accomp.id}}" class="accomplishments-info-item">
 						<span class="heading">
 							{% if accomp.Accomplishment_from_date == accomp.Accomplishment_to_date %} 
 								<font id="Accomplishment_from_date{{forloop.counter}}">{{accomp.Accomplishment_from_date}}</font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{{forloop.counter}}">{{accomp.Accomplishment_to_date}}</font>{% endif %}
@@ -228,15 +232,29 @@
 								<font id="Accomplishment_from_date{{forloop.counter}}">{{accomp.Accomplishment_from_date}}</font>-<font id="Accomplishment_to_date{{forloop.counter}}">{{accomp.Accomplishment_to_date}}</font>
 							{% endif %}
 						</span>
-                        <p id="about{{forloop.counter}}" class="description">{{accomp.about}}</p>
+                        <p id="accomplishments_about{{forloop.counter}}" class="description">{{accomp.about}}</p>
                     </li>
 					{% endfor %}
+					<li id="blank-accomplishments-info" class="blank-item"></li>
                 </ul>
             </div>
         </div>
     </div>
 </section>
 {% endif %}
+
+
+
+<!-- Start accomplishment template -->
+
+<div id="accomplishments-info-template" class="template">
+    <li id="{counter}" class="accomplishments-info-item">
+        <span class="heading">
+				<font id="Accomplishment_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{counter}"></font>{% endif %}
+		</span>
+		<p id="accomplishments_about{counter}" class="description"></p>
+    </li>
+</div>
 
 
 <hr id="mobileBreak" class="empty">
