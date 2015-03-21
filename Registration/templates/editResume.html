@@ -28,6 +28,9 @@
 			<div class="Left-content">
 				<form id="full-form" action="{{action_url}}" method="post" accept-charset="utf-8">
 					{% csrf_token %}
+					
+<!-- Personal -->
+					
 					<section id="personal-section">
 						<h2 class="fs-title">Personal Details</h2>
 						<hr>
@@ -56,7 +59,9 @@
 						</div>
 						<hr>
 					</section>
-				
+
+<!-- Experience -->
+									
 					<section id="experience-section">
 						<h2 class="fs-title">Work Experience</h2>
 						<div id="experience-info">
@@ -120,7 +125,9 @@
 							{% endif %}
 							</div>
 						</section>
-				
+
+<!-- Education -->
+									
 					<section id="education-section">
 						<h2 class="fs-title">Education History</h2>
 						<div id="education-info">
@@ -191,8 +198,68 @@
 							</div>
 					</section>
 				
+				
+<!-- Accomplishments-->				
 					<section id="accomplishments-section">
 						<h2 class="fs-title">Accomplishments</h2>
+						
+						<div id="accomplishments-info">
+							{% if accomp_list %}
+								{% for accomp in accomp_list %}
+									<div class="info-item">
+											<hr>
+											<div class="input-block">
+												 <a class="pull-left"><font class="panelIcon"><i id="collapse_accomplishments{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+												 <span id="collapse_accomplishments{{forloop.counter}}-toggle" class="collapse-toggle">{% if accomp.title %}{{accomp.title}}{% else %}New Record{% endif %}</span>
+												 <a class="pull-right delete-item" id="accomplishments_{{accomp.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+											</div>
+						                    <hr>
+								            <div id="collapse_accomplishments{{forloop.counter}}" class="collapsable-item">
+								                <div class="panel-body">							                    
+													<div class="input-block">
+														<label class="input-label">Title</label>
+														<input type="text" id="title{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="title-{{forloop.counter}}" placeholder="Accomplishment" value="{{accomp.title}}"/>
+													</div>
+													<hr>
+													<div class="input-block">
+														<label class="input-label">Date</label>
+														<div class="form-inline">
+													        <select id="Accomplishment_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_from_date-{{forloop.counter}}" placeholder="From: ">
+																<option disabled="disabled">From</option>
+																{% for x in year_choices %}
+																	<option value="{{x}}">{{x}}</option>
+																{% endfor %}
+															<select/>
+													        <select id="Accomplishment_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_to_date-{{forloop.counter}}" placeholder="To: ">
+																<option disabled="disabled">To</option>
+																<option value="PRESENT">Present</option>
+																{% for x in year_choices %}
+																<option value="{{x}}">{{x}}</option>
+																{% endfor %}
+															</select>
+															<script>
+																$("#title{{forloop.counter}}-edit").val("{{accomp.title}}");
+																$("#Accomplishment_from_date{{forloop.counter}}-edit").val("{{accomp.Accomplishment_from_date}}");
+																$("#Accomplishment_to_date{{forloop.counter}}-edit").val("{{accomp.Accomplishment_to_date}}");
+															</script>
+															<br>
+														</div>
+														<hr>
+														<div class="input-block">
+															<label class="input-label">Description</label>
+															<textarea id="accomplishments_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="accomplishments_about-{{forloop.counter}}" placeholder="Description">{{accomp.about}}</textarea>
+														</div>
+													</div>
+								                </div>
+								            </div>
+								        </div>
+										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+									{% endfor %}
+								{%else%}
+									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+								{%endif%}
+							</div>
+
 					</section>
 				
 					<section id="skills-section">
@@ -317,6 +384,8 @@
 	
 	<!-- TEMPLATES -->
 	
+	<!-- Experience -->
+	
 	<div id="experience-info-template" class="template">
 		<div class="info-item">
 			<hr>
@@ -366,6 +435,8 @@
 		    </div>
 		</div>
 	</div>
+	
+	<!-- Education -->
 	
 	<div id="education-info-template" class="template">
 		<div class="info-item">
@@ -421,7 +492,56 @@
 	            </div>
 			</div>
 		</div>
-	</div>
+		
+		<!-- Accomplishments -->			
+						
+		<div id="accomplishments-info-template" class="template">
+			<div class="info-item">
+					<hr>
+					<div class="input-block">
+						 <a class="pull-left"><font class="panelIcon"><i id="collapse_accomplishments{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+						 <span id="collapse_accomplishments{counter}-toggle" class="collapse-toggle">New Record</span>
+						 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+					</div>
+	                <hr>
+		            <div id="collapse_accomplishments{counter}" class="collapsable-item">
+		                <div class="panel-body">							                    
+
+							<div class="input-block">
+								<label class="input-label">Title</label>
+								<input type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="title-{counter}" placeholder="Accomplishment"/>
+							</div>
+							<hr>
+							<div class="input-block">
+								<label class="input-label">Date</label>
+								<div class="form-inline">
+							        <select id="Accomplishment_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_from_date-{counter}" placeholder="From: ">
+										<option disabled="disabled">From</option>
+										{% for x in year_choices %}
+											<option value="{{x}}">{{x}}</option>
+										{% endfor %}
+									<select/>
+							        <select id="Accomplishment_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_to_date-{counter}" placeholder="To: ">
+										<option disabled="disabled">To</option>
+										<option value="PRESENT">Present</option>
+										{% for x in year_choices %}
+										<option value="{{x}}">{{x}}</option>
+										{% endfor %}
+									</select>
+									<br>
+								</div>
+								<hr>
+								<div class="input-block">
+									<label class="input-label">Description</label>
+									<textarea id="accomplishments_about{counter}-edit" class="textarea-box directEdit" name="accomplishments_about-{counter}" placeholder="Description"></textarea>
+								</div>
+							</div>
+		                </div>
+		            </div>
+				</div>
+			</div>
+		
+	</div> <!-- END TEMPS -->
 			
 			
 	<!-- / TEMPLATES -->
