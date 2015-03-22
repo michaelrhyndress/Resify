@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'Registration',
     'crispy_forms',
+    'rest_framework',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -91,6 +92,8 @@ LOGOUT_URL = 'resify_logout'
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'Registration.User'
+
+
 
 
 

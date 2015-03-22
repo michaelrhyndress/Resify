@@ -37,7 +37,7 @@
 						<div class="input-block">
 							<label class="input-label">Name</label>
 							
-							<input type="text" id="first_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="First" value="{{s_user.first_name}}"/>
+							<input type="text" id="first_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="First" value="{{s_user.first_name}}" autofocus/>
 							<input type="text" id="last_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="Last" value="{{s_user.last_name}}"/>
 						</div>
 						<hr>
@@ -202,7 +202,6 @@
 <!-- Accomplishments-->				
 					<section id="accomplishments-section">
 						<h2 class="fs-title">Accomplishments</h2>
-						
 						<div id="accomplishments-info">
 							{% if accomp_list %}
 								{% for accomp in accomp_list %}
@@ -259,25 +258,62 @@
 									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 								{%endif%}
 							</div>
-
 					</section>
-				
+					
+					
+<!-- Skill Set -->		
 					<section id="skills-section">
-						<h2 class="fs-title">Your Skill Set</h2>
-						<div class="slider"></div>
+						<h2 class="fs-title">Skill Set</h2>
+						<div id="skills-info">
+							{% if skill_list %}
+								{% for skill in skill_list %}
+									<div class="info-item">
+											<hr>
+											<div class="input-block">
+												 <a class="pull-left"><font class="panelIcon"><i id="collapse_skills{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+												 <span id="collapse_skills{{forloop.counter}}-toggle" class="collapse-toggle">{% if skill.skill %}{{skill.skill}}{% else %}New Record{% endif %}</span>
+												 <a class="pull-right delete-item" id="skills_{{skill.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+											</div>
+						                    <hr>
+								            <div id="collapse_skills{{forloop.counter}}" class="collapsable-item">
+								                <div class="panel-body">							                    
+													<div class="input-block">
+														<label class="input-label">Title</label>
+														<input type="text" id="skillName{{forloop.counter}}-edit" class="input-box directEdit" name="skillName-{{forloop.counter}}" placeholder="Skill" value="{{skill.skill}}"/>
+													</div>
+													
+													<div class="input-block">
+														<br>
+														<div id="slider{{forloop.counter}}" style="background-color:rgb(63, 138, 255)"></div>
+															<font id="percentage{{forloop.counter}}" class="pull-right">{{skill.percentage}}%</font>
+															<script>
+															$('#slider{{forloop.counter}}').noUiSlider({
+																start: [ {{skill.percentage}} ],
+																connect: "lower",
+																step: 5,
+																range: {
+																'min': 0,
+																'max': 100
+																}
+															});
+															$('#slider{{forloop.counter}}').on('slide', { slider: 'slider{{forloop.counter}}', percentHolder: 'percentage{{forloop.counter}}' }, LinkVal);
+															</script>
+														</div>
+													</div>
+								                </div>
+								            </div>
 
-						<script>
-						$('.slider').noUiSlider({
-							start: [ 0 ],
-							range: {
-								'min': 0,
-								'max': 100
-							}
-
-						});
-						</script>
-					</section>
-				
+										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+									{% endfor %}
+								{%else%}
+									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+								{%endif%}
+							</div>
+					</section>				
+					
+					
+					
+<!-- Contact Info -->						
 					<section id="contact-section">
 						<h2 class="fs-title">Contact Info.</h2>
 						<hr>
@@ -316,6 +352,7 @@
 						<hr>
 					</section>
 				
+<!-- Template Select -->						
 					<section id="template-section">
 						<h2 class="fs-title">Choose A Template</h2>
 						<hr>
@@ -328,10 +365,12 @@
 							</select>
 						</div>
 						<hr>
-					</section> <!-- /Template Section -->
+					</section>
 				
+				
+<!-- Preview (RIGHT SIDE) -->						
 					<section id="preview-section">
-						<iframe id="mobile-iframe" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Your browser doesn't support iframes.</iframe>
+						<iframe id="mobile-iframe" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Please upgrade your browser to view this page.</iframe>
 					</section> <!-- Preview Section -->
 					
 					<section id="settings-section">
@@ -377,12 +416,12 @@
         <div id="webView" class="Right">
 			<button id="fullscreen-btn" class="clear-btn">Fullscreen</button>
 			
-			<iframe id="resume" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Your browser doesn't support iframes.</iframe>
+			<iframe id="resume" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Please upgrade your browser to view this page.</iframe>
 		</div>
     </div> <!-- / CONTAINTER -->
 	
 	
-	<!-- TEMPLATES -->
+	<!-- TEMPLATES for New Items -->
 	
 	<!-- Experience -->
 	
@@ -540,8 +579,40 @@
 		            </div>
 				</div>
 			</div>
-		
+			
+			<!-- Skills -->
+			
+			<div id="skills-info-template" class="template">
+				<div class="info-item">
+						<hr>
+						<div class="input-block">
+							 <a class="pull-left"><font class="panelIcon"><i id="collapse_skills{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
+							 <span id="collapse_skills{counter}-toggle" class="collapse-toggle">New Record</span>
+							 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+						</div>
+		                <hr>
+			            <div id="collapse_skills{counter}" class="collapsable-item">
+			                <div class="panel-body">							                    
+
+								<div class="input-block">
+									<label class="input-label">Title</label>
+									<input type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="title-{counter}" placeholder="Skill"/>
+								</div>
+								<div class="input-block">
+									<br>
+									<div id="slider{counter}" style="background-color:rgb(63, 138, 255)"></div>
+										<font id="percentage{counter}" class="pull-right">0%</font>
+									</div>
+								</div>
+			                </div>
+			            </div>
+					</div>
+				</div>
+				
+
 	</div> <!-- END TEMPS -->
+			
+			
 			
 			
 	<!-- / TEMPLATES -->

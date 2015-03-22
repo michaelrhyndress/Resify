@@ -134,6 +134,7 @@ $(document).ready(function(){
 	});	
 	
 	$('#full-form').on('click', '.add-item', function(){
+		var isSlider = $(this).attr('class').split(' ')[1];
 		var iframe = $("#resume, #mobile-iframe");
 		var number = $(this).attr('id'); //Last count
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
@@ -164,6 +165,20 @@ $(document).ready(function(){
 		});
 		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
 		$(blankSpot).before(resumeClone.html());
+
+		if(isSlider == 'add-slider') {
+			$('#slider_New_'+number).noUiSlider({
+				start: [ 0 ],
+				connect: "lower",
+				step: 5,
+				range: {
+					'min': 0,
+					'max': 100
+				}
+			});
+			$('#full-form').on('slide', '#slider_New_'+number, { slider: 'slider_New_'+number, percentHolder: 'percentage_New_'+number }, LinkVal);
+		}
+		
 		number++;
 		$(this).attr('id', number);
 	});
@@ -185,7 +200,13 @@ $(document).ready(function(){
 		$(this).prev('i').html(" Save and refresh to add again");
 		$(this).hide();
 	});
+	
 });
+
+function LinkVal(param){
+	var $theVal=$("#"+param.data.slider).find(".noUi-origin")[0].style.left;
+	$("#"+param.data.percentHolder).html($theVal)
+}
 
 //Take experience-info-template and put it into ul experience-info before #blank-"experience"
 
