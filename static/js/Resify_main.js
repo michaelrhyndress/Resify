@@ -124,6 +124,32 @@ $(document).ready(function(){
 		}
 	});
 	
+	$('#full-form').on('change', 'select.directEdit', function(){
+		var elementId = $(this).attr('id');
+		var iframe = $("#resume, #mobile-iframe");
+		if(elementId != ''){
+			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
+			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
+		}
+	});
+	
+	$('#full-form').on('slide', '.directEdit', function(){
+		var elementId = $(this).attr('id');
+		var idNum=elementId.replace(/[^0-9]/g,'');
+		if(elementId != ''){
+			elementSubstr = elementId.substr(0, elementId.indexOf('-'));
+			var $theVal=$("#"+elementId).find(".noUi-origin")[0].style.left;
+			$("#percentage"+idNum+"-edit").html($theVal);
+			$("#percentage_New_"+idNum+"-edit").html($theVal);
+			$theVal=$theVal.replace(/[%$]/g,'');
+			var iframe = $("#resume, #mobile-iframe");
+			iframe.contents().find('#percentage'+idNum).text($theVal);
+			iframe.contents().find('#percentage_New_'+idNum).text($theVal);
+			iframe.contents().find('#'+elementSubstr).attr("style", "width: "+$theVal+"%;");
+			iframe.contents().find('#'+elementSubstr).attr("aria-valuenow", $theVal);
+		}
+	});
+	
 	$('#full-form').on('click', '.collapse-toggle', function(){
 		var itemID = $(this).attr('id');
 		var itemToHide = itemID.substr(0, itemID.indexOf('-'));
@@ -134,6 +160,7 @@ $(document).ready(function(){
 	});	
 	
 	$('#full-form').on('click', '.add-item', function(){
+		var isSlider = $(this).attr('class').split(' ')[1];
 		var iframe = $("#resume, #mobile-iframe");
 		var number = $(this).attr('id'); //Last count
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
@@ -164,6 +191,19 @@ $(document).ready(function(){
 		});
 		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
 		$(blankSpot).before(resumeClone.html());
+
+		if(isSlider == 'add-slider') {
+			$('#slider_New_'+number+"-edit").noUiSlider({
+				start: [ 0 ],
+				connect: "lower",
+				step: 5,
+				range: {
+					'min': 0,
+					'max': 100
+				}
+			});
+		}
+		
 		number++;
 		$(this).attr('id', number);
 	});
@@ -185,7 +225,9 @@ $(document).ready(function(){
 		$(this).prev('i').html(" Save and refresh to add again");
 		$(this).hide();
 	});
+	
 });
+
 
 //Take experience-info-template and put it into ul experience-info before #blank-"experience"
 
