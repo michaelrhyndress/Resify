@@ -284,10 +284,10 @@
 													
 													<div class="input-block">
 														<br>
-														<div id="slider{{forloop.counter}}" style="background-color:rgb(63, 138, 255)"></div>
-															<font id="percentage{{forloop.counter}}" class="pull-right">{{skill.percentage}}%</font>
+														<div id="slider{{forloop.counter}}-edit" class="slider directEdit" style="background-color:rgb(63, 138, 255)"></div>
+															<font id="percentage{{forloop.counter}}-edit" class="pull-right">{{skill.percentage}}%</font>
 															<script>
-															$('#slider{{forloop.counter}}').noUiSlider({
+															$('#slider{{forloop.counter}}-edit').noUiSlider({
 																start: [ {{skill.percentage}} ],
 																connect: "lower",
 																step: 5,
@@ -296,7 +296,6 @@
 																'max': 100
 																}
 															});
-															$('#slider{{forloop.counter}}').on('slide', { slider: 'slider{{forloop.counter}}', percentHolder: 'percentage{{forloop.counter}}' }, LinkVal);
 															</script>
 														</div>
 													</div>
@@ -374,7 +373,7 @@
 					</section> <!-- Preview Section -->
 					
 					<section id="settings-section">
-						<h2 class="fs-title">Settings</h2>
+						<h2 class="fs-title">Account Information</h2>
 						<hr>
 						<div class="input-block">
 							<label class="input-label checkbox-label">
@@ -394,7 +393,7 @@
 						</div>
 						<hr>
 						<br><br>
-						<h2 class="fs-title">Account Information</h2>
+						<h2 class="fs-title">Login Credentials</h2>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Email</label>
@@ -596,12 +595,12 @@
 
 								<div class="input-block">
 									<label class="input-label">Title</label>
-									<input type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="title-{counter}" placeholder="Skill"/>
+									<input type="text" id="skillName{counter}-edit" class="input-box directEdit" maxlength="50" name="skillName-{counter}" placeholder="Skill"/>
 								</div>
 								<div class="input-block">
 									<br>
-									<div id="slider{counter}" style="background-color:rgb(63, 138, 255)"></div>
-										<font id="percentage{counter}" class="pull-right">0%</font>
+									<div id="slider{counter}-edit" class="directEdit" style="background-color:rgb(63, 138, 255)"></div>
+										<font id="percentage{counter}-edit" class="pull-right">0%</font>
 									</div>
 								</div>
 			                </div>

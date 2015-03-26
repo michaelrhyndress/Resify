@@ -192,21 +192,24 @@
     
 <!-- Professional skills -->
 {% if skill_list %}
-<section id="skill-sets" class="skill-sets">
+<section id="skills" class="skills">
     <div class="container">
         <div class="row">
             <div class="col col-sm-offset-5">
-                <ul id="skill-info">
+                <ul id="skills-info">
                     <li class="title"><span class="glyphicon glyphicon-tasks"></span>Skill Set</li>
 					
 					{% for skill in skill_list %}
-	                    <li class="skill-info-item">
-	                        <p><font id="skill{{forloop.counter}}">{{skill.skill}}</font><span class="annotation pull-right"><font id="percentage{{forloop.counter}}">{{skill.percentage}}</font>%</span></p>
+	                    <li id="skills_{{skill.id}}" class="skills-info-item">
+	                        <p>
+								<font id="skillName{{forloop.counter}}">{{skill.skill}}</font><span class="annotation pull-right"><font id="percentage{{forloop.counter}}">{{skill.percentage}}</font>%</span>
+							</p>
 	                        <div class="progress">
-	                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{skill.percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.percentage}}%;"></div>
+	                            <div id="slider{{forloop.counter}}" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{skill.percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.percentage}}%;"></div>
 	                        </div>
 	                    </li>
 					{% endfor%}
+					<li id="blank-skills-info" class="blank-item"></li>
                 </ul>
             </div>
         </div>
@@ -214,7 +217,20 @@
 </section>
 {% endif %}
 <!-- end Professional skills -->
+
+<!-- Start skills template -->
+<div id="skills-info-template" class="template">
+    <li id="{counter}" class="skills-info-item">
+       <p>
+		   <font id="skillName{counter}">New skill</font><span class="annotation pull-right"><font id="percentage{counter}">0</font>%</span>
+	   </p>
+       <div class="progress">
+           <div id="slider{counter}" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+       </div>
+    </li>
+</div>
     
+	
 <!-- Accomplishments -->
 {% if accomp_list  %}
 <section id="accomplishments" class="accomplishments">
