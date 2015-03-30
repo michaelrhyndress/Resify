@@ -1,20 +1,9 @@
 $(document).ready(function(){
  	
 	/* AUTO SAVE */
-	// $("#autosaving").css("visibility","hidden");
-// 	$('#full-form').sayt({'autosave': false, 'autorecover': true, 'days': 3});
-// 	$( "#full-form" ).change(function() {
-// 		function show_saving(t){
-// 		      $("#autosaving").css("visibility","visible");
-// 			  window.setTimeout( hide_saving, t );
-// 		};
-// 		function hide_saving(){
-// 		      $("#autosaving").css("visibility","hidden");
-// 		};
-// 		$('#full-form').sayt({'savenow': true});
-// 		show_saving(1000);
-// 		return false;
-// 	});
+	$("#autosaving").hide();
+	// $('#full-form').sayt({'autosave': false, 'autorecover': true, 'days': 3});
+	//$('#full-form').sayt({'savenow': true});
 	/* / AUTO SAVE */ 
 
 	var amounts = [];  
@@ -109,29 +98,48 @@ $(document).ready(function(){
 	/* Directly edit resume */
 	$('#full-form').on('keyup', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
+		var elementValue = $("#"+elementId).val()
 		var iframe = $("#resume, #mobile-iframe");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
-			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
-		}
-	});
-	$('#full-form').on('change', 'select.directEdit', function(){
-		var elementId = $(this).attr('id');
-		var iframe = $("#resume, #mobile-iframe");
-		if(elementId != ''){
-			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
-			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
+			iframe.contents().find('#'+elementSubstr).text(elementValue);
 		}
 	});
 	
-	$('#full-form').on('change', 'select.directEdit', function(){
+	/* Directly save resume */
+	$('#full-form').on('change', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
+		var elementValue = $("#"+elementId).val()
 		var iframe = $("#resume, #mobile-iframe");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
-			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
+			iframe.contents().find('#'+elementSubstr).text(elementValue);
 		}
+		nameAttr = $("#"+elementId).attr("name")
+		primaryKey = nameAttr.replace(/[^0-9]/g,'');
+		saveResume(elementSubstr, elementValue, primaryKey, "update");
 	});
+	
+	$('#full-form').on('change', '.checker',  function(){
+		var elementId = $(this).attr('id');
+		var elementValue = $("#"+elementId).prop( "checked" );
+		nameAttr = $("#"+elementId).attr("name")
+		primaryKey = nameAttr.replace(/[^0-9]/g,'');
+		saveResume(elementId, elementValue, primaryKey, "update");
+	});
+	
+	// $('#full-form').on('change', 'select.directEdit', function(){ #for select
+// 		var elementId = $(this).attr('id');
+// 		var iframe = $("#resume, #mobile-iframe");
+// 		if(elementId != ''){
+// 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
+// 			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
+// 		}
+// 		//nameAttr = $("#"+elementId).attr("name")
+// 		//primaryKey = nameAttr.replace(/[^0-9]/g,'');
+// 		//saveResume(elementSubstr, elementValue, primaryKey, "update");
+// 	});
+	
 	
 	$('#full-form').on('slide', '.directEdit', function(){
 		var elementId = $(this).attr('id');
@@ -140,6 +148,8 @@ $(document).ready(function(){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-'));
 			var $theVal=$("#"+elementId).find(".noUi-origin")[0].style.left;
 			$("#percentage"+idNum+"-edit").html($theVal);
+			$("#form_percentage"+idNum).attr("value", $theVal);
+			$("#form_percentage_New_"+idNum).attr("value", $theVal);
 			$("#percentage_New_"+idNum+"-edit").html($theVal);
 			$theVal=$theVal.replace(/[%$]/g,'');
 			var iframe = $("#resume, #mobile-iframe");
@@ -228,6 +238,13 @@ $(document).ready(function(){
 	
 });
 
+function show_saving(t){
+	$("#autosaving").show();
+	window.setTimeout( hide_saving, t );
+};
+function hide_saving(){
+      $("#autosaving").hide()
+};
 
 //Take experience-info-template and put it into ul experience-info before #blank-"experience"
 

@@ -33,19 +33,17 @@
 // 			element.className += " " + 'safari';
 // 		}
 		var webPageWidth = document.body.clientWidth;
-		var fullPage = document.getElementById('fullPage');
-		fullPageSize=fullPage;
 		if(webPageWidth > 699){
 			var leftPage = document.getElementById('left-content');
 			var rightPage = document.getElementById('right-content');
-			if(leftPage<rightPage){
-				var topDifference=fullPage.offsetHeight-rightPage.offsetHeight;
-				var fullSize = fullPage.offsetHeight + topDifference * 2 + 50;
-				fullPage.style.height = fullSize+"px";
+			if(leftPage.offsetHeight<rightPage.offsetHeight){
+				leftPage.style.height = rightPage.offsetHeight+"px";
+				// var topDifference=fullPage.offsetHeight-rightPage.offsetHeight;
+// 				var fullSize = fullPage.offsetHeight + topDifference * 2 + 50;
+// 				fullPage.style.height = fullSize+"px";
 			}
 			else{
 				var footer = document.getElementById('footer1');
-				
 			}
 		}
 		else{
@@ -102,7 +100,7 @@
 				</div>
 				<br />
 				<br />
-				<div class="left-content">
+				<div id="left-content" class="left-content">
 					
 					<div class="available">
 						<h2 class="left-head" style="width:200px;"><i class="fa fa-bell"></i> Contact</h2>

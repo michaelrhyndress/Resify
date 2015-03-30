@@ -187,9 +187,15 @@ WebKit inertia scrolling is being added here for any present/future devices that
 	border:solid 1px black;
 }
 
+.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background-color:rgba(255,255,255,0);
+}
+
 #autosaving{
-	background-color:transparent;
-	border:none;
+	
 }
 
 

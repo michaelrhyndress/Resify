@@ -11,7 +11,7 @@ from django.utils.timezone import now
 
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
 from Registration.models import Job_History, User, Education_History, Skills, User_Skills, SocialMedia
-from Registration.models import Accomplishments, Template
+from Registration.models import Accomplishments, Template, UserProfile, User_Template
 from Registration.forms import UserProfileForm, JobHistoryForm, EducationHistoryForm, AccomplishmentForm, SocialMediaForm, UserTemplateForm
 
 import os, re, datetime
@@ -137,7 +137,7 @@ class Homepage(View):
             YEAR_CHOICES = []
             template_list = list(Template.objects.all())
         
-            for r in xrange((now().year), 1900, -1):
+            for r in xrange((now().year), 1979, -1):
                 YEAR_CHOICES.append(r)
                 
             if(request.user.passed_setup is False):
@@ -268,12 +268,6 @@ class Homepage(View):
                     'social_form' : social_form,
                     'template_form' : template_form,
                 }
-                print(profile_form.errors)
-                print(job_form.errors)
-                print(education_form.errors)
-                print(accomplishment_form.errors)
-                print(social_form.errors)
-                print(template_form.errors)
                 return render(request, 'setup.html', c)
         else:
             return redirect('/')
@@ -310,4 +304,126 @@ def skipSetup(request):
              request.user.save()
              return redirect('/')
         
+def saveResume(request):
+    if request.user.is_authenticated():
+        if request.is_ajax():
+            key = request.POST.get('key', False)
+            value = request.POST.get('value', False)
+            pk = request.POST.get('pk', False)
+            option = request.POST.get('option', False)
+            isSet=0
+            print key
+            print value
+            print pk
+            print option 
+            
+            if key == "first_name":
+                if option == "update":
+                    request.user.first_name=value
+                    request.user.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+    
+            if key == "last_name":
+                if option == "update":
+                    request.user.last_name=value
+                    request.user.save()
+                    isSet=1
+                    return HttpResponse(isSet)
         
+            if key == "is_public":
+                if option == "update":
+                    if value == "true":
+                        request.user.is_public=True
+                    else:
+                        request.user.is_public=False
+                    request.user.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+                    
+            #Template        
+            if key == "template" and value:
+                template = User_Template.objects.get(user=request.user)
+                if option == "update":
+                    TemplateObj = Template.objects.get(template_name=value)
+                    template.template_name=TemplateObj
+                    template.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+            #Profile    
+            if key == "handle":
+                profile = UserProfile.objects.get(user=request.user)
+                if option == "update":
+                    profile.handle=value
+                    profile.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+
+            if key == "profession":
+                profile = UserProfile.objects.get(user=request.user)
+                if option == "update":
+                    profile.profession=value
+                    profile.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+            if key == "phone_number":
+                profile = UserProfile.objects.get(user=request.user)
+                if option == "update":
+                    profile.phone_number=value
+                    profile.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+            if key == "personal": #Statement
+                profile = UserProfile.objects.get(user=request.user)
+                if option == "update":
+                    profile.statement=value
+                    profile.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+
+    
+            #SocialMedia
+            if key == "facebook":
+                media = SocialMedia.objects.get(user=request.user)
+                if option == "update":
+                    media.facebook=value
+                    media.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+            if key == "twitter":
+                media = SocialMedia.objects.get(user=request.user)
+                if option == "update":
+                    media.twitter=value
+                    media.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+            if key == "gplus":
+                media = SocialMedia.objects.get(user=request.user)
+                if option == "update":
+                    media.gplus=value
+                    media.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+            
+            if key == "linkedIn":
+                media = SocialMedia.objects.get(user=request.user)
+                if option == "update":
+                    media.linkedIn=value
+                    media.save()
+                    isSet=1
+                    return HttpResponse(isSet)
+        return HttpResponse(isSet)
+        
+    else:
+        return HttpResponse(isSet)
+            
+            
+            
+            
+            

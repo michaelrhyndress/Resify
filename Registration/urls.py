@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     url(r'^logout$', 'Registration.views.logout', name='logout'),
     url(r'^setup/skip$', 'Registration.views.skipSetup', name='skip'),
     url(r'^setup$', 'Registration.views.Homepage', name='setup'),
+    url(r'^save$', 'Registration.views.saveResume', name='save_resume'),
 )
