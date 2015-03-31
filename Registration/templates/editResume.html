@@ -1,6 +1,9 @@
 {% extends "base_dashboard.html" %}
 {% block content %} 
 
+	{% url "save_resume" as action_url %}
+
+
 <html class="no-js">
     <head>
         <meta charset="utf-8">
@@ -22,7 +25,6 @@
 				<i id="template" class="fa fa-file-image-o fa-md"></i>
 				<i id="preview" class="fa fa-eye fa-md mobile-only"></i>
 				<i id="settings" class="fa fa-cog fa-md"></i>
-				{# <i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> #}
 			</div>
 			
 			<div class="Left-content">
@@ -30,15 +32,15 @@
 					{% csrf_token %}
 					
 <!-- Personal -->
-					
+					<div id="autosaving" class="center"><i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> Saving...</div>
 					<section id="personal-section">
 						<h2 class="fs-title">Personal Details</h2>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Name</label>
 							
-							<input type="text" id="first_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="First" value="{{s_user.first_name}}" autofocus/>
-							<input type="text" id="last_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="Last" value="{{s_user.last_name}}"/>
+							<input type="text" id="first_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="First" name="first_name" value="{{s_user.first_name}}" autofocus/>
+							<input type="text" id="last_name-edit" class="input-box half-box directEdit" maxlength="35" pattern=".{1,35}" placeholder="Last" name="last_name" value="{{s_user.last_name}}"/>
 						</div>
 						<hr>
 						<div class="input-block">
@@ -50,12 +52,12 @@
 						<div class="input-block">
 							<label class="input-label">Profession</label>
 							
-							<input type="text" id="profession-edit" class="input-box directEdit" maxlength="50" placeholder="What do you do?" value="{{s_user.userprofile.profession}}" maxlength="50" />
+							<input type="text" id="profession-edit" class="input-box directEdit" maxlength="50" placeholder="What do you do?" name="profession" value="{{s_user.userprofile.profession}}" maxlength="50" />
 						</div>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Statement</label>
-							<textarea id="personal-edit" class="textarea-box directEdit" placeholder="Let's talk about you.">{{s_user.userprofile.statement}}</textarea>
+							<textarea id="personal-edit" class="textarea-box directEdit" name="statement" placeholder="Let's talk about you.">{{s_user.userprofile.statement}}</textarea>
 						</div>
 						<hr>
 					</section>
@@ -79,24 +81,24 @@
 							                <div class="panel-body">							                    
 												<div class="input-block">
 													<label class="input-label">Position</label>
-													<input type="text" id="position{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="position-{{forloop.counter}}" placeholder="Position" value="{{job.position}}"/>
+													<input type="text" id="position{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="{{job.id}}_position" placeholder="Position" value="{{job.position}}"/>
 												</div>
 												<hr>
 												<div class="input-block">
 													<label class="input-label">Employer</label>
-													<input type="text" id="company{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="company-{{forloop.counter}}" placeholder="Company" value="{{job.company}}"/>
+													<input type="text" id="company{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="{{job.id}}_company" placeholder="Company" value="{{job.company}}"/>
 												</div>
 												<hr>
 												<div class="input-block">
 													<label class="input-label">Date</label>
 													<div class="form-inline">
-												        <select id="job_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date-{{forloop.counter}}" placeholder="From: ">
+												        <select id="job_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="{{job.id}}_job_from_date" placeholder="From: ">
 															<option disabled="disabled">From</option>
 															{% for x in year_choices %}
 																<option value="{{x}}">{{x}}</option>
 															{% endfor %}
 														<select/>
-												        <select id="job_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date-{{forloop.counter}}" placeholder="To: ">
+												        <select id="job_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="{{job.id}}_job_to_date" placeholder="To: ">
 															<option disabled="disabled">To</option>
 															<option value="PRESENT">Present</option>
 															{% for x in year_choices %}
@@ -113,7 +115,7 @@
 												<hr>
 												<div class="input-block">
 													<label class="input-label">Description</label>
-													<textarea id="job_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="job_about-{{forloop.counter}}" placeholder="Description">{{job.job_about}}</textarea>
+													<textarea id="job_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="{{job.id}}_job_about" placeholder="Description">{{job.job_about}}</textarea>
 												</div>
 							                </div>
 							            </div>
@@ -145,7 +147,7 @@
 								                <div class="panel-body">							                    
 													<div class="input-block">
 														<label class="input-label">Status</label>
-												        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="status-{{forloop.counter}}">
+												        <select id="status{{forloop.counter}}-edit" class="form-control directEdit" name="{{ed.id}}_status">
 															<option selected="" disabled="disabled">Status</option>
 															<option value="Graduated">Graduated</option>
 															<option value="Attending">Attending</option>
@@ -155,24 +157,24 @@
 													<hr>
 													<div class="input-block">
 														<label class="input-label">School</label>
-														<input type="text" id="school{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="school-{{forloop.counter}}" placeholder="School" value="{{ed.school}}"/>
+														<input type="text" id="school{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="{{ed.id}}_school" placeholder="School" value="{{ed.school}}"/>
 													</div>
 													<hr>
 													<div class="input-block">
 														<label class="input-label">Degree</label>
-														<input type="text" id="degree{{forloop.counter}}-edit" class="input-box directEdit" maxlength="100" name="degree-{{forloop.counter}}" placeholder="Degree" value="{{ed.degree}}"/>
+														<input type="text" id="degree{{forloop.counter}}-edit" class="input-box directEdit" maxlength="100" name="{{ed.id}}_degree" placeholder="Degree" value="{{ed.degree}}"/>
 													</div>
 													<hr>
 													<div class="input-block">
 														<label class="input-label">Date</label>
 														<div class="form-inline">
-													        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date-{{forloop.counter}}" placeholder="From: ">
+													        <select id="Education_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="{{ed.id}}_Education_from_date" placeholder="From: ">
 																<option disabled="disabled">From</option>
 																{% for x in year_choices %}
 																	<option value="{{x}}">{{x}}</option>
 																{% endfor %}
 															<select/>
-													        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date-{{forloop.counter}}" placeholder="To: ">
+													        <select id="Education_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="{{ed.id}}_Education_to_date" placeholder="To: ">
 																<option disabled="disabled">To</option>
 																<option value="PRESENT">Present</option>
 																{% for x in year_choices %}
@@ -217,19 +219,19 @@
 								                <div class="panel-body">							                    
 													<div class="input-block">
 														<label class="input-label">Title</label>
-														<input type="text" id="title{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="title-{{forloop.counter}}" placeholder="Accomplishment" value="{{accomp.title}}"/>
+														<input type="text" id="title{{forloop.counter}}-edit" class="input-box directEdit" maxlength="50" name="{{accomp.id}}_title" placeholder="Accomplishment" value="{{accomp.title}}"/>
 													</div>
 													<hr>
 													<div class="input-block">
 														<label class="input-label">Date</label>
 														<div class="form-inline">
-													        <select id="Accomplishment_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_from_date-{{forloop.counter}}" placeholder="From: ">
+													        <select id="Accomplishment_from_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="{{accomp.id}}_Accomplishment_from_date" placeholder="From: ">
 																<option disabled="disabled">From</option>
 																{% for x in year_choices %}
 																	<option value="{{x}}">{{x}}</option>
 																{% endfor %}
 															<select/>
-													        <select id="Accomplishment_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_to_date-{{forloop.counter}}" placeholder="To: ">
+													        <select id="Accomplishment_to_date{{forloop.counter}}-edit" class="form-control to-from-field half-box directEdit" name="{{accomp.id}}_Accomplishment_to_date" placeholder="To: ">
 																<option disabled="disabled">To</option>
 																<option value="PRESENT">Present</option>
 																{% for x in year_choices %}
@@ -246,7 +248,7 @@
 														<hr>
 														<div class="input-block">
 															<label class="input-label">Description</label>
-															<textarea id="accomplishments_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="accomplishments_about-{{forloop.counter}}" placeholder="Description">{{accomp.about}}</textarea>
+															<textarea id="accomplishments_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="{{accomp.id}}_accomplishments_about" placeholder="Description">{{accomp.about}}</textarea>
 														</div>
 													</div>
 								                </div>
@@ -279,12 +281,13 @@
 								                <div class="panel-body">							                    
 													<div class="input-block">
 														<label class="input-label">Title</label>
-														<input type="text" id="skillName{{forloop.counter}}-edit" class="input-box directEdit" name="skillName-{{forloop.counter}}" placeholder="Skill" value="{{skill.skill}}"/>
+														<input type="text" id="skillName{{forloop.counter}}-edit" class="input-box directEdit" name="{{skill.id}}_skill" placeholder="Skill" value="{{skill.skill}}"/>
 													</div>
 													
 													<div class="input-block">
 														<br>
 														<div id="slider{{forloop.counter}}-edit" class="slider directEdit" style="background-color:rgb(63, 138, 255)"></div>
+														<input type="hidden" id="form_percentage{{forloop.counter}}" class="directEdit" name="{{skill.id}}_percentage" value="{{skill.percentage}}"/>
 															<font id="percentage{{forloop.counter}}-edit" class="pull-right">{{skill.percentage}}%</font>
 															<script>
 															$('#slider{{forloop.counter}}-edit').noUiSlider({
@@ -318,7 +321,7 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Phone #</label>
-							<input type="tel" class="input-box" value="{{ s_user.userprofile.phone_number }}"></input>
+							<input type="tel" class="input-box directEdit" value="{{ s_user.userprofile.phone_number }}" id="phone_number-edit" name="phone_number"></input>
 						</div>
 						<hr>
 						{% for social in social_list %}
@@ -356,7 +359,7 @@
 						<h2 class="fs-title">Choose A Template</h2>
 						<hr>
 						<div class="grid">
-							<select name="template_name" id="select_template" class="image-picker show-html">
+							<select name="template" id="template-edit" class="image-picker show-html directEdit">
 								<option value=""></option>
 								{% for template in template_list %}
 									<option {% if template == s_user.user_template.template_name %}selected=""{%endif%} data-img-src="../static/img/templateIcons/{{template}}.jpg" value="{{template}}">{{template.readable_name}}</option>
@@ -377,7 +380,7 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label checkbox-label">
-								<input type="checkbox" name="is_public" {% if s_user.is_public == True %} checked {% endif %} />
+								<input type="checkbox" id="is_public" name="is_public" class="checker" {% if s_user.is_public == True %} checked {% endif %} />
 							</label>
 							<label class="input-box">Public profile? <span class="descriptive-text">| Allow others to view your resume.</span></label>
 						</div>
@@ -397,12 +400,12 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Email</label>
-							<input type="email" id="email-edit" class="input-box directEdit" placeholder="Email Address" value="{{s_user.email}}" maxlength="255"/>
+							<input type="email" id="email-edit" class="input-box directEdit" placeholder="Email Address" value="{{s_user.email}}" name="{{s_user.id}}_email" maxlength="255"/>
 							<hr>
 						</div>
 						<div class="input-block">
 							<label class="input-label">Password</label>
-							<input name="password" class="input-box" placeholder="Change Password" type="password" id="password" pattern=".{6,}" />
+							<input name="{{s_user.id}}_password" class="input-box" placeholder="Change Password" type="password" id="password" pattern=".{6,}" />
 							<hr>
 						</div>
 					</section> <!-- Preview Section -->
@@ -437,24 +440,24 @@
 		        <div class="panel-body">							                    
 					<div class="input-block">
 						<label class="input-label">Position</label>
-						<input type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="position-{counter}" placeholder="Position"/>
+						<input type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_position" placeholder="Position"/>
 					</div>
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Employer</label>
-						<input type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="company-{counter}" placeholder="Company"/>
+						<input type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_company" placeholder="Company"/>
 					</div>
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Date</label>
 						<div class="form-inline">
-					        <select id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_from_date-{counter}" placeholder="From: ">
+					        <select id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_job_from_date" placeholder="From: ">
 								<option disabled="disabled">From</option>
 								{% for x in year_choices %}
 									<option value="{{x}}">{{x}}</option>
 								{% endfor %}
 							<select/>
-					        <select id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="job_to_date-{counter}" placeholder="To: ">
+					        <select id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_job_to_date" placeholder="To: ">
 								<option disabled="disabled">To</option>
 								<option value="PRESENT">Present</option>
 								{% for x in year_choices %}
@@ -467,7 +470,7 @@
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Description</label>
-						<textarea id="job_about{counter}-edit" class="textarea-box directEdit" name="job_about-{counter}" placeholder="Description"></textarea>
+						<textarea id="job_about{counter}-edit" class="textarea-box directEdit" name="{counter}_NEW_job_about" placeholder="Description"></textarea>
 					</div>
 		        </div>
 		    </div>
@@ -489,7 +492,7 @@
 	                <div class="panel-body">							                    
 						<div class="input-block">
 							<label class="input-label">Status</label>
-					        <select id="status{counter}-edit" class="form-control directEdit" name="status-{counter}">
+					        <select id="status{counter}-edit" class="form-control directEdit" name="{counter}_NEW_status">
 								<option selected="" disabled="disabled">Status</option>
 								<option value="Graduated">Graduated</option>
 								<option value="Attending">Attending</option>
@@ -499,24 +502,24 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">School</label>
-							<input type="text" id="school{counter}-edit" class="input-box directEdit" maxlength="50" name="school-{counter}" placeholder="School"/>
+							<input type="text" id="school{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_school" placeholder="School"/>
 						</div>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Degree</label>
-							<input type="text" id="degree{counter}-edit" class="input-box directEdit" maxlength="100" name="degree-{counter}" placeholder="Degree"/>
+							<input type="text" id="degree{counter}-edit" class="input-box directEdit" maxlength="100" name="{counter}_NEW_degree" placeholder="Degree"/>
 						</div>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Date</label>
 							<div class="form-inline">
-						        <select id="Education_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Education_from_date-{counter}" placeholder="From: ">
+						        <select id="Education_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Education_from_date" placeholder="From: ">
 									<option disabled="disabled">From</option>
 									{% for x in year_choices %}
 										<option value="{{x}}">{{x}}</option>
 									{% endfor %}
 								<select/>
-						        <select id="Education_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Education_to_date-{counter}" placeholder="To: ">
+						        <select id="Education_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Education_to_date" placeholder="To: ">
 									<option disabled="disabled">To</option>
 									<option value="PRESENT">Present</option>
 									{% for x in year_choices %}
@@ -547,19 +550,19 @@
 
 							<div class="input-block">
 								<label class="input-label">Title</label>
-								<input type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="title-{counter}" placeholder="Accomplishment"/>
+								<input type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_title" placeholder="Accomplishment"/>
 							</div>
 							<hr>
 							<div class="input-block">
 								<label class="input-label">Date</label>
 								<div class="form-inline">
-							        <select id="Accomplishment_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_from_date-{counter}" placeholder="From: ">
+							        <select id="Accomplishment_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Accomplishment_from_date" placeholder="From: ">
 										<option disabled="disabled">From</option>
 										{% for x in year_choices %}
 											<option value="{{x}}">{{x}}</option>
 										{% endfor %}
 									<select/>
-							        <select id="Accomplishment_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="Accomplishment_to_date-{counter}" placeholder="To: ">
+							        <select id="Accomplishment_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Accomplishment_to_date" placeholder="To: ">
 										<option disabled="disabled">To</option>
 										<option value="PRESENT">Present</option>
 										{% for x in year_choices %}
@@ -571,7 +574,7 @@
 								<hr>
 								<div class="input-block">
 									<label class="input-label">Description</label>
-									<textarea id="accomplishments_about{counter}-edit" class="textarea-box directEdit" name="accomplishments_about-{counter}" placeholder="Description"></textarea>
+									<textarea id="accomplishments_about{counter}-edit" class="textarea-box directEdit" name="{counter}_NEW_accomplishments_about" placeholder="Description"></textarea>
 								</div>
 							</div>
 		                </div>
@@ -595,11 +598,12 @@
 
 								<div class="input-block">
 									<label class="input-label">Title</label>
-									<input type="text" id="skillName{counter}-edit" class="input-box directEdit" maxlength="50" name="skillName-{counter}" placeholder="Skill"/>
+									<input type="text" id="skillName{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_skill" placeholder="Skill"/>
 								</div>
 								<div class="input-block">
 									<br>
 									<div id="slider{counter}-edit" class="directEdit" style="background-color:rgb(63, 138, 255)"></div>
+									<input type="hidden" id="form_percentage{counter}" class="directEdit" name="{counter}_percentage" value="0"/>
 										<font id="percentage{counter}-edit" class="pull-right">0%</font>
 									</div>
 								</div>
@@ -615,15 +619,15 @@
 			
 			
 	<!-- / TEMPLATES -->
-	
     </body>
 		<script>
 		var originalHandle = "{{s_user.userprofile.handle}}";
 		
+		
 		$("#handle").change(function() {
 			var handle = $('#handle').val();
 			if(originalHandle !== handle){
-				checkHandle(handle);
+				checkHandle(handle)
 			}
 			else{
 				$('#handle').css("border",'solid 1px white');
@@ -634,7 +638,7 @@
 			handle=handle.replace(/\s/g,''); 
 
 			$.ajax({
-				async : false,
+				async : true,
 		        url : "/check_handle", // the endpoint
 		        type : "POST", // http method
 		        data : {
@@ -646,6 +650,7 @@
 					if(json == 0){
 						$('#handle').css("border",'solid 1px green');
 						flag=0;
+						saveResume("handle", handle,-1, "update");
 						//Success: 0
 					}else{
 						$('#handle').css("border",'solid 1px red');
@@ -657,6 +662,37 @@
 			});
 			return flag;
 		};
+		
+		function saveResume(key, value, pk, option) {
+			//Option: Create, update, delete
+			$.ajax({
+				async : true,
+		        url : "{{action_url}}", // the endpoint
+		        type : "POST", // http method
+		        data : {
+					key : key,
+					value : value,
+					id : pk,
+					option : option,
+					'csrfmiddlewaretoken': '{{csrf_token}}'
+				},
+		        // handle a successful response
+		        success : function(json) {
+					if(json == 1){
+						show_saving(1000);
+						if(key == "template"){
+							document.getElementById('resume').contentWindow.location.reload(true)
+						}
+						//Success: 0
+					}else{
+						$('[name="'+key+'"]').css("border",'solid 1px red');
+						alert("Save failed, please refresh the page and try again");
+						//Failed: 1
+					}
+		        }
+			});
+		};
+		
 		
   		// This is called with the results from from FB.getLoginStatus().
   		  function statusChangeCallback(response) {
