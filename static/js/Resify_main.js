@@ -126,6 +126,7 @@ $(document).ready(function(){
 		nameAttr = $("#"+elementId).attr("name")
 		primaryKey = nameAttr.replace(/[^0-9]/g,'');
 		saveResume(elementId, elementValue, primaryKey, "update");
+		
 	});
 	
 	// $('#full-form').on('change', 'select.directEdit', function(){ #for select
