@@ -142,7 +142,7 @@ $(document).ready(function(){
 // 	});
 	
 	
-	$('#full-form').on('slide', '.directEdit', function(){
+	$('#full-form').on('slide', '.animateSlide', function(){
 		var elementId = $(this).attr('id');
 		var idNum=elementId.replace(/[^0-9]/g,'');
 		if(elementId != ''){

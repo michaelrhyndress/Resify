@@ -99,10 +99,6 @@ strong {
     border-radius: 3px;
 }
 
-.template, .blank-item{
-	display:none;
-}
-
 .progress-bar {
     width: 0;
     -webkit-border-radius: 3px;

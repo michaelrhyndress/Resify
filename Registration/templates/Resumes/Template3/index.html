@@ -1,0 +1,285 @@
+{% load staticfiles %}
+{% static "" as baseUrl %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable = yes">
+	<title>{{ s_user.first_name }} {{ s_user.last_name }}</title>
+
+	<link rel="stylesheet" media="all" href="{% static 'css/bootstrap.css' %}" type="text/css">
+	<link rel="stylesheet" media="all" href="{% static 'css/base_resume.css' %}" type="text/css">
+	<link rel="stylesheet" media="all" href="{{baseUrl}}Resumes/{{s_user.user_template.template_name}}/layout.css" type="text/css">
+
+	<script src="{% static 'js/vendor/jquery-1.11.1.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+</head>
+<body>
+	<br class="hidden-print"><br class="hidden-print">
+	<div id="content">
+		<div class="container">
+
+			<br class="visable-print">
+			<div class="header">
+				<div class="row">
+					<div class='col-md-10 col-xs-12 col-sm-10 col-lg-10'>
+						<br class="hidden-print">
+						<div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 text-left">
+							<font class="mega isBold" id="first_name">{{ s_user.first_name }}</font>&nbsp;
+							<font id="last_name" class="mega isBold">{{ s_user.last_name }}</font>
+						</div>
+						<div class="col-md-6 col-xs-6 col-sm-6 col-lg-6 no-padding text-right">
+							<font id="phone_number" class="bigger">{{ s_user.userprofile.phone_number }}</font>&nbsp;&bull;&nbsp;
+							<font id="email" class="bigger">{{s_user.email}}</font>
+						</div>
+						<p id="profession" class="profession jumbo text-right">{{s_user.userprofile.profession}}</p>
+					</div>
+				</div>
+			</div>
+			<!-- Profile -->
+			
+			{% if job_list %}
+			<br><br class="hidden-print">
+			{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
+			<!-- Work experience -->
+			<section id="work-experience" class="work-experience">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-11 col-xs-12 col-sm-11 col-lg-11">
+							<div class="col-md-2 col-md-2 col-xs-2 col-sm-3 col-lg-2 text-right">
+								<label class="bigger">Experience</label>
+							</div>
+							<div class="col-md-9 col-xs-10 col-sm-9 col-lg-9">
+								{% for job in job_list %}
+								<div id="Job_{{job.id}}" class="experience-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+									<div class="row">
+										<strong class="pull-left text-left" id="company{{forloop.counter}}">{{job.company}}</strong>
+										<div class="text-right pull-right">
+											{% if job.job_from_date == job.job_to_date %} 
+											<font id="job_from_date{{forloop.counter}}">{{job.job_from_date}}</font>
+											{% if user.is_authenticated %}-<font id="job_to_date{{forloop.counter}}">{{job.job_to_date}}</font>
+											{% endif %}
+											{% else %}
+											<font id="job_from_date{{forloop.counter}}">{{job.job_from_date}}</font>-<font id="job_to_date{{forloop.counter}}">{{job.job_to_date}}</font>
+											{% endif %}
+										</div>
+									</div>
+									<div class="row">
+										<em><p id="position{{forloop.counter}}" class="text-left">{{job.position}}</p></em>
+										<p id="job_about{{forloop.counter}}" class="description">{{job.job_about}}</p>
+									</div>
+									<br>
+								</div>
+								{% endfor %}
+								<div id="blank-experience-info" class="blank-item"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			{% endif %}
+
+			<!-- Start experience template -->
+
+			<div id="experience-info-template" class="template">
+				<br class="hidden-print"><br class="hidden-print">
+				{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
+				<div id="{counter}" class="experience-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+					<div class="row">
+						<strong class="pull-left text-left" id="company{counter}"></strong>
+						<div class="text-right pull-right">
+							{% if job.job_from_date == job.job_to_date %} 
+							<font id="job_from_date{counter}"></font>
+							{% if user.is_authenticated %}-<font id="job_to_date{counter}"></font>
+							{% endif %}
+							{% else %}
+							<font id="job_from_date{counter}"></font>-<font id="job_to_date{counter}"></font>
+							{% endif %}
+						</div>
+					</div>
+					<div class="row">
+						<p id="position{counter}" class="text-left"></p>
+						<p id="job_about{counter}" class="description"></p>
+					</div>
+					<br>
+				</div>
+			</div>
+    
+			<!-- END Work experience -->	
+			
+			{% if education_list %}
+			<br class="hidden-print">
+			{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
+			<!-- Education -->
+			<section id="education" class="education">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-11 col-xs-12 col-sm-11 col-lg-11">
+							<div class="col-md-2 col-xs-2 col-sm-3 col-lg-2 text-right">
+								<label class="bigger">Education</label>
+							</div>
+							<div class="col-md-9 col-xs-10 col-sm-9 col-lg-9">
+								{% for ed in education_list %}
+								<div id="Ed_{{ed.id}}" class="education-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+									<div class="row">
+										<strong class="pull-left text-left" id="school{{forloop.counter}}">{{ed.school}}</strong>
+										<div class="text-right pull-right">
+											{% if ed.Education_from_date == ed.Education_to_date %} 
+											<font id="Education_from_date{{forloop.counter}}">{{ed.Education_from_date}}</font>{% if user.is_authenticated %}-<font id="Education_to_date{{forloop.counter}}">{{ed.Education_to_date}}</font>{% endif %}
+											{% else %}
+											<font id="Education_from_date{{forloop.counter}}">{{ed.Education_from_date}}</font>-<font id="Education_to_date{{forloop.counter}}">{{ed.Education_to_date}}</font>
+											{% endif %}
+										</div>
+									</div>
+									<div class="row">
+										<em><font class="pull-left text-left" id="status{{forloop.counter}}">{{ed.status}}</font></em>
+										<div class="text-right pull-right">
+											<em><font class="pull-left text-left" id="degree{{forloop.counter}}">{{ed.degree}}</font></em>
+										</div>
+									</div>
+									<br>
+								</div>
+								{% endfor %}
+								<div id="blank-education-info" class="blank-item"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			{% endif %}
+
+			<!-- Start experience template -->
+
+			<div id="education-info-template" class="template">
+				<br><br class="hidden-print">
+				{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
+				<div id="{counter}" class="education-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+					<div class="row">
+						<strong class="pull-left text-left" id="school{counter}"></strong>
+						<div class="text-right pull-right">
+							<font id="Education_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Education_to_date{counter}"></font>{% endif %}
+						</div>
+					</div>
+					<div class="row">
+						<font class="pull-left text-left" id="status{counter}"></font>
+						<div class="text-right pull-right">
+							<font class="pull-left text-left" id="degree{counter}"></font>
+						</div>
+					</div>
+					<br>
+				</div>
+			</div>
+			<!-- END Education -->
+			
+			<!-- Professional skills -->
+			{% if skill_list %}
+			<br class="hidden-print"><br class="hidden-print">
+			<section id="skills" class="skills">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-11 col-xs-12 col-sm-11 col-lg-11">
+							<div class="col-md-2 col-xs-2 col-sm-3 col-lg-2 text-right">
+								<label class="bigger">Skill Set</label>
+							</div>
+							<div class="col-md-10 col-xs-10 col-sm-8 col-lg-10">
+								{% for skill in skill_list %}
+								
+								<div id="skills_{{skill.id}}" class="skills-info-item col-md-3 col-xs-4 col-sm-5 col-lg-3 text-left">
+									<div class="row">
+										<p>
+											<font id="skillName{{forloop.counter}}">{{skill.skill}}</font>
+										</p>
+									</div>
+								</div>
+								{% endfor%}
+								<div id="blank-skills-info" class="blank-item"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			{% endif %}
+			<!-- end Professional skills -->
+
+			<!-- Start skills template -->
+			<div id="skills-info-template" class="template">
+				<div id="{counter}" class="skills-info-item col-md-3 col-xs-4 col-sm-5 col-lg-3 text-left">
+					<div class="row">
+						<p>
+							<font id="skillName{counter}">New skill</font>
+						</p>
+					</div>
+				</div>
+			</div>
+    
+			<!-- Accomplishments -->
+			{% if accomp_list  %}
+			<br><br class="hidden-print"><br class="hidden-print">
+			{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
+			<section id="accomplishments" class="accomplishments">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-11 col-xs-12 col-sm-11 col-lg-11">
+							<div class="col-md-2 col-xs-2 col-sm-3 col-lg-2 text-right">
+								<label class="bigger">Achievements</label>
+							</div>
+							<div class="col-md-9 col-xs-10 col-sm-9 col-lg-9">
+								{% for accomp in accomp_list %}
+								<div id="accomplishments_{{accomp.id}}" class="accomplishments-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+									<div class="row">
+										<strong class="pull-left text-left" id="title{{forloop.counter}}">{{accomp.title}}</strong>
+										<div class="text-right pull-right">
+											{% if accomp.Accomplishment_from_date == accomp.Accomplishment_to_date %} 
+											<font id="Accomplishment_from_date{{forloop.counter}}">{{accomp.Accomplishment_from_date}}</font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{{forloop.counter}}">{{accomp.Accomplishment_to_date}}</font>{% endif %}
+											{% else %}
+											<font id="Accomplishment_from_date{{forloop.counter}}">{{accomp.Accomplishment_from_date}}</font>-<font id="Accomplishment_to_date{{forloop.counter}}">{{accomp.Accomplishment_to_date}}</font>
+											{% endif %}
+										</div>
+									</div>
+									<div class="row">
+										<p id="accomplishments_about{{forloop.counter}}" class="description">{{accomp.about}}</p>
+									</div>
+									<br>
+								</div>
+								{% endfor %}
+								<div id="blank-accomplishments-info" class="blank-item"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			{% endif %}
+
+			<!-- Start accomplishment template -->
+
+			<div id="accomplishments-info-template" class="template">
+				<br><br class="hidden-print">
+				{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
+				<div id="{counter}" class="accomplishments-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+					<div class="row">
+						<strong class="pull-left text-left" id="title{counter}"></strong>
+						<div class="text-right pull-right">
+							<font id="Accomplishment_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{counter}"></font>{% endif %}
+						</div>
+					</div>
+					<div class="row">
+						<p id="accomplishments_about{counter}" class="description"></p>
+					</div>
+					<br>
+				</div>
+			</div>
+			
+			
+			<br class="hidden-print"><br class="hidden-print">
+			<div class="footer col-md-10 col-xs-12 col-sm-10 col-lg-10 text-center hidden-print"> 2014 &copy; Résify </div>	
+			<br class="hidden-print"><br class="hidden-print">	
+		</div><!-- END CENTER -->
+	</div>
+	<br class="hidden-print"><br class="hidden-print">
+	<!-- <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+		<script src="{% static 'css/bootstrap-progressbar.js' %}"></script>
+		<script src="{% static 'css/slow.js' %}"></script> -->
+
+	</body>
+
+	</html>

@@ -286,7 +286,7 @@
 													
 													<div class="input-block">
 														<br>
-														<div id="slider{{forloop.counter}}-edit" class="slider directEdit" style="background-color:rgb(63, 138, 255)"></div>
+														<div id="slider{{forloop.counter}}-edit" class="slider animateSlide" style="background-color:rgb(63, 138, 255)"></div>
 														<input type="hidden" id="form_percentage{{forloop.counter}}" class="directEdit" name="{{skill.id}}_percentage" value="{{skill.percentage}}"/>
 															<font id="percentage{{forloop.counter}}-edit" class="pull-right">{{skill.percentage}}%</font>
 															<script>
@@ -317,7 +317,7 @@
 					
 <!-- Contact Info -->						
 					<section id="contact-section">
-						<h2 class="fs-title">Contact Info.</h2>
+						<h2 class="fs-title">Contact Details</h2>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Phone #</label>
@@ -602,7 +602,7 @@
 								</div>
 								<div class="input-block">
 									<br>
-									<div id="slider{counter}-edit" class="directEdit" style="background-color:rgb(63, 138, 255)"></div>
+									<div id="slider{counter}-edit" class="animateSlide" style="background-color:rgb(63, 138, 255)"></div>
 									<input type="hidden" id="form_percentage{counter}" class="directEdit" name="{counter}_percentage" value="0"/>
 										<font id="percentage{counter}-edit" class="pull-right">0%</font>
 									</div>
@@ -686,7 +686,7 @@
 						//Success: 0
 					}else{
 						$('[name="'+key+'"]').css("border",'solid 1px red');
-						alert("Save failed, please refresh the page and try again");
+						// alert("Save failed, please refresh the page and try again");
 						//Failed: 1
 					}
 		        }

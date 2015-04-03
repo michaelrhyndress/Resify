@@ -440,4 +440,8 @@
 		top:126px;
 		
 	}
+	
+	.hidden-print{
+		display: none !important;
+	}
 }

@@ -1,0 +1,79 @@
+
+html, body, div, span, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, font, img, ul, li {
+ margin: 0;
+ padding: 0;
+ border: 0;
+ outline: 0;
+ font-size: 100%;
+ vertical-align: baseline;
+ background: transparent;
+}
+
+ol, ul {
+	list-style: none;
+}
+
+body{
+	font-family: "Times New Roman", Georgia, Serif;
+	background-image: url(pattern.png);
+	background-repeat: repeat;
+	font-size: 15pt;
+	color:#414141;
+}
+
+
+label{
+	color:#000000;
+	font-weight:300;
+}
+
+#content {
+ clear: both;
+ margin: 0px auto;
+ width: 1000px;
+ background: #fff;
+ -moz-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  -webkit-border-radius: 10px;
+ -moz-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+  -khtml-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+ position: relative;
+ overflow:none;
+}
+
+hr{
+	position: relative;
+	max-width: 1000px;
+}
+
+.mega {
+	font-size:2em;
+}
+
+.jumbo {
+	font-size:1.4em;
+}
+
+.super {
+	font-size:1.2em;
+}
+
+
+.isBold{
+	font-weight:bold;
+	font-weight:500;
+}
+
+
+.no-padding {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+@page {
+    size: A4;
+    margin: .25in;
+}
+
