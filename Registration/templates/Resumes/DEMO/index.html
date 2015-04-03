@@ -1,0 +1,231 @@
+{% load staticfiles %}
+{% static "" as baseUrl %}
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<title>{{ s_user.first_name }} {{ s_user.last_name }}</title>
+
+	<link rel="stylesheet" media="all" href="{% static 'css/bootstrap.css' %}" type="text/css">
+	<link rel="stylesheet" media="all" href="{% static 'css/base_resume.css' %}" type="text/css">
+	<link rel="stylesheet" media="all" href="{{baseUrl}}Resumes/{{s_user.user_template.template_name}}/layout.css" type="text/css">
+
+	<script src="{% static 'js/vendor/jquery-1.11.1.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/vendor/modernizr-2.6.2-respond-1.1.0.min.js' %}"></script>
+	<body>
+
+		<header id="header" class=""> <!-- TOP -->
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2 text-center">
+						<p class="name"><font id="first_name">{{ s_user.first_name }}</font> <font id="last_name">{{ s_user.last_name }}</font></p><br>
+						<p id="profession" class="profession">{{s_user.userprofile.profession}}</p>
+						<p id="personal" class="personal">{{ s_user.userprofile.statement}}</p>
+					</div>
+				</div>
+			</div>
+		</header>
+
+		<!-- Profile -->
+		<section id="contact">
+			<div class="container">
+				<div class="row">
+					{% if s_user.userprofile.phone_number %}
+					<span class="heading">Phone Number</span>
+					<p id="phone_number"><strong><a href="tel:{{ parsed_phone_number }}">{{ s_user.userprofile.phone_number }}</a></strong></p>
+					{% endif %}
+					<span class="heading">Email</span>
+					<p id="email"><strong><a href="mailto:{{s_user.email}}?Subject=Your%20online%20resume">{{s_user.email}}</a></strong></p>
+				</div>
+			</div>
+		</section>
+					
+		{# {% for social in social_list %} #}
+		{# 						{% if social.facebook %} #}
+		{# 		                    <div> #}
+			{# 		                        <span class="heading">Facebook Profile</span> #}
+			{# 		                        <p id="facebook"><strong><a href="{{social.facebook}}">{{social.facebook}}</a></strong></p> #}
+			{# 		                    </div> #}
+			{# 						{% endif %} #}
+			{# 						{% if social.twitter %} #}
+			{# 		                    <div> #}
+				{# 		                        <span class="heading">Twitter Profile</span> #}
+				{# 		                        <p id="twitter"><strong><a href="{{social.twitter}}">{{social.twitter}}</a></strong></p> #}
+				{# 		                    </div> #}
+				{# 						{% endif %} #}
+				{# 						{% if social.linkedIn %} #}
+				{# 		                    <div> #}
+					{# 		                        <span class="heading">LinkedIn Profile</span> #}
+					{# 		                        <p id="linkedIn"><strong><a href="{{social.linkedIn}}">{{social.linkedIn}}</a></strong></p> #}
+					{# 		                    </div> #}
+					{# 						{% endif %} #}
+					{# 					{% endfor%} #}
+
+					<!-- end Profile -->
+
+					{% if job_list %}
+					<!-- Work experience -->
+					<section id="work-experience" class="work-experience">
+						<div class="container">
+							<div class="row">
+								{% for job in job_list %}
+								<div id="Job_{{job.id}}" class="experience-info-item">
+									<span class="heading">
+										{% if job.job_from_date == job.job_to_date %} 
+										<font id="job_from_date{{forloop.counter}}">{{job.job_from_date}}</font>{% if user.is_authenticated %}-<font id="job_to_date{{forloop.counter}}">{{job.job_to_date}}</font>{% endif %}
+										{% else %}
+										<font id="job_from_date{{forloop.counter}}">{{job.job_from_date}}</font>-<font id="job_to_date{{forloop.counter}}">{{job.job_to_date}}</font>
+										{% endif %}
+									</span>
+									<strong><p id="position{{forloop.counter}}">{{job.position}}</p></strong>
+									<strong><p id="company{{forloop.counter}}">{{job.company}}</p></strong>
+									<p id="job_about{{forloop.counter}}" class="description">{{job.job_about}}</p>
+								</div>
+								{% endfor %}
+					
+								<div id="blank-experience-info" class="blank-item"></div>
+							</div>
+						</div>
+					</section>
+					{% endif %}
+
+					<!-- Start experience template -->
+
+					<div id="experience-info-template" class="template">
+						<div id="{counter}" class="experience-info-item">
+							<span class="heading">
+								<font id="job_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="job_to_date{counter}"></font>{% endif %}
+							</span>
+							<strong><p id="position{counter}"></p></strong>
+							<strong><p id="company{counter}"></p></strong>
+							<p id="job_about{counter}" class="description"></p>
+						</div>
+					</div>
+    
+					<!-- END Work experience -->	
+
+					{% if education_list %}
+					<!-- Education -->
+					<section id="education" class="education">
+						<div class="container">
+							<div class="row">
+								<div class="title"><span class="glyphicon glyphicon-book"></span>Education</div>
+		
+								{% for ed in education_list %}
+								<div id="Ed_{{ed.id}}" class="education-info-item">
+									<span class="heading">
+										{% if ed.Education_from_date == ed.Education_to_date %} 
+										<font id="Education_from_date{{forloop.counter}}">{{ed.Education_from_date}}</font>{% if user.is_authenticated %}-<font id="Education_to_date{{forloop.counter}}">{{ed.Education_to_date}}</font>{% endif %}
+										{% else %}
+										<font id="Education_from_date{{forloop.counter}}">{{ed.Education_from_date}}</font>-<font id="Education_to_date{{forloop.counter}}">{{ed.Education_to_date}}</font>
+										{% endif %}
+									</span>
+									<strong><p id="status{{forloop.counter}}">{{ed.status}}</p></strong>
+									<strong><p id="school{{forloop.counter}}">{{ed.school}}</p></strong>
+									<p id="degree{{forloop.counter}}">{{ed.degree}}</p>
+								</div>
+								{% endfor %}
+								<div id="blank-education-info" class="blank-item"></div>
+							</div>
+						</div>
+					</section>
+					{% endif %}
+
+					<!-- Start experience template -->
+
+					<div id="education-info-template" class="template">
+						<div id="{counter}" class="education-info-item">
+							<span class="heading">
+								<font id="Education_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Education_to_date{counter}"></font>{% endif %}
+							</span>
+							<strong><p id="status{counter}"></p></strong>
+							<strong><p id="school{counter}"></p></strong>
+							<p id="degree{counter}"></p>
+						</div>
+					</div>
+
+					<!-- END Education -->
+    
+					<!-- Professional skills -->
+					{% if skill_list %}
+					<section id="skills" class="skills">
+						<div class="container">
+							<div class="row">    
+								<div class="title"><span class="glyphicon glyphicon-tasks"></span>Skill Set</div>
+								{% for skill in skill_list %}
+								<div id="skills_{{skill.id}}" class="skills-info-item">
+									<p>
+										<font id="skillName{{forloop.counter}}">{{skill.skill}}</font><span class="annotation pull-right"><font id="percentage{{forloop.counter}}">{{skill.percentage}}</font>%</span>
+									</p>
+									<div class="progress">
+										<div id="slider{{forloop.counter}}" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{skill.percentage}}" aria-valuemin="0" aria-valuemax="100" style="width: {{skill.percentage}}%;"></div>
+									</div>
+								</div>
+								{% endfor%}
+								<div id="blank-skills-info" class="blank-item"></div>
+							</div>
+						</div>
+					</section>
+					{% endif %}
+					<!-- end Professional skills -->
+
+					<!-- Start skills template -->
+					<div id="skills-info-template" class="template">
+						<div id="{counter}" class="skills-info-item">
+							<p>
+								<font id="skillName{counter}">New skill</font><span class="annotation pull-right"><font id="percentage{counter}">0</font>%</span>
+							</p>
+							<div class="progress">
+								<div id="slider{counter}" class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+							</div>
+						</div>
+					</div>
+    
+	
+					<!-- Accomplishments -->
+					{% if accomp_list  %}
+					<section id="accomplishments" class="accomplishments">
+						<div class="container">
+							<div class="row">
+								<div id="accomplishments-info">
+									<div class="title"><span class="glyphicon glyphicon-ok"></span>Accomplishments</div>
+									{% for accomp in accomp_list %}
+									<div id="accomplishments_{{accomp.id}}" class="accomplishments-info-item">
+										<span class="heading">
+											{% if accomp.Accomplishment_from_date == accomp.Accomplishment_to_date %} 
+											<font id="Accomplishment_from_date{{forloop.counter}}">{{accomp.Accomplishment_from_date}}</font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{{forloop.counter}}">{{accomp.Accomplishment_to_date}}</font>{% endif %}
+											{% else %}
+											<font id="Accomplishment_from_date{{forloop.counter}}">{{accomp.Accomplishment_from_date}}</font>-<font id="Accomplishment_to_date{{forloop.counter}}">{{accomp.Accomplishment_to_date}}</font>
+											{% endif %}
+										</span>
+										<p id="accomplishments_about{{forloop.counter}}" class="description">{{accomp.about}}</p>
+									</div>
+									{% endfor %}
+									<div id="blank-accomplishments-info" class="blank-item"></div>
+								</div>
+							</div>
+						</div>
+					</section>
+					{% endif %}
+
+
+
+					<!-- Start accomplishment template -->
+
+					<div id="accomplishments-info-template" class="template">
+						<div id="{counter}" class="accomplishments-info-item">
+							<span class="heading">
+								<font id="Accomplishment_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{counter}"></font>{% endif %}
+							</span>
+							<p id="accomplishments_about{counter}" class="description"></p>
+						</div>
+					</div>
+
+					<hr class="empty">
+					<div class="footer">2014 &copy; Résify</div>
+					<script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
+					<script src="{% static 'css/bootstrap-progressbar.js' %}"></script>
+					<script src="{% static 'css/slow.js' %}"></script>
+				</body>
+
+				</html>
