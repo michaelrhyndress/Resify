@@ -31,7 +31,7 @@ label{
 #content {
  clear: both;
  margin: 0px auto;
- width: 1000px;
+ max-width: 1000px;
  background: #fff;
  -moz-border-radius: 10px;
   -khtml-border-radius: 10px;
@@ -77,3 +77,8 @@ hr{
     margin: .25in;
 }
 
+@media print{
+	#content {
+	 width: 1000px;
+	}
+}

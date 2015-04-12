@@ -194,10 +194,41 @@ WebKit inertia scrolling is being added here for any present/future devices that
     background-color:rgba(255,255,255,0);
 }
 
-#autosaving{
-	
+.tag{
+	background-color: rgb(63, 138, 255);
+	color:white;
+    border: rgb(63, 138, 255) 1px solid;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    display: inline-block;
+    border-radius: 3px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    margin: 0 5px 5px 0;
+    padding: 4px;
+    text-decoration: none;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    -webkit-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    vertical-align: middle;
 }
 
+.inline{
+	display: inline
+}
+
+.tag_new{
+	background-color: rgb(0, 181, 37);
+    border: rgb(0, 181, 37) 1px solid;
+}
+
+.tagIcon{
+	cursor:pointer;
+	color:white;
+}
+
+.hint{
+	color:grey;
+}
 
 /* btn */
 .menu-toggle {

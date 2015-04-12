@@ -9,6 +9,13 @@
         <meta charset="utf-8">
         <title>Edit Resume</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+		<script>
+			tags=[];
+		
+			function tag_list(tag, index) {
+				tags[index]=tag;
+			};
+		</script>
     </head>
     <body>
     {# <div class="Top">{{ s_user.first_name }} {{ s_user.last_name }}</div> #}
@@ -123,7 +130,7 @@
 									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 								{% endfor %}
 								{# {% if not job_list %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %} #}	{% else %}
-								<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>
+								<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 							{% endif %}
 							</div>
 						</section>
@@ -195,7 +202,7 @@
 										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 									{% endfor %}
 								{%else%}
-									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+									<a id="0" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 								{%endif%}
 							</div>
 					</section>
@@ -257,7 +264,7 @@
 										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 									{% endfor %}
 								{%else%}
-									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+									<a id="0" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 								{%endif%}
 							</div>
 					</section>
@@ -308,7 +315,7 @@
 										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 									{% endfor %}
 								{%else%}
-									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
+									<a id="0" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>
 								{%endif%}
 							</div>
 					</section>				
@@ -396,6 +403,24 @@
 						</div>
 						<hr>
 						<br><br>
+						
+						<h2 class="fs-title">Tags</h2>
+						<hr>
+						<div class="input-block" id="tags-info">
+							{% if s_user.userprofile.tags.all %}
+								{% for tag in s_user.userprofile.tags.all %}
+									<script>
+										tag_list("{{tag}}", {{forloop.counter}});
+									</script>
+									<span class="info-item tag" id="tag{{forloop.counter}}">{{tag}}&nbsp;<a class="delete-item" id="tags_{{tag.id}}"><font class="tagIcon"><i class="fa fa-times fa-lg"></i></font></a></span>
+								{% endfor %}
+							{% endif %}
+							<input type="text" id="new_tag_add" class="input-box inline" value="" placeholder="Add new tag"\>
+							<hr>
+						</div>
+						
+						<br><br>
+						
 						<h2 class="fs-title">Login Credentials</h2>
 						<hr>
 						<div class="input-block">
@@ -612,6 +637,12 @@
 					</div>
 				</div>
 				
+				<!-- tags -->
+				<div id="tags-info-template" class="template">
+					<span class="info-item tag tag_new" id="tag{counter}">{value}&nbsp;<a class="delete-item" id="tags_{counter}"><font class="tagIcon"><i class="fa fa-times fa-lg"></i></font></a></span>
+				</div>
+
+				
 
 	</div> <!-- END TEMPS -->
 			
@@ -621,13 +652,16 @@
 	<!-- / TEMPLATES -->
     </body>
 		<script>
-		var originalHandle = "{{s_user.userprofile.handle}}";
+
+		var lastHandle = "{{s_user.userprofile.handle}}";
 		
 		
 		$("#handle").change(function() {
-			var handle = $('#handle').val();
-			if(originalHandle !== handle){
-				checkHandle(handle)
+			var handle = slugify($('#handle').val());
+			$('#handle').val(handle);
+			if(lastHandle !== handle){
+				checkHandle(slugify(handle))
+				lastHandle=slugify(handle)
 			}
 			else{
 				$('#handle').css("border",'solid 1px white');
@@ -649,50 +683,52 @@
 		        success : function(json) {
 					if(json == 0){
 						$('#handle').css("border",'solid 1px green');
-						flag=0;
 						saveResume("handle", handle,-1, "update");
 						//Success: 0
 					}else{
 						$('#handle').css("border",'solid 1px red');
-						alert("That URL is taken");
-						flag=1;
+						// alert("That URL is taken");
 						//Failed: 1
 					}
 		        }
 			});
-			return flag;
 		};
 		
 		function saveResume(key, value, pk, option) {
-			//Option: Create, update, delete
-			$.ajax({
-				async : true,
-		        url : "{{action_url}}", // the endpoint
-		        type : "POST", // http method
-		        data : {
-					key : key,
-					value : value,
-					id : pk,
-					option : option,
-					'csrfmiddlewaretoken': '{{csrf_token}}'
-				},
-		        // handle a successful response
-		        success : function(json) {
-					if(json == 1){
-						show_saving(1000);
-						if(key == "template"){
-							document.getElementById('resume').contentWindow.location.reload(true)
+				var data = 0;
+				$.ajax({
+					async : (option != "add") ? true : false, //(true, false)
+			        url : "{{action_url}}", // the endpoint
+			        type : "POST", // http method
+			        data : {
+						key : key,
+						value : value,
+						pk : pk,
+						option : option,
+						'csrfmiddlewaretoken': '{{csrf_token}}'
+					},
+			        // handle a successful response
+			        success : function(json) {
+						if(json != 0){
+							show_saving(1000);
+							if(key == "template"){
+								document.getElementById('resume').contentWindow.location.reload(true);
+							}
+							if(option == "add"){
+								data=json;
+							}
+							//Success: 0
+						}else{
+							$('[name="'+key+'"]').css("border",'solid 1px red');
+							// alert("Save failed, please refresh the page and try again");
+							//Failed: 1
 						}
-						//Success: 0
-					}else{
-						$('[name="'+key+'"]').css("border",'solid 1px red');
-						// alert("Save failed, please refresh the page and try again");
-						//Failed: 1
-					}
-		        }
-			});
+			        }
+				});
+				if(option == "add"){
+					return data;
+				}
 		};
-		
 		
   		// This is called with the results from from FB.getLoginStatus().
   		  function statusChangeCallback(response) {

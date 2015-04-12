@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User as django_User
-from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View
@@ -11,7 +10,7 @@ from django.utils.timezone import now
 
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
 from Registration.models import Job_History, User, Education_History, Skills, User_Skills, SocialMedia
-from Registration.models import Accomplishments, Template, UserProfile, User_Template
+from Registration.models import Accomplishments, Template, UserProfile, User_Template, Tag
 from Registration.forms import UserProfileForm, JobHistoryForm, EducationHistoryForm, AccomplishmentForm, SocialMediaForm, UserTemplateForm
 
 import os, re, datetime
@@ -307,10 +306,10 @@ def skipSetup(request):
 def saveResume(request):
     if request.user.is_authenticated():
         if request.is_ajax():
-            key = request.POST.get('key', False)
-            value = request.POST.get('value', False)
-            pk = request.POST.get('pk', False)
-            option = request.POST.get('option', False)
+            key = request.POST.get('key', None)
+            value = request.POST.get('value', None)
+            pk = request.POST.get('pk', None)
+            option = request.POST.get('option', None)
             isSet=0
             print key
             print value
@@ -321,14 +320,14 @@ def saveResume(request):
                 if option == "update":
                     request.user.first_name=value
                     request.user.save()
-                    isSet=1
+                    isSet=-1
                     return HttpResponse(isSet)
     
             if key == "last_name":
                 if option == "update":
                     request.user.last_name=value
                     request.user.save()
-                    isSet=1
+                    isSet=-1
                     return HttpResponse(isSet)
         
             if key == "is_public":
@@ -338,7 +337,7 @@ def saveResume(request):
                     else:
                         request.user.is_public=False
                     request.user.save()
-                    isSet=1
+                    isSet=-1
                     return HttpResponse(isSet)
                     
             #Template        
@@ -348,16 +347,20 @@ def saveResume(request):
                     TemplateObj = Template.objects.get(template_name=value)
                     template.template_name=TemplateObj
                     template.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
             #Profile    
             if key == "handle":
                 profile = UserProfile.objects.get(user=request.user)
                 if option == "update":
-                    profile.handle=value
+                    profile.handle=slugify(value)
                     profile.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
 
@@ -366,7 +369,9 @@ def saveResume(request):
                 if option == "update":
                     profile.profession=value
                     profile.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
             if key == "phone_number":
@@ -374,7 +379,9 @@ def saveResume(request):
                 if option == "update":
                     profile.phone_number=value
                     profile.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
             if key == "personal": #Statement
@@ -382,9 +389,33 @@ def saveResume(request):
                 if option == "update":
                     profile.statement=value
                     profile.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
-
+            
+            if key == "tags":
+                profile = UserProfile.objects.get(user=request.user)
+                if option == "add":
+                    obj, created = Tag.objects.get_or_create(name=value.title())
+                    # print profile.tags.filter(name=value).exists()
+                    if profile.tags.filter(name=value).exists() or value == "":
+                        return HttpResponse(isSet)
+                    profile.tags.add(obj) #Add obj to profile
+                    profile.save()
+                    # obj = profile.tags.get(name=value) #get instance of saved object for id
+                    isSet = obj.id
+                    request.user.modified_date=now()
+                    request.user.save()
+                    return HttpResponse(isSet)
+                if option == "delete":
+                    obj = profile.tags.get(pk=pk)
+                    profile.tags.remove(obj)
+                    profile.save()
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
+                    return HttpResponse(isSet)
     
             #SocialMedia
             if key == "facebook":
@@ -392,7 +423,9 @@ def saveResume(request):
                 if option == "update":
                     media.facebook=value
                     media.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
             if key == "twitter":
@@ -400,7 +433,9 @@ def saveResume(request):
                 if option == "update":
                     media.twitter=value
                     media.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
             if key == "gplus":
@@ -408,7 +443,9 @@ def saveResume(request):
                 if option == "update":
                     media.gplus=value
                     media.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
             
             if key == "linkedIn":
@@ -416,14 +453,29 @@ def saveResume(request):
                 if option == "update":
                     media.linkedIn=value
                     media.save()
-                    isSet=1
+                    isSet=-1
+                    request.user.modified_date=now()
+                    request.user.save()
                     return HttpResponse(isSet)
         return HttpResponse(isSet)
         
     else:
-        return HttpResponse(isSet)
-            
-            
-            
+        return HttpResponse(isSet)      
+        
+def slugify(s):
+    """
+    Simplifies ugly strings into something URL-friendly.
+
+    """
+    s = s.lower()
+    for c in [' ', '-', '.', '/']:
+        s = s.replace(c, '')
+    s = re.sub('\W', '', s)
+    s = s.replace('_', '')
+    s = re.sub('\s+', ' ', s)
+    s = s.strip()
+
+ 
+    return s   
             
             

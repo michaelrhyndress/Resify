@@ -37,7 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Registration',
-    'crispy_forms',
+    'ATS',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -89,6 +89,10 @@ STATICFILES_DIRS = (
 LOGIN_URL = 'resify_login'
 LOGOUT_URL = 'resify_logout'
 LOGIN_REDIRECT_URL = '/'
+TEMPLATE_DIRS = (
+    '/ATS/templates/override/',
+    '/Registration/templates/',
+)
 
 AUTH_USER_MODEL = 'Registration.User'
 
