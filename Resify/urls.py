@@ -13,3 +13,7 @@ urlpatterns += patterns('django.contrib.auth.views',
 urlpatterns += patterns('',
     url(r'^', include('Registration.urls')),
 )
+
+urlpatterns += patterns('',
+    url(r'^', include('ATS.urls')),
+)

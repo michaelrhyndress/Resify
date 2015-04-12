@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime    
+from django.utils import timezone
 
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import (
@@ -58,8 +58,8 @@ class User(AbstractBaseUser):
     accept_terms = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     passed_setup = models.BooleanField(default=False)
-    created_date = models.DateField(auto_now_add=True, default=datetime.now)
-    modified_date = models.DateField(auto_now=True, default=datetime.now)
+    created_date = models.DateField(auto_now_add=True, default=timezone.now())
+    modified_date = models.DateField(auto_now=True, default=timezone.now())
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
@@ -96,6 +96,7 @@ class User(AbstractBaseUser):
         
 @python_2_unicode_compatible
 class Tag(models.Model):
+    ''' Purpose is still up in the air... Maybe connect to Categories? '''
     name=models.CharField(max_length=50, unique=True)
     class Meta:
         verbose_name='tag'

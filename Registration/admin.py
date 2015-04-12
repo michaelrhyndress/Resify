@@ -79,10 +79,14 @@ class UserAdmin(UserAdmin):
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
+    
+class UserProfileAdmin(admin.ModelAdmin):
+    filter_horizontal=('tags',)
 
+    
 # Now register the new UserAdmin...
 admin.site.register(User, UserAdmin)
-admin.site.register(UserProfile)
+admin.site.register(UserProfile, UserProfileAdmin)
 admin.site.register(Tag)
 admin.site.register(Template)
 admin.site.register(Education_History)
