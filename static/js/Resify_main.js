@@ -107,7 +107,7 @@ $(document).ready(function(){
 	$('#full-form').on('keyup', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
 		var elementValue = $("#"+elementId).val()
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 			iframe.contents().find('#'+elementSubstr).text(elementValue);
@@ -118,7 +118,7 @@ $(document).ready(function(){
 	$('#full-form').on('change', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
 		var elementValue = $("#"+elementId).val()
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 			iframe.contents().find('#'+elementSubstr).text(elementValue);
@@ -139,7 +139,7 @@ $(document).ready(function(){
 	
 	// $('#full-form').on('change', 'select.directEdit', function(){ #for select
 // 		var elementId = $(this).attr('id');
-// 		var iframe = $("#resume, #mobile-iframe");
+// 		var iframe = $("#resume, #mobile-resume");
 // 		if(elementId != ''){
 // 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 // 			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
@@ -161,7 +161,7 @@ $(document).ready(function(){
 			$("#form_percentage_New_"+idNum).attr("value", $theVal);
 			$("#percentage_New_"+idNum+"-edit").html($theVal);
 			$theVal=$theVal.replace(/[%$]/g,'');
-			var iframe = $("#resume, #mobile-iframe");
+			var iframe = $("#resume, #mobile-resume");
 			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#percentage_New_'+idNum).text($theVal);
 			iframe.contents().find('#'+elementSubstr).attr("style", "width: "+$theVal+"%;");
@@ -180,7 +180,7 @@ $(document).ready(function(){
 	
 	$('#full-form').on('click', '.add-item', function(){
 		var isSlider = $(this).attr('class').split(' ')[1];
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		var number = $(this).attr('id'); //Last count
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
@@ -289,7 +289,7 @@ $(document).ready(function(){
 	$('#full-form').on('click', '.delete-item', function(){
 		var itemID = $(this).attr('id');
 		splitID = itemID.split("_");
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		$("#"+itemID+".delete-item").parents(".info-item").remove(); //Hide the box
 		iframe.contents().find('#'+itemID).remove();
 		saveResume(splitID[0], "None", splitID[1], "delete");

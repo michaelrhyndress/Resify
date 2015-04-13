@@ -448,7 +448,7 @@ a.add-item, .collapse-toggle{
 	.input-box{
 		width: calc(100%-70px);
 	}
-	#mobile-iframe{
+	#mobile-resume{
 	    padding:0px;
 		height:100%;
 		box-shadow: 0px 0px 20px black; 
