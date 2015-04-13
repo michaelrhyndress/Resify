@@ -683,6 +683,7 @@
 		        success : function(json) {
 					if(json == 0){
 						$('#handle').css("border",'solid 1px green');
+						$('#resume').attr("src", handle);
 						saveResume("handle", handle,-1, "update");
 						//Success: 0
 					}else{

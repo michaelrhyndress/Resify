@@ -335,6 +335,7 @@ function hide_saving(){
  */
 (function($) {
 	var keys = {
+		backspace: 8,
 		tab: 9,
 		up: 38,
 		down: 40
@@ -394,7 +395,20 @@ function hide_saving(){
 
 			// Emit the number of matching words with the 'match' event.
 			self.trigger("match", words.length);
+			if (options.hint) {
+				if (word.length >= options.minLength) {
+					// Show hint.
+					hint.call(self, words[0]);
+				} else {
+					// Clear hinting.
+					// This call is needed when using backspace.
+					hint.call(self, "");
+				}
+			}
 
+			if (backspace) {
+				backspace = false;
+			}
 		});
 
 		this.on("keydown.tabcomplete", function(e) {
@@ -453,6 +467,15 @@ function hide_saving(){
 				if (options.hint) {
 					// Turn off any additional hinting.
 					hint.call(self, "");
+				}
+				else if (key == keys.backspace) {
+					// Remember that backspace was pressed. This is used
+					// by the 'input' event.
+					backspace = true;
+
+					// Reset iteration.
+					i = -1;
+					last = "";
 				}
 			}
 		});
