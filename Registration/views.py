@@ -154,6 +154,7 @@ class Homepage(View):
                 skill_list = list(User_Skills.objects.filter(user__email=s_user.email))
                 accomplishments_list =list(Accomplishments.objects.filter(user__email=s_user.email))
                 socialMedia_list =list(SocialMedia.objects.filter(user__email=s_user.email))
+                tag_list=list(Tag.objects.all())
                 #get user template
                 template = str(s_user.user_template.template_name)
                 template= os.path.join('Resumes',template,'index.html')
@@ -169,6 +170,7 @@ class Homepage(View):
                     'social_list' : socialMedia_list,
                     'year_choices' : YEAR_CHOICES,
                     'template_list' : template_list,
+                    'tag_list': tag_list,
                 }
                 return render(request, 'editResume.html', c)
                 
@@ -363,7 +365,7 @@ def saveResume(request):
                     request.user.save()
                     return HttpResponse(isSet)
             
-
+                    
             if key == "profession":
                 profile = UserProfile.objects.get(user=request.user)
                 if option == "update":
@@ -412,11 +414,26 @@ def saveResume(request):
                     obj = profile.tags.get(pk=pk)
                     profile.tags.remove(obj)
                     profile.save()
-                    isSet=-1
                     request.user.modified_date=now()
                     request.user.save()
+                    isSet=-1
                     return HttpResponse(isSet)
-    
+            
+            #education
+            if key == "Ed":
+                # if option == "add":
+                    
+                if option == "delete":
+                    obj =  Education_History.objects.filter(pk=pk)
+                    print obj
+                    obj.delete()
+                    obj.save()
+                    request.user.modified_date=now()
+                    request.user.save()
+                    isSet=-1
+                    return HttpResponse(isSet)
+                        
+                                
             #SocialMedia
             if key == "facebook":
                 media = SocialMedia.objects.get(user=request.user)

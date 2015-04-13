@@ -1,13 +1,5 @@
+var user_tags=[];	
 $(document).ready(function(){
- 	$('#new_tag_add').tabcomplete([
- 				"array",
- 				"arrays",
- 				"arraies",
- 				"with",
- 				"words",
- 				"to",
- 				"complete"
- 			]);
 	/* AUTO SAVE */
 	$("#autosaving").hide();
 	// $('#full-form').sayt({'autosave': false, 'autorecover': true, 'days': 3});
@@ -248,6 +240,8 @@ $(document).ready(function(){
 			arrowKeys: true
 		};
 		var elementValue = $(this).val();
+		
+		elementValue= capitalize(elementValue);
 		var elementId = 0;
 		var key = e.keyCode;
 		//188: comma ; 9: tab ; 186: semi-colon ; 13: enter 
@@ -261,7 +255,7 @@ $(document).ready(function(){
 				return false;
 			}
 			if(elementId != 0){
-				if(tags.indexOf(elementValue) == -1 && elementValue){ //Case sensitive?
+				if(user_tags.indexOf(elementValue) == -1 && elementValue){ //Case sensitive?
 					var stepUp = $(this).parent();
 					var parentEl = stepUp.parent(); // gets div.info-item which is the main container
 					var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
@@ -276,7 +270,7 @@ $(document).ready(function(){
 					stepUp.before(templateClone.html());
 					var newVal=$("#tag"+elementId).html().replace("{value}", elementValue);
 					$("#tag"+elementId).html(newVal.replace("{value}", elementValue));
-					tags[elementId]=elementValue;
+					tag_list(elementValue, elementId)
 					$(this).val(''); //Clear input
 				}
 			}
@@ -295,12 +289,14 @@ $(document).ready(function(){
 	$('#full-form').on('click', '.delete-item', function(){
 		var itemID = $(this).attr('id');
 		splitID = itemID.split("_");
+		var iframe = $("#resume, #mobile-iframe");
 		$("#"+itemID+".delete-item").parents(".info-item").remove(); //Hide the box
+		iframe.contents().find('#'+itemID).remove();
 		saveResume(splitID[0], "None", splitID[1], "delete");
-		tags.pop([splitID[1]])
-		amounts.push({ action: "delete", id: splitID[1] }); //stack of deletions
+		user_tags.pop([splitID[1]]);
 	});	
-	
+
+		
 	$('#full-form').on('click', '.cancelInputAfter', function(){
 		$(this).next('input').val("");
 		$(this).prev('i').addClass("fa-bell-o");
@@ -313,10 +309,36 @@ $(document).ready(function(){
 function show_saving(t){
 	$("#autosaving").show();
 	window.setTimeout( hide_saving, t );
-};
+}
+
 function hide_saving(){
       $("#autosaving").hide()
-};
+}
+
+
+function tag_list(tag, index) {
+	user_tags[index]=capitalize(tag);
+}
+
+function slugify(text){
+	return text.toString().toLowerCase()
+	  .replace(/\s+/g, '')           // Replace spaces
+	  .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+	  .replace(/\-+/g, '')         // Replace multiple - with single -
+	  .replace(/^-+/, '')             // Trim - from start of text
+	  .replace(/-+$/, '');            // Trim - from end of text
+}
+
+function capitalize(str){ 
+   var words = str.split(" "); 
+   for (var i=0 ; i < words.length ; i++){ 
+      var testwd = words[i]; 
+      var firLet = testwd.substr(0,1); 
+      var rest = testwd.substr(1, testwd.length -1) 
+      words[i] = firLet.toUpperCase() + rest 
+   } 
+   return words.join(" "); 
+} 
 
 //Take experience-info-template and put it into ul experience-info before #blank-"experience"
 
@@ -370,6 +392,7 @@ function hide_saving(){
 		this.prev(".hint").remove();
 
 		var self = this;
+		var backspace = false;
 		var i = -1;
 		var words = [];
 		var last = "";
@@ -468,7 +491,7 @@ function hide_saving(){
 					// Turn off any additional hinting.
 					hint.call(self, "");
 				}
-				else if (key == keys.backspace) {
+				else if (e.which == keys.backspace) {
 					// Remember that backspace was pressed. This is used
 					// by the 'input' event.
 					backspace = true;
@@ -544,12 +567,3 @@ function hide_saving(){
 	}
 
 })(jQuery);
-
-function slugify(text){
-	return text.toString().toLowerCase()
-	  .replace(/\s+/g, '')           // Replace spaces
-	  .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-	  .replace(/\-+/g, '')         // Replace multiple - with single -
-	  .replace(/^-+/, '')             // Trim - from start of text
-	  .replace(/-+$/, '');            // Trim - from end of text
-}

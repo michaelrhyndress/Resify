@@ -145,6 +145,9 @@ WebKit inertia scrolling is being added here for any present/future devices that
 */	padding:10px;
 	width:80%;
 }
+.tag-box{
+	width:110%;
+}
 .input-fieldset{
 	border:solid 1px white;
 	padding:0px;
@@ -213,7 +216,7 @@ WebKit inertia scrolling is being added here for any present/future devices that
 }
 
 .inline{
-	display: inline
+	display: inline;
 }
 
 .tag_new{

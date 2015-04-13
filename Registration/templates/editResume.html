@@ -10,11 +10,14 @@
         <title>Edit Resume</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 		<script>
-			tags=[];
-		
-			function tag_list(tag, index) {
-				tags[index]=tag;
-			};
+		$(document).ready(function(){
+			var db_tag_list = [];
+			 //Makes the tag list from db for tab complete
+			{% for tag in tag_list %}
+				db_tag_list[{{forloop.counter0}}]="{{tag}}";
+				{%if forloop.last%}$('#new_tag_add').tabcomplete(db_tag_list);{%endif%}
+			{% endfor %}
+			});
 		</script>
     </head>
     <body>
@@ -52,7 +55,7 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">URL</label>
-							<input type="text" id="handle" class="input-box" maxlength="15" name="handle" placeholder="Personal URL" value="{{s_user.userprofile.handle}}" autofocus/>
+							<input type="text" id="handle" class="input-box" maxlength="25" name="handle" placeholder="Personal URL" value="{{s_user.userprofile.handle}}" autofocus/>
 							<span class="help-block url"></span>
 						</div>
 						<hr>
@@ -379,7 +382,7 @@
 				
 <!-- Preview (RIGHT SIDE) -->						
 					<section id="preview-section">
-						<iframe id="mobile-iframe" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Please upgrade your browser to view this page.</iframe>
+						<iframe id="mobile-resume" src="{{s_user.userprofile.handle}}" allowfullscreen="" seamless>Please upgrade your browser to view this page.</iframe>
 					</section> <!-- Preview Section -->
 					
 					<section id="settings-section">
@@ -394,7 +397,7 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Created</label>
-							<label class="input-box">{{s_user.created_date}} <span class="descriptive-text">| Your Resume's birthday!</span></label>
+							<label class="input-box">{{s_user.created_date}} <span class="descriptive-text">| Your resume's birthday!</span></label>
 							<hr>
 						</div>
 						<div class="input-block">
@@ -415,7 +418,7 @@
 									<span class="info-item tag" id="tag{{forloop.counter}}">{{tag}}&nbsp;<a class="delete-item" id="tags_{{tag.id}}"><font class="tagIcon"><i class="fa fa-times fa-lg"></i></font></a></span>
 								{% endfor %}
 							{% endif %}
-							<input type="text" id="new_tag_add" class="input-box inline" value="" placeholder="Add new tag"\>
+							<input type="text" id="new_tag_add" class="input-box tag-box inline" value="" placeholder="Add new tag"\>
 							<hr>
 						</div>
 						
@@ -652,7 +655,7 @@
 	<!-- / TEMPLATES -->
     </body>
 		<script>
-
+		
 		var lastHandle = "{{s_user.userprofile.handle}}";
 		
 		
@@ -684,6 +687,7 @@
 					if(json == 0){
 						$('#handle').css("border",'solid 1px green');
 						$('#resume').attr("src", handle);
+						$('#mobile-resume').attr("src", handle);
 						saveResume("handle", handle,-1, "update");
 						//Success: 0
 					}else{
@@ -714,6 +718,7 @@
 							show_saving(1000);
 							if(key == "template"){
 								document.getElementById('resume').contentWindow.location.reload(true);
+								document.getElementById('mobile-resume').contentWindow.location.reload(true);
 							}
 							if(option == "add"){
 								data=json;
