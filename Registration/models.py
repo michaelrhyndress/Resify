@@ -130,7 +130,7 @@ class User_Template(models.Model):
 class UserProfile(models.Model):
     user=models.OneToOneField(User)
     profession=models.CharField(max_length=50, blank=True, default="")
-    handle=models.SlugField(max_length=15, blank=True, default="", unique=True)
+    handle=models.SlugField(max_length=25, blank=True, default="", unique=True)
     phone_number = models.CharField(max_length=30, blank=True, default="")
     statement = models.TextField(blank=True, default="")
     tags = models.ManyToManyField(Tag, blank=True)

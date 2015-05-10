@@ -22,7 +22,7 @@ class Keyword(models.Model):
         
 class Category(models.Model):
     """ Class to maintain certain catagories. Such as Computer Science, HealthCare, etc."""
-    title = models.CharField(max_length=250, blank=False, unique=True)
+    title = models.CharField(max_length=250, blank=False, unique=True) # one to one with tags
     words = models.ManyToManyField(Keyword,  blank=True)
     
     class Meta:

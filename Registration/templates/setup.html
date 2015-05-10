@@ -31,7 +31,7 @@
 			{{ profile_form.handle.errors }}
 			<div class="input-group input-group-sm">
 				<span id="handle_addon" class="input-group-addon" style="height:20px;">@</span>
-				<input type="text" id="handle" maxlength="15" name="handle" placeholder="Personal URL" style="margin-bottom:0px; border-left:none; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 0px; border-top-left-radius: 0px;"/>
+				<input type="text" id="handle" maxlength="25" name="handle" placeholder="Personal URL" style="margin-bottom:0px; border-left:none; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 0px; border-top-left-radius: 0px;"/>
 			</div>
 			<span class="help-block url"></span>
 			{{ profile_form.profession.errors }}
@@ -237,7 +237,7 @@
 	});
 
 	function checkHandle(flag) {
-		var handle = $('#handle').val();
+		var handle = slugify($('#handle').val());
 		handle=handle.replace(/\s/g,''); 
 		
 		$.ajax({

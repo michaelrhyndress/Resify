@@ -114,6 +114,9 @@ li.point:first-child::before {
 #progressbar{
 	padding:0px;
 }
+.field-active{
+	z-index:10;
+}
 /*headings*/
 .fs-title {
 	font-size: 15px;

@@ -1,13 +1,5 @@
+var user_tags=[];	
 $(document).ready(function(){
- 	$('#new_tag_add').tabcomplete([
- 				"array",
- 				"arrays",
- 				"arraies",
- 				"with",
- 				"words",
- 				"to",
- 				"complete"
- 			]);
 	/* AUTO SAVE */
 	$("#autosaving").hide();
 	// $('#full-form').sayt({'autosave': false, 'autorecover': true, 'days': 3});
@@ -115,7 +107,7 @@ $(document).ready(function(){
 	$('#full-form').on('keyup', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
 		var elementValue = $("#"+elementId).val()
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 			iframe.contents().find('#'+elementSubstr).text(elementValue);
@@ -126,7 +118,7 @@ $(document).ready(function(){
 	$('#full-form').on('change', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
 		var elementValue = $("#"+elementId).val()
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 			iframe.contents().find('#'+elementSubstr).text(elementValue);
@@ -147,7 +139,7 @@ $(document).ready(function(){
 	
 	// $('#full-form').on('change', 'select.directEdit', function(){ #for select
 // 		var elementId = $(this).attr('id');
-// 		var iframe = $("#resume, #mobile-iframe");
+// 		var iframe = $("#resume, #mobile-resume");
 // 		if(elementId != ''){
 // 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 // 			iframe.contents().find('#'+elementSubstr).text($("#"+elementId).val());
@@ -169,7 +161,7 @@ $(document).ready(function(){
 			$("#form_percentage_New_"+idNum).attr("value", $theVal);
 			$("#percentage_New_"+idNum+"-edit").html($theVal);
 			$theVal=$theVal.replace(/[%$]/g,'');
-			var iframe = $("#resume, #mobile-iframe");
+			var iframe = $("#resume, #mobile-resume");
 			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#percentage_New_'+idNum).text($theVal);
 			iframe.contents().find('#'+elementSubstr).attr("style", "width: "+$theVal+"%;");
@@ -188,7 +180,7 @@ $(document).ready(function(){
 	
 	$('#full-form').on('click', '.add-item', function(){
 		var isSlider = $(this).attr('class').split(' ')[1];
-		var iframe = $("#resume, #mobile-iframe");
+		var iframe = $("#resume, #mobile-resume");
 		var number = $(this).attr('id'); //Last count
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
@@ -248,6 +240,8 @@ $(document).ready(function(){
 			arrowKeys: true
 		};
 		var elementValue = $(this).val();
+		
+		elementValue= capitalize(elementValue);
 		var elementId = 0;
 		var key = e.keyCode;
 		//188: comma ; 9: tab ; 186: semi-colon ; 13: enter 
@@ -261,7 +255,7 @@ $(document).ready(function(){
 				return false;
 			}
 			if(elementId != 0){
-				if(tags.indexOf(elementValue) == -1 && elementValue){ //Case sensitive?
+				if(user_tags.indexOf(elementValue) == -1 && elementValue){ //Case sensitive?
 					var stepUp = $(this).parent();
 					var parentEl = stepUp.parent(); // gets div.info-item which is the main container
 					var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
@@ -276,7 +270,7 @@ $(document).ready(function(){
 					stepUp.before(templateClone.html());
 					var newVal=$("#tag"+elementId).html().replace("{value}", elementValue);
 					$("#tag"+elementId).html(newVal.replace("{value}", elementValue));
-					tags[elementId]=elementValue;
+					tag_list(elementValue, elementId)
 					$(this).val(''); //Clear input
 				}
 			}
@@ -295,12 +289,14 @@ $(document).ready(function(){
 	$('#full-form').on('click', '.delete-item', function(){
 		var itemID = $(this).attr('id');
 		splitID = itemID.split("_");
+		var iframe = $("#resume, #mobile-resume");
 		$("#"+itemID+".delete-item").parents(".info-item").remove(); //Hide the box
+		iframe.contents().find('#'+itemID).remove();
 		saveResume(splitID[0], "None", splitID[1], "delete");
-		tags.pop([splitID[1]])
-		amounts.push({ action: "delete", id: splitID[1] }); //stack of deletions
+		user_tags.pop([splitID[1]]);
 	});	
-	
+
+		
 	$('#full-form').on('click', '.cancelInputAfter', function(){
 		$(this).next('input').val("");
 		$(this).prev('i').addClass("fa-bell-o");
@@ -313,10 +309,36 @@ $(document).ready(function(){
 function show_saving(t){
 	$("#autosaving").show();
 	window.setTimeout( hide_saving, t );
-};
+}
+
 function hide_saving(){
       $("#autosaving").hide()
-};
+}
+
+
+function tag_list(tag, index) {
+	user_tags[index]=capitalize(tag);
+}
+
+function slugify(text){
+	return text.toString().toLowerCase()
+	  .replace(/\s+/g, '')           // Replace spaces
+	  .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+	  .replace(/\-+/g, '')         // Replace multiple - with single -
+	  .replace(/^-+/, '')             // Trim - from start of text
+	  .replace(/-+$/, '');            // Trim - from end of text
+}
+
+function capitalize(str){ 
+   var words = str.split(" "); 
+   for (var i=0 ; i < words.length ; i++){ 
+      var testwd = words[i]; 
+      var firLet = testwd.substr(0,1); 
+      var rest = testwd.substr(1, testwd.length -1) 
+      words[i] = firLet.toUpperCase() + rest 
+   } 
+   return words.join(" "); 
+} 
 
 //Take experience-info-template and put it into ul experience-info before #blank-"experience"
 
@@ -335,6 +357,7 @@ function hide_saving(){
  */
 (function($) {
 	var keys = {
+		backspace: 8,
 		tab: 9,
 		up: 38,
 		down: 40
@@ -369,6 +392,7 @@ function hide_saving(){
 		this.prev(".hint").remove();
 
 		var self = this;
+		var backspace = false;
 		var i = -1;
 		var words = [];
 		var last = "";
@@ -394,7 +418,20 @@ function hide_saving(){
 
 			// Emit the number of matching words with the 'match' event.
 			self.trigger("match", words.length);
+			if (options.hint) {
+				if (word.length >= options.minLength) {
+					// Show hint.
+					hint.call(self, words[0]);
+				} else {
+					// Clear hinting.
+					// This call is needed when using backspace.
+					hint.call(self, "");
+				}
+			}
 
+			if (backspace) {
+				backspace = false;
+			}
 		});
 
 		this.on("keydown.tabcomplete", function(e) {
@@ -453,6 +490,15 @@ function hide_saving(){
 				if (options.hint) {
 					// Turn off any additional hinting.
 					hint.call(self, "");
+				}
+				else if (e.which == keys.backspace) {
+					// Remember that backspace was pressed. This is used
+					// by the 'input' event.
+					backspace = true;
+
+					// Reset iteration.
+					i = -1;
+					last = "";
 				}
 			}
 		});
@@ -521,12 +567,3 @@ function hide_saving(){
 	}
 
 })(jQuery);
-
-function slugify(text){
-	return text.toString().toLowerCase()
-	  .replace(/\s+/g, '')           // Replace spaces
-	  .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-	  .replace(/\-+/g, '')         // Replace multiple - with single -
-	  .replace(/^-+/, '')             // Trim - from start of text
-	  .replace(/-+$/, '');            // Trim - from end of text
-}
