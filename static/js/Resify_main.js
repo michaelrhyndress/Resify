@@ -198,7 +198,14 @@ $(document).ready(function(){
 		
 		var number = $(this).attr('id'); //Last count on "Add-item" link
 		
-		// replace this with id
+		// replace this with id from saveResume(Add)
+		var subKey = $(this).attr('group');
+		if (typeof attr == typeof undefined || attr == false) {
+			subKey = "None";
+		}
+		
+		obj_id = saveResume("None", "None", subKey, "None", "add");
+		
 		
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template

@@ -130,11 +130,9 @@
 							                </div>
 							            </div>
 							        </div>
-									{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 								{% endfor %}
-								{# {% if not job_list %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %} #}	{% else %}
-								<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 							{% endif %}
+							<a group="experience" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 							</div>
 						</section>
 
@@ -202,11 +200,10 @@
 								                </div>
 								            </div>
 								        </div>
-										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 									{% endfor %}
-								{%else%}
-									<a id="0" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 								{%endif%}
+								<a group="education" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
+								
 							</div>
 					</section>
 				
@@ -264,11 +261,9 @@
 								                </div>
 								            </div>
 								        </div>
-										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 									{% endfor %}
-								{%else%}
-									<a id="0" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 								{%endif%}
+								<a group="accomplishments" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
 							</div>
 					</section>
 					
@@ -314,12 +309,10 @@
 													</div>
 								                </div>
 								            </div>
-
-										{% if forloop.last %}<a id="{{forloop.counter|add:'1'}}" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>{% endif %}
 									{% endfor %}
-								{%else%}
-									<a id="0" class="add-item add-slider"><i class="fa fa-plus-circle"></i> Add item</a>
 								{%endif%}
+								<a group="skills" class="add-item"><i class="fa fa-plus-circle"></i>Add item</a>
+								
 							</div>
 					</section>				
 					
