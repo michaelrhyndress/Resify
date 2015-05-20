@@ -165,20 +165,20 @@ class Job_History(models.Model):
         return self.position
         
         
-class Skills(models.Model):
-    name=models.CharField(max_length=30, blank=True, unique=True, default="")
-    # percentage=models.PositiveSmallIntegerField(max_length=100)
-    class Meta:
-        verbose_name='skill'
-        verbose_name_plural='skills'
-        ordering = ['name']
-    def __str__(self):
-        return self.name
+# class Skills(models.Model):
+#     name=models.CharField(max_length=30, blank=True, unique=True, default="")
+#     # percentage=models.PositiveSmallIntegerField(max_length=100)
+#     class Meta:
+#         verbose_name='skill'
+#         verbose_name_plural='skills'
+#         ordering = ['name']
+#     def __str__(self):
+#         return self.name
     
 class User_Skills(models.Model):
     user = models.ForeignKey(User)
-    skill=models.ForeignKey(Skills)
-    percentage=models.PositiveSmallIntegerField(max_length=100, blank=True)
+    skill = models.CharField(max_length=30, default="New Record")
+    percentage=models.PositiveSmallIntegerField(max_length=100, default=0)
     class Meta:
         verbose_name='user skill'
         verbose_name_plural='user skills'

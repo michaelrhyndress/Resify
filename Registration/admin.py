@@ -5,7 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from Registration.models import User, UserProfile, Tag, Template, User_Template, Education_History
-from Registration.models import Skills, User_Skills, Job_History, Accomplishments, SocialMedia
+from Registration.models import User_Skills, Job_History, Accomplishments, SocialMedia
 
 class UserCreationForm(forms.ModelForm):
     """A form for creating new users. Includes all the required
@@ -92,7 +92,6 @@ admin.site.register(Template)
 admin.site.register(Education_History)
 admin.site.register(Job_History)
 admin.site.register(Accomplishments)
-admin.site.register(Skills)
 admin.site.register(User_Skills)
 admin.site.register(User_Template)
 admin.site.register(SocialMedia)

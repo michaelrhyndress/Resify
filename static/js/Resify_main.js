@@ -136,7 +136,7 @@ $(document).ready(function(){
 	
 	$('#full-form').on('change', '.checker',  function(){
 		var subKey = $(this).attr('group');
-		if (typeof attr == typeof undefined || attr == false) {
+		if (typeof subKey == typeof undefined || subKey == false) {
 			subKey = "None";
 		}
 		var elementId = $(this).attr('id');
@@ -173,6 +173,20 @@ $(document).ready(function(){
 			$("#percentage"+idNum+"-edit").html($theVal);
 			$theVal=$theVal.replace(/[%$]/g,'');
 			var iframe = $("#resume, #mobile-resume");
+			
+			var subKey = $("#form_percentage"+idNum).attr('group');
+			if (typeof subKey == typeof undefined || subKey == false) {
+				subKey = "None";
+			}
+			nameAttr =$("#form_percentage"+idNum).attr("name");
+			
+			split_name = nameAttr.split("_")
+			primaryKey = split_name[0]
+			fieldname = split_name[1]
+			
+			saveResume(fieldname, $theVal, subKey, primaryKey, "update");
+			
+			
 			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#'+elementSubstr).attr("style", "width: "+$theVal+"%;");
@@ -192,10 +206,7 @@ $(document).ready(function(){
 	$('#full-form').on('click', '.add-item', function(){
 		
 		//Create obj, get id back, place id at {{forloop.counters}}
-		
-		var isSlider = $(this).attr('class').split(' ')[1];
 		var iframe = $("#resume, #mobile-resume");
-		
 		//var number = $(this).attr('id'); //Last count on "Add-item" link
 		
 		// replace this with id from saveResume(Add)
@@ -234,7 +245,7 @@ $(document).ready(function(){
 		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
 		$(blankSpot).before(resumeClone.html());
 
-		if(isSlider == 'add-slider') {
+		if(subKey == 'skills') {
 			$('#slider'+obj_id+"-edit").noUiSlider({
 				start: [ 0 ],
 				connect: "lower",
@@ -270,7 +281,7 @@ $(document).ready(function(){
 			$('.hint').val("");
 			e.preventDefault();
 			if(elementValue != ""){
-				elementId = saveResume("tags", elementValue, "None", "None", "add");
+				elementId = saveResume("tags", elementValue, "tags", "None", "add");
 			}
 			else{
 				return false;

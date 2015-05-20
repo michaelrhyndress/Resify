@@ -10,7 +10,7 @@ from django.utils.timezone import now
 from django.db.models import get_model
 
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
-from Registration.models import Job_History, User, Education_History, Skills, User_Skills, SocialMedia
+from Registration.models import Job_History, User, Education_History, User_Skills, SocialMedia
 from Registration.models import Accomplishments, Template, UserProfile, User_Template, Tag
 from Registration.forms import UserProfileForm, JobHistoryForm, EducationHistoryForm, AccomplishmentForm, SocialMediaForm, UserTemplateForm
 
@@ -329,6 +329,7 @@ def saveResume(request):
                         request.user.save()
                         isSet=-1
                         return HttpResponse(isSet)
+
     
                 if key == "last_name":
                     if option == "update":
@@ -336,19 +337,22 @@ def saveResume(request):
                         request.user.save()
                         isSet=-1
                         return HttpResponse(isSet)
-        
+                    
                 if key == "is_public":
-                    if option == "update":
+                    model = User
+                    obj = model.objects.get(email=request.user) 
+                    if option == "update": #full override of update
                         if value == "true":
-                            request.user.is_public=True
+                            obj.is_public=True
                         else:
-                            request.user.is_public=False
-                        request.user.save()
+                            obj.is_public=False
+                        obj.save()
                         isSet=-1
                         return HttpResponse(isSet)
                     
                 #Template        
                 if key == "template" and value:
+                    model = User_Template
                     template = User_Template.objects.get(user=request.user)
                     if option == "update":
                         TemplateObj = Template.objects.get(template_name=value)
@@ -400,29 +404,6 @@ def saveResume(request):
                         request.user.modified_date=now()
                         request.user.save()
                         return HttpResponse(isSet)
-            
-                if key == "tags":
-                    profile = UserProfile.objects.get(user=request.user)
-                    if option == "add":
-                        obj, created = Tag.objects.get_or_create(name=value.title())
-                        # print profile.tags.filter(name=value).exists()
-                        if value == "" or profile.tags.filter(name=value).exists():
-                            return HttpResponse(isSet)
-                        profile.tags.add(obj) #Add obj to profile
-                        profile.save()
-                        # obj = profile.tags.get(name=value) #get instance of saved object for id
-                        isSet = obj.id
-                        request.user.modified_date=now()
-                        request.user.save()
-                        return HttpResponse(isSet)
-                    if option == "delete":
-                        obj = profile.tags.get(pk=pk)
-                        profile.tags.remove(obj)
-                        profile.save()
-                        request.user.modified_date=now()
-                        request.user.save()
-                        isSet=-1
-                        return HttpResponse(isSet)
                         
                 #SocialMedia
                 if key == "facebook":
@@ -456,7 +437,8 @@ def saveResume(request):
                         return HttpResponse(isSet)
             
                 if key == "linkedIn":
-                    media = SocialMedia.objects.get(user=request.user)
+                    model = SocialMedia
+                    media = model.objects.get(user=request.user)
                     if option == "update":
                         media.linkedIn=value
                         media.save()
@@ -465,6 +447,28 @@ def saveResume(request):
                         request.user.save()
                         return HttpResponse(isSet)
             
+            if group == "tags":
+                profile = UserProfile.objects.get(user=request.user)
+                if option == "add":
+                    if value == "" or profile.tags.filter(name=value).exists():
+                        return HttpResponse(isSet)
+                    obj, created = Tag.objects.get_or_create(name=value.title())
+                    profile.tags.add(obj) #Add obj to profile
+                    profile.save()
+                    # obj = profile.tags.get(name=value) #get instance of saved object for id
+                    isSet = obj.id
+                    request.user.modified_date=now()
+                    request.user.save()
+                    return HttpResponse(isSet)
+                if option == "delete":
+                    obj = profile.tags.get(pk=pk)
+                    profile.tags.remove(obj)
+                    profile.save()
+                    request.user.modified_date=now()
+                    request.user.save()
+                    isSet=-1
+                    return HttpResponse(isSet)
+                    
             # accordian groups            
             if group == "education":
                 model = Education_History
@@ -479,39 +483,47 @@ def saveResume(request):
                     
             elif group == "skills":
                 model = User_Skills
-                #override, add skill if doesn't exist. Link or remove.
-                    
+                if key == "skillName": # Name override
+                    key = "skill"
+                
             else:
-                return HttpResponse(isSet)
+                pass
                     
-            group_set = set(["education", "experience", "accomplishments", "skills"])
-            
-            if group in group_set:        
-                #ambiguous options on these groups
-                if option == "add":
+            # group_set = set(["education", "experience", "accomplishments", "skills", ])
+            # if group in group_set:    
+            #ambiguous options on these groups
+            if option == "add":
+                try:
+                    type(obj)
+                except:
                     obj = model.objects.create(user=request.user)
-                    isSet = obj.id
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
+                isSet = obj.id
+                request.user.modified_date=now()
+                request.user.save()
+                return HttpResponse(isSet)
+    
+            if option == "delete":
+                try:
+                    type(obj)
+                except:
+                    obj = model.objects.get(pk=pk, user=request.user)
+                obj.delete()
+                request.user.modified_date=now()
+                request.user.save()
+                return HttpResponse(isSet)
             
-                if option == "delete":
+            if option == "update":
+                #do things to obj fields
+                try:
+                    type(obj)
+                except:
                     obj = model.objects.get(pk=pk, user=request.user)
-                    obj.delete()
-                    request.user.modified_date=now()
-                    request.user.save()
-                    isSet=-1
-                    return HttpResponse(isSet)
-                    
-                if option == "update":
-                    #do things to obj fields
-                    obj = model.objects.get(pk=pk, user=request.user)
-                    setattr(obj, key, value)
-                    obj.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
+                setattr(obj, key, value)
+                obj.save()
+                isSet=-1
+                request.user.modified_date=now()
+                request.user.save()
+                return HttpResponse(isSet)
 
         return HttpResponse(isSet)
         
