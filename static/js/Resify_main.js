@@ -106,7 +106,7 @@ $(document).ready(function(){
 	/* Directly edit resume */
 	$('#full-form').on('keyup', '.directEdit',  function(){
 		var elementId = $(this).attr('id');
-		var elementValue = $("#"+elementId).val()
+		var elementValue = $("#"+elementId).val();
 		var iframe = $("#resume, #mobile-resume");
 		if(elementId != ''){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
@@ -116,6 +116,11 @@ $(document).ready(function(){
 	
 	/* Directly save resume */
 	$('#full-form').on('change', '.directEdit',  function(){
+		var subKey = $(this).attr('group');
+		if (typeof subKey == typeof undefined || subKey == false) {
+			subKey = "None";
+		}
+		
 		var elementId = $(this).attr('id');
 		var elementValue = $("#"+elementId).val()
 		var iframe = $("#resume, #mobile-resume");
@@ -123,17 +128,23 @@ $(document).ready(function(){
 			elementSubstr = elementId.substr(0, elementId.indexOf('-')); //Get iframe item id
 			iframe.contents().find('#'+elementSubstr).text(elementValue);
 		}
-		nameAttr = $("#"+elementId).attr("name")
+		nameAttr = $("#"+elementId).attr("name");
 		primaryKey = nameAttr.replace(/[^0-9]/g,'');
-		saveResume(elementSubstr, elementValue, primaryKey, "update");
+		fieldname = elementSubstr.replace(/[0-9]/g, '');
+		saveResume(fieldname, elementValue, subKey, primaryKey, "update");
 	});
 	
 	$('#full-form').on('change', '.checker',  function(){
+		var subKey = $(this).attr('group');
+		if (typeof attr == typeof undefined || attr == false) {
+			subKey = "None";
+		}
 		var elementId = $(this).attr('id');
 		var elementValue = $("#"+elementId).prop( "checked" );
-		nameAttr = $("#"+elementId).attr("name")
+		nameAttr = $("#"+elementId).attr("name");
 		primaryKey = nameAttr.replace(/[^0-9]/g,'');
-		saveResume(elementId, elementValue, primaryKey, "update");
+		fieldname = elementId.replace(/[0-9]/g, '');
+		saveResume(fieldname, elementValue, subKey, primaryKey, "update");
 		
 	});
 	
@@ -158,12 +169,12 @@ $(document).ready(function(){
 			var $theVal=$("#"+elementId).find(".noUi-origin")[0].style.left;
 			$("#percentage"+idNum+"-edit").html($theVal);
 			$("#form_percentage"+idNum).attr("value", $theVal);
-			$("#form_percentage_New_"+idNum).attr("value", $theVal);
-			$("#percentage_New_"+idNum+"-edit").html($theVal);
+			$("#form_percentage"+idNum).attr("value", $theVal);
+			$("#percentage"+idNum+"-edit").html($theVal);
 			$theVal=$theVal.replace(/[%$]/g,'');
 			var iframe = $("#resume, #mobile-resume");
 			iframe.contents().find('#percentage'+idNum).text($theVal);
-			iframe.contents().find('#percentage_New_'+idNum).text($theVal);
+			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#'+elementSubstr).attr("style", "width: "+$theVal+"%;");
 			iframe.contents().find('#'+elementSubstr).attr("aria-valuenow", $theVal);
 		}
@@ -179,16 +190,23 @@ $(document).ready(function(){
 	});	
 	
 	$('#full-form').on('click', '.add-item', function(){
+		
+		//Create obj, get id back, place id at {{forloop.counters}}
+		
 		var isSlider = $(this).attr('class').split(' ')[1];
 		var iframe = $("#resume, #mobile-resume");
-		var number = $(this).attr('id'); //Last count
+		
+		var number = $(this).attr('id'); //Last count on "Add-item" link
+		
+		// replace this with id
+		
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
 		var templateClone = template.clone(true); //Clone Template
 		var searchFor = $(templateClone).find("*[id*='{counter}']");
 		$(searchFor).each(function() { //Replaces id counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', "_New_"+number);
+			var newId = id.replace('{counter}', ""+number);
 			$(this).attr('id', newId);
 		});
 		var searchFor = $(templateClone).find("*[name*='{counter}']");//Replaces name counter with number
@@ -205,14 +223,14 @@ $(document).ready(function(){
 		var searchFor = $(resumeClone).find("*[id*='{counter}']");
 		$(searchFor).each(function() { //Replaces counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', "_New_"+number);
+			var newId = id.replace('{counter}', ""+number);
 			$(this).attr('id', newId);
 		});
 		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
 		$(blankSpot).before(resumeClone.html());
 
 		if(isSlider == 'add-slider') {
-			$('#slider_New_'+number+"-edit").noUiSlider({
+			$('#slider'+number+"-edit").noUiSlider({
 				start: [ 0 ],
 				connect: "lower",
 				step: 5,
@@ -249,7 +267,7 @@ $(document).ready(function(){
 			$('.hint').val("");
 			e.preventDefault();
 			if(elementValue != ""){
-				elementId = saveResume("tags", elementValue, "None", "add");
+				elementId = saveResume("tags", elementValue, "None", "None", "add");
 			}
 			else{
 				return false;
@@ -287,12 +305,17 @@ $(document).ready(function(){
 	});
 	
 	$('#full-form').on('click', '.delete-item', function(){
+		var subKey = $(this).attr('group');
+		if (typeof attr == typeof undefined || attr == false) {
+			subKey = "None";
+		}
 		var itemID = $(this).attr('id');
 		splitID = itemID.split("_");
 		var iframe = $("#resume, #mobile-resume");
 		$("#"+itemID+".delete-item").parents(".info-item").remove(); //Hide the box
 		iframe.contents().find('#'+itemID).remove();
-		saveResume(splitID[0], "None", splitID[1], "delete");
+		subKey = splitID[0].replace(/[0-9]/g, '');
+		saveResume("None", "None", subKey, splitID[1], "delete");
 		user_tags.pop([splitID[1]]);
 	});	
 

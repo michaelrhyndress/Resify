@@ -310,13 +310,15 @@ def saveResume(request):
         if request.is_ajax():
             key = request.POST.get('key', None)
             value = request.POST.get('value', None)
+            sub = request.POST.get('sub', None) #sub key (ex. education -> school name)
             pk = request.POST.get('pk', None)
             option = request.POST.get('option', None)
             isSet=0
-            print key
-            print value
-            print pk
-            print option 
+            print "Fieldname: " + key
+            print "Content: " + value
+            print "Group: " + sub
+            print "ID: " + pk
+            print "Action: " + option 
             
             if key == "first_name":
                 if option == "update":
@@ -401,7 +403,7 @@ def saveResume(request):
                 if option == "add":
                     obj, created = Tag.objects.get_or_create(name=value.title())
                     # print profile.tags.filter(name=value).exists()
-                    if profile.tags.filter(name=value).exists() or value == "":
+                    if value == "" or profile.tags.filter(name=value).exists():
                         return HttpResponse(isSet)
                     profile.tags.add(obj) #Add obj to profile
                     profile.save()
@@ -420,8 +422,13 @@ def saveResume(request):
                     return HttpResponse(isSet)
             
             #education
-            if key == "Ed":
-                # if option == "add":
+            if sub == "education":                
+                if option == "add":
+                    obj = Education_History.objects.create()
+                    isSet = obj.id # return the id of new obj
+                    request.user.modified_date=now()
+                    request.user.save()
+                    return HttpResponse(isSet)
                     
                 if option == "delete":
                     obj =  Education_History.objects.filter(pk=pk)
@@ -430,6 +437,11 @@ def saveResume(request):
                     obj.save()
                     request.user.modified_date=now()
                     request.user.save()
+                    isSet=-1
+                    return HttpResponse(isSet)
+                
+                if option == "update":
+                    # Have pk and fieldname
                     isSet=-1
                     return HttpResponse(isSet)
                         
