@@ -136,7 +136,7 @@ $(document).ready(function(){
 	
 	$('#full-form').on('change', '.checker',  function(){
 		var subKey = $(this).attr('group');
-		if (typeof attr == typeof undefined || attr == false) {
+		if (typeof subKey == typeof undefined || subKey == false) {
 			subKey = "None";
 		}
 		var elementId = $(this).attr('id');
@@ -173,6 +173,20 @@ $(document).ready(function(){
 			$("#percentage"+idNum+"-edit").html($theVal);
 			$theVal=$theVal.replace(/[%$]/g,'');
 			var iframe = $("#resume, #mobile-resume");
+			
+			var subKey = $("#form_percentage"+idNum).attr('group');
+			if (typeof subKey == typeof undefined || subKey == false) {
+				subKey = "None";
+			}
+			nameAttr =$("#form_percentage"+idNum).attr("name");
+			
+			split_name = nameAttr.split("_")
+			primaryKey = split_name[0]
+			fieldname = split_name[1]
+			
+			saveResume(fieldname, $theVal, subKey, primaryKey, "update");
+			
+			
 			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#percentage'+idNum).text($theVal);
 			iframe.contents().find('#'+elementSubstr).attr("style", "width: "+$theVal+"%;");
@@ -192,13 +206,15 @@ $(document).ready(function(){
 	$('#full-form').on('click', '.add-item', function(){
 		
 		//Create obj, get id back, place id at {{forloop.counters}}
-		
-		var isSlider = $(this).attr('class').split(' ')[1];
 		var iframe = $("#resume, #mobile-resume");
+		//var number = $(this).attr('id'); //Last count on "Add-item" link
 		
-		var number = $(this).attr('id'); //Last count on "Add-item" link
-		
-		// replace this with id
+		// replace this with id from saveResume(Add)
+		var subKey = $(this).attr('group');
+		if (typeof subKey == typeof undefined || subKey == false) {
+			subKey = "None";
+		}
+		obj_id = saveResume("None", "None", subKey, "None", "add");
 		
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
@@ -206,13 +222,13 @@ $(document).ready(function(){
 		var searchFor = $(templateClone).find("*[id*='{counter}']");
 		$(searchFor).each(function() { //Replaces id counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', ""+number);
+			var newId = id.replace('{counter}', ""+obj_id);
 			$(this).attr('id', newId);
 		});
 		var searchFor = $(templateClone).find("*[name*='{counter}']");//Replaces name counter with number
 		$(searchFor).each(function() { //Replaces counter with number
 			var nameAttr = $(this).attr('name');
-			var newNameAttr = nameAttr.replace('{counter}', number);
+			var newNameAttr = nameAttr.replace('{counter}', obj_id);
 			$(this).attr('name', newNameAttr);
 		});
 		$(this).before(templateClone.html());//Place into page
@@ -223,14 +239,14 @@ $(document).ready(function(){
 		var searchFor = $(resumeClone).find("*[id*='{counter}']");
 		$(searchFor).each(function() { //Replaces counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', ""+number);
+			var newId = id.replace('{counter}', ""+obj_id);
 			$(this).attr('id', newId);
 		});
 		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
 		$(blankSpot).before(resumeClone.html());
 
-		if(isSlider == 'add-slider') {
-			$('#slider'+number+"-edit").noUiSlider({
+		if(subKey == 'skills') {
+			$('#slider'+obj_id+"-edit").noUiSlider({
 				start: [ 0 ],
 				connect: "lower",
 				step: 5,
@@ -240,9 +256,7 @@ $(document).ready(function(){
 				}
 			});
 		}
-		
-		number++;
-		$(this).attr('id', number);
+		$(this).attr('id', obj_id);
 	});
 	
 	$('#full-form').on('keydown', '#new_tag_add',  function(e){ //May be possible to combine with old Add
@@ -267,7 +281,7 @@ $(document).ready(function(){
 			$('.hint').val("");
 			e.preventDefault();
 			if(elementValue != ""){
-				elementId = saveResume("tags", elementValue, "None", "None", "add");
+				elementId = saveResume("tags", elementValue, "tags", "None", "add");
 			}
 			else{
 				return false;
@@ -305,10 +319,6 @@ $(document).ready(function(){
 	});
 	
 	$('#full-form').on('click', '.delete-item', function(){
-		var subKey = $(this).attr('group');
-		if (typeof attr == typeof undefined || attr == false) {
-			subKey = "None";
-		}
 		var itemID = $(this).attr('id');
 		splitID = itemID.split("_");
 		var iframe = $("#resume, #mobile-resume");

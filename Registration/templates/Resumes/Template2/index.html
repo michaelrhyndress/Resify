@@ -109,7 +109,7 @@
 					
 					{% for job in job_list %}
 					
-                    <li id="Job_{{job.id}}" class="experience-info-item">
+                    <li id="experience_{{job.id}}" class="experience-info-item">
                         <span class="heading">
 							{% if job.job_from_date == job.job_to_date %} 
 								<font id="job_from_date{{forloop.counter}}">{{job.job_from_date}}</font>{% if user.is_authenticated %}-<font id="job_to_date{{forloop.counter}}">{{job.job_to_date}}</font>{% endif %}
@@ -133,7 +133,7 @@
 <!-- Start experience template -->
 
 <div id="experience-info-template" class="template">
-    <li id="{counter}" class="experience-info-item">
+    <li id="experience_{counter}" class="experience-info-item">
         <span class="heading">
 				<font id="job_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="job_to_date{counter}"></font>{% endif %}
 		</span>
@@ -156,7 +156,7 @@
 					
 					{% for ed in education_list %}
 					
-	                    <li id="Ed_{{ed.id}}" class="education-info-item">
+	                    <li id="education_{{ed.id}}" class="education-info-item">
                            <span class="heading">
    								{% if ed.Education_from_date == ed.Education_to_date %} 
    									<font id="Education_from_date{{forloop.counter}}">{{ed.Education_from_date}}</font>{% if user.is_authenticated %}-<font id="Education_to_date{{forloop.counter}}">{{ed.Education_to_date}}</font>{% endif %}
@@ -180,7 +180,7 @@
 <!-- Start experience template -->
 
 <div id="education-info-template" class="template">
-    <li id="{counter}" class="education-info-item">
+    <li id="education_{counter}" class="education-info-item">
         <span class="heading">
 				<font id="Education_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Education_to_date{counter}"></font>{% endif %}
 		</span>
@@ -222,7 +222,7 @@
 
 <!-- Start skills template -->
 <div id="skills-info-template" class="template">
-    <li id="{counter}" class="skills-info-item">
+    <li id="skills_{counter}" class="skills-info-item">
        <p>
 		   <font id="skillName{counter}">New skill</font><span class="annotation pull-right"><font id="percentage{counter}">0</font>%</span>
 	   </p>
@@ -266,7 +266,7 @@
 <!-- Start accomplishment template -->
 
 <div id="accomplishments-info-template" class="template">
-    <li id="{counter}" class="accomplishments-info-item">
+    <li id="accomplishments_{counter}" class="accomplishments-info-item">
         <span class="heading">
 				<font id="Accomplishment_from_date{counter}"></font>{% if user.is_authenticated %}-<font id="Accomplishment_to_date{counter}"></font>{% endif %}
 		</span>

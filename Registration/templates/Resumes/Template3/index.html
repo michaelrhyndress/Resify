@@ -51,7 +51,7 @@
 							</div>
 							<div class="col-md-9 col-xs-10 col-sm-9 col-lg-9">
 								{% for job in job_list %}
-								<div id="Job_{{job.id}}" class="experience-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+								<div id="experience_{{job.id}}" class="experience-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
 									<div class="row">
 										<strong class="pull-left text-left" id="company{{forloop.counter}}">{{job.company}}</strong>
 										<div class="text-right pull-right">
@@ -84,7 +84,7 @@
 			<div id="experience-info-template" class="template">
 				<br class="hidden-print"><br class="hidden-print">
 				{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
-				<div id="{counter}" class="experience-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+				<div id="experience_{counter}" class="experience-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
 					<div class="row">
 						<strong class="pull-left text-left" id="company{counter}"></strong>
 						<div class="text-right pull-right">
@@ -120,7 +120,7 @@
 							</div>
 							<div class="col-md-9 col-xs-10 col-sm-9 col-lg-9">
 								{% for ed in education_list %}
-								<div id="Ed_{{ed.id}}" class="education-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+								<div id="education_{{ed.id}}" class="education-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
 									<div class="row">
 										<strong class="pull-left text-left" id="school{{forloop.counter}}">{{ed.school}}</strong>
 										<div class="text-right pull-right">
@@ -153,7 +153,7 @@
 			<div id="education-info-template" class="template">
 				<br class="hidden-print">
 				{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
-				<div id="{counter}" class="education-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+				<div id="education_{counter}" class="education-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
 					<div class="row">
 						<strong class="pull-left text-left" id="school{counter}"></strong>
 						<div class="text-right pull-right">
@@ -203,7 +203,7 @@
 
 			<!-- Start skills template -->
 			<div id="skills-info-template" class="template">
-				<div id="{counter}" class="skills-info-item col-md-3 col-xs-4 col-sm-5 col-lg-3 text-left">
+				<div id="skills_{counter}" class="skills-info-item col-md-3 col-xs-4 col-sm-5 col-lg-3 text-left">
 					<div class="row">
 						<p>
 							<font id="skillName{counter}">New skill</font>
@@ -255,7 +255,7 @@
 			<div id="accomplishments-info-template" class="template">
 				<br><br class="hidden-print">
 				{# <hr class="col-md-10 col-xs-12 col-sm-10 col-lg-10 hidden-print"><br class="visible-print"><br class="visible-print"> #}
-				<div id="{counter}" class="accomplishments-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
+				<div id="accomplishments_{counter}" class="accomplishments-info-item col-md-11 col-xs-12 col-sm-11 col-lg-11 text-left">
 					<div class="row">
 						<strong class="pull-left text-left" id="title{counter}"></strong>
 						<div class="text-right pull-right">
