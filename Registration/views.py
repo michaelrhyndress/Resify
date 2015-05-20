@@ -7,6 +7,7 @@ from django.views.generic import View
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.template import RequestContext, Template, Context
 from django.utils.timezone import now
+from django.db.models import get_model
 
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
 from Registration.models import Job_History, User, Education_History, Skills, User_Skills, SocialMedia
@@ -310,186 +311,213 @@ def saveResume(request):
         if request.is_ajax():
             key = request.POST.get('key', None)
             value = request.POST.get('value', None)
-            sub = request.POST.get('sub', None) #sub key (ex. education -> school name)
+            group = request.POST.get('sub', None) #sub key (ex. education -> school name)
             pk = request.POST.get('pk', None)
             option = request.POST.get('option', None)
             isSet=0
+
             print "Fieldname: " + key
             print "Content: " + value
-            print "Group: " + sub
+            print "Group: " + group
             print "ID: " + pk
             print "Action: " + option 
             
-            if key == "first_name":
-                if option == "update":
-                    request.user.first_name=value
-                    request.user.save()
-                    isSet=-1
-                    return HttpResponse(isSet)
-    
-            if key == "last_name":
-                if option == "update":
-                    request.user.last_name=value
-                    request.user.save()
-                    isSet=-1
-                    return HttpResponse(isSet)
-        
-            if key == "is_public":
-                if option == "update":
-                    if value == "true":
-                        request.user.is_public=True
-                    else:
-                        request.user.is_public=False
-                    request.user.save()
-                    isSet=-1
-                    return HttpResponse(isSet)
-                    
-            #Template        
-            if key == "template" and value:
-                template = User_Template.objects.get(user=request.user)
-                if option == "update":
-                    TemplateObj = Template.objects.get(template_name=value)
-                    template.template_name=TemplateObj
-                    template.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-            #Profile    
-            if key == "handle":
-                profile = UserProfile.objects.get(user=request.user)
-                if option == "update":
-                    profile.handle=slugify(value)
-                    profile.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-                    
-            if key == "profession":
-                profile = UserProfile.objects.get(user=request.user)
-                if option == "update":
-                    profile.profession=value
-                    profile.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-            if key == "phone_number":
-                profile = UserProfile.objects.get(user=request.user)
-                if option == "update":
-                    profile.phone_number=value
-                    profile.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-            if key == "personal": #Statement
-                profile = UserProfile.objects.get(user=request.user)
-                if option == "update":
-                    profile.statement=value
-                    profile.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-            if key == "tags":
-                profile = UserProfile.objects.get(user=request.user)
-                if option == "add":
-                    obj, created = Tag.objects.get_or_create(name=value.title())
-                    # print profile.tags.filter(name=value).exists()
-                    if value == "" or profile.tags.filter(name=value).exists():
+            if group == "None":
+                if key == "first_name":
+                    if option == "update":
+                        request.user.first_name=value
+                        request.user.save()
+                        isSet=-1
                         return HttpResponse(isSet)
-                    profile.tags.add(obj) #Add obj to profile
-                    profile.save()
-                    # obj = profile.tags.get(name=value) #get instance of saved object for id
+    
+                if key == "last_name":
+                    if option == "update":
+                        request.user.last_name=value
+                        request.user.save()
+                        isSet=-1
+                        return HttpResponse(isSet)
+        
+                if key == "is_public":
+                    if option == "update":
+                        if value == "true":
+                            request.user.is_public=True
+                        else:
+                            request.user.is_public=False
+                        request.user.save()
+                        isSet=-1
+                        return HttpResponse(isSet)
+                    
+                #Template        
+                if key == "template" and value:
+                    template = User_Template.objects.get(user=request.user)
+                    if option == "update":
+                        TemplateObj = Template.objects.get(template_name=value)
+                        template.template_name=TemplateObj
+                        template.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                #Profile    
+                if key == "handle":
+                    profile = UserProfile.objects.get(user=request.user)
+                    if option == "update":
+                        profile.handle=slugify(value)
+                        profile.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                    
+                if key == "profession":
+                    profile = UserProfile.objects.get(user=request.user)
+                    if option == "update":
+                        profile.profession=value
+                        profile.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                if key == "phone_number":
+                    profile = UserProfile.objects.get(user=request.user)
+                    if option == "update":
+                        profile.phone_number=value
+                        profile.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                if key == "personal": #Statement
+                    profile = UserProfile.objects.get(user=request.user)
+                    if option == "update":
+                        profile.statement=value
+                        profile.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                if key == "tags":
+                    profile = UserProfile.objects.get(user=request.user)
+                    if option == "add":
+                        obj, created = Tag.objects.get_or_create(name=value.title())
+                        # print profile.tags.filter(name=value).exists()
+                        if value == "" or profile.tags.filter(name=value).exists():
+                            return HttpResponse(isSet)
+                        profile.tags.add(obj) #Add obj to profile
+                        profile.save()
+                        # obj = profile.tags.get(name=value) #get instance of saved object for id
+                        isSet = obj.id
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+                    if option == "delete":
+                        obj = profile.tags.get(pk=pk)
+                        profile.tags.remove(obj)
+                        profile.save()
+                        request.user.modified_date=now()
+                        request.user.save()
+                        isSet=-1
+                        return HttpResponse(isSet)
+                        
+                #SocialMedia
+                if key == "facebook":
+                    media = SocialMedia.objects.get(user=request.user)
+                    if option == "update":
+                        media.facebook=value
+                        media.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                if key == "twitter":
+                    media = SocialMedia.objects.get(user=request.user)
+                    if option == "update":
+                        media.twitter=value
+                        media.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                if key == "gplus":
+                    media = SocialMedia.objects.get(user=request.user)
+                    if option == "update":
+                        media.gplus=value
+                        media.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+                if key == "linkedIn":
+                    media = SocialMedia.objects.get(user=request.user)
+                    if option == "update":
+                        media.linkedIn=value
+                        media.save()
+                        isSet=-1
+                        request.user.modified_date=now()
+                        request.user.save()
+                        return HttpResponse(isSet)
+            
+            # accordian groups            
+            if group == "education":
+                model = Education_History
+
+            elif group == "experience":
+                model = Job_History
+                    
+            elif group == "accomplishments":
+                model = Accomplishments
+                if key == "accomplishments_about": # Name override
+                    key = "about"
+                    
+            elif group == "skills":
+                model = User_Skills
+                #override, add skill if doesn't exist. Link or remove.
+                    
+            else:
+                return HttpResponse(isSet)
+                    
+            group_set = set(["education", "experience", "accomplishments", "skills"])
+            
+            if group in group_set:        
+                #ambiguous options on these groups
+                if option == "add":
+                    obj = model.objects.create(user=request.user)
                     isSet = obj.id
                     request.user.modified_date=now()
                     request.user.save()
                     return HttpResponse(isSet)
+            
                 if option == "delete":
-                    obj = profile.tags.get(pk=pk)
-                    profile.tags.remove(obj)
-                    profile.save()
+                    obj = model.objects.get(pk=pk, user=request.user)
+                    obj.delete()
                     request.user.modified_date=now()
                     request.user.save()
                     isSet=-1
-                    return HttpResponse(isSet)
-            
-            #education
-            if sub == "education":                
-                if option == "add":
-                    obj = Education_History.objects.create()
-                    isSet = obj.id # return the id of new obj
-                    request.user.modified_date=now()
-                    request.user.save()
                     return HttpResponse(isSet)
                     
-                if option == "delete":
-                    obj =  Education_History.objects.filter(pk=pk)
-                    print obj
-                    obj.delete()
+                if option == "update":
+                    #do things to obj fields
+                    obj = model.objects.get(pk=pk, user=request.user)
+                    setattr(obj, key, value)
                     obj.save()
-                    request.user.modified_date=now()
-                    request.user.save()
-                    isSet=-1
-                    return HttpResponse(isSet)
-                
-                if option == "update":
-                    # Have pk and fieldname
-                    isSet=-1
-                    return HttpResponse(isSet)
-                        
-                                
-            #SocialMedia
-            if key == "facebook":
-                media = SocialMedia.objects.get(user=request.user)
-                if option == "update":
-                    media.facebook=value
-                    media.save()
                     isSet=-1
                     request.user.modified_date=now()
                     request.user.save()
                     return HttpResponse(isSet)
-            
-            if key == "twitter":
-                media = SocialMedia.objects.get(user=request.user)
-                if option == "update":
-                    media.twitter=value
-                    media.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-            if key == "gplus":
-                media = SocialMedia.objects.get(user=request.user)
-                if option == "update":
-                    media.gplus=value
-                    media.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
-            
-            if key == "linkedIn":
-                media = SocialMedia.objects.get(user=request.user)
-                if option == "update":
-                    media.linkedIn=value
-                    media.save()
-                    isSet=-1
-                    request.user.modified_date=now()
-                    request.user.save()
-                    return HttpResponse(isSet)
+
         return HttpResponse(isSet)
         
-    else:
-        return HttpResponse(isSet)      
+    else: #Not Authenticated!!
+        return HttpResponse(isSet) 
+             
         
 def slugify(s):
     """

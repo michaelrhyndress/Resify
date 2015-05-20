@@ -84,7 +84,7 @@
 										<div class="input-block">
 											 <a class="pull-left"><font class="panelIcon"><i id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
 											 <span id="collapse_experience{{forloop.counter}}-toggle" class="collapse-toggle">{% if job.position %}{{job.position}}{% else %}New Job{% endif %}</span>
-											 <a class="pull-right delete-item" id="Job_{{job.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+											 <a class="pull-right delete-item" id="experience_{{job.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 										</div>
 					                    <hr>
 							            <div id="collapse_experience{{forloop.counter}}" class="collapsable-item">
@@ -148,7 +148,7 @@
 											<div class="input-block">
 												 <a class="pull-left"><font class="panelIcon"><i id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
 												 <span id="collapse_education{{forloop.counter}}-toggle" class="collapse-toggle">{% if ed.school %}{{ed.school}}{% else %}New Record{% endif %}</span>
-												 <a class="pull-right delete-item" id="Ed_{{ed.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+												 <a class="pull-right delete-item" id="education_{{ed.id}}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 											</div>
 						                    <hr>
 								            <div id="collapse_education{{forloop.counter}}" class="collapsable-item">
@@ -255,7 +255,7 @@
 														<hr>
 														<div class="input-block">
 															<label class="input-label">Description</label>
-															<textarea group="accomplishments" id="accomplishments_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="{{accomp.id}}_accomplishments_about" placeholder="Description">{{accomp.about}}</textarea>
+															<textarea group="accomplishments" id="accomplishments_about{{forloop.counter}}-edit" class="textarea-box directEdit" name="{{accomp.id}}_accomplishments_about" placeholder="Description">{{accomp.accomplishment_about}}</textarea>
 														</div>
 													</div>
 								                </div>
@@ -454,31 +454,31 @@
 			<div class="input-block">
 				 <a class="pull-left"><font class="panelIcon"><i id="collapse_experience{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
 				 <span id="collapse_experience{counter}-toggle" class="collapse-toggle">New Job</span>
-				 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+				 <a class="pull-right delete-item" id="experience_{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 			</div>
 		    <hr>
 		    <div id="collapse_experience{counter}" class="collapsable-item">
 		        <div class="panel-body">							                    
 					<div class="input-block">
 						<label class="input-label">Position</label>
-						<input group="experience" type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_position" placeholder="Position"/>
+						<input group="experience" type="text" id="position{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}position" placeholder="Position"/>
 					</div>
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Employer</label>
-						<input group="experience" type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_company" placeholder="Company"/>
+						<input group="experience" type="text" id="company{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}company" placeholder="Company"/>
 					</div>
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Date</label>
 						<div class="form-inline">
-					        <select group="experience" id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_job_from_date" placeholder="From: ">
+					        <select group="experience" id="job_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}job_from_date" placeholder="From: ">
 								<option disabled="disabled">From</option>
 								{% for x in year_choices %}
 									<option value="{{x}}">{{x}}</option>
 								{% endfor %}
 							<select/>
-					        <select group="experience" id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_job_to_date" placeholder="To: ">
+					        <select group="experience" id="job_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}job_to_date" placeholder="To: ">
 								<option disabled="disabled">To</option>
 								<option value="PRESENT">Present</option>
 								{% for x in year_choices %}
@@ -491,7 +491,7 @@
 					<hr>
 					<div class="input-block">
 						<label class="input-label">Description</label>
-						<textarea group="experience" id="job_about{counter}-edit" class="textarea-box directEdit" name="{counter}_NEW_job_about" placeholder="Description"></textarea>
+						<textarea group="experience" id="job_about{counter}-edit" class="textarea-box directEdit" name="{counter}job_about" placeholder="Description"></textarea>
 					</div>
 		        </div>
 		    </div>
@@ -506,14 +506,14 @@
 				<div class="input-block">
 					 <a class="pull-left"><font class="panelIcon"><i id="collapse_education{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
 					 <span id="collapse_education{counter}-toggle" class="collapse-toggle">New Record</span>
-					 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+					 <a class="pull-right delete-item" id="education_{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 				</div>
                 <hr>
 	            <div id="collapse_education{counter}" class="collapsable-item">
 	                <div class="panel-body">							                    
 						<div class="input-block">
 							<label class="input-label">Status</label>
-					        <select group="education" id="status{counter}-edit" class="form-control directEdit" name="{counter}_NEW_status">
+					        <select group="education" id="status{counter}-edit" class="form-control directEdit" name="{counter}status">
 								<option selected="" disabled="disabled">Status</option>
 								<option value="Graduated">Graduated</option>
 								<option value="Attending">Attending</option>
@@ -523,24 +523,24 @@
 						<hr>
 						<div class="input-block">
 							<label class="input-label">School</label>
-							<input group="education" type="text" id="school{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_school" placeholder="School"/>
+							<input group="education" type="text" id="school{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}school" placeholder="School"/>
 						</div>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Degree</label>
-							<input group="education" type="text" id="degree{counter}-edit" class="input-box directEdit" maxlength="100" name="{counter}_NEW_degree" placeholder="Degree"/>
+							<input group="education" type="text" id="degree{counter}-edit" class="input-box directEdit" maxlength="100" name="{counter}degree" placeholder="Degree"/>
 						</div>
 						<hr>
 						<div class="input-block">
 							<label class="input-label">Date</label>
 							<div class="form-inline">
-						        <select group="education" id="Education_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Education_from_date" placeholder="From: ">
+						        <select group="education" id="Education_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}Education_from_date" placeholder="From: ">
 									<option disabled="disabled">From</option>
 									{% for x in year_choices %}
 										<option value="{{x}}">{{x}}</option>
 									{% endfor %}
 								<select/>
-						        <select group="education" id="Education_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Education_to_date" placeholder="To: ">
+						        <select group="education" id="Education_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}Education_to_date" placeholder="To: ">
 									<option disabled="disabled">To</option>
 									<option value="PRESENT">Present</option>
 									{% for x in year_choices %}
@@ -563,7 +563,7 @@
 					<div class="input-block">
 						 <a class="pull-left"><font class="panelIcon"><i id="collapse_accomplishments{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
 						 <span id="collapse_accomplishments{counter}-toggle" class="collapse-toggle">New Record</span>
-						 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+						 <a class="pull-right delete-item" id="accomplishments_{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 					</div>
 	                <hr>
 		            <div id="collapse_accomplishments{counter}" class="collapsable-item">
@@ -571,19 +571,19 @@
 
 							<div class="input-block">
 								<label class="input-label">Title</label>
-								<input group="accomplishments" type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_title" placeholder="Accomplishment"/>
+								<input group="accomplishments" type="text" id="title{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}title" placeholder="Accomplishment"/>
 							</div>
 							<hr>
 							<div class="input-block">
 								<label class="input-label">Date</label>
 								<div class="form-inline">
-							        <select group="accomplishments" id="Accomplishment_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Accomplishment_from_date" placeholder="From: ">
+							        <select group="accomplishments" id="Accomplishment_from_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}Accomplishment_from_date" placeholder="From: ">
 										<option disabled="disabled">From</option>
 										{% for x in year_choices %}
 											<option value="{{x}}">{{x}}</option>
 										{% endfor %}
 									<select/>
-							        <select group="accomplishments" id="Accomplishment_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}_NEW_Accomplishment_to_date" placeholder="To: ">
+							        <select group="accomplishments" id="Accomplishment_to_date{counter}-edit" class="form-control to-from-field half-box directEdit" name="{counter}Accomplishment_to_date" placeholder="To: ">
 										<option disabled="disabled">To</option>
 										<option value="PRESENT">Present</option>
 										{% for x in year_choices %}
@@ -595,7 +595,7 @@
 								<hr>
 								<div class="input-block">
 									<label class="input-label">Description</label>
-									<textarea group="accomplishments" id="accomplishments_about{counter}-edit" class="textarea-box directEdit" name="{counter}_NEW_accomplishments_about" placeholder="Description"></textarea>
+									<textarea group="accomplishments" id="accomplishments_about{counter}-edit" class="textarea-box directEdit" name="{counter}accomplishments_about" placeholder="Description"></textarea>
 								</div>
 							</div>
 		                </div>
@@ -611,7 +611,7 @@
 						<div class="input-block">
 							 <a class="pull-left"><font class="panelIcon"><i id="collapse_skills{counter}-toggle" class="collapse-toggle fa fa-plus-square"></i></font></a>
 							 <span id="collapse_skills{counter}-toggle" class="collapse-toggle">New Record</span>
-							 <a class="pull-right delete-item" id="{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
+							 <a class="pull-right delete-item" id="skills_{counter}"><font class="panelIcon"><i class="fa fa-trash-o fa-lg"></i></font></a>
 						</div>
 		                <hr>
 			            <div id="collapse_skills{counter}" class="collapsable-item">
@@ -619,7 +619,7 @@
 
 								<div class="input-block">
 									<label class="input-label">Title</label>
-									<input group="skills" type="text" id="skillName{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}_NEW_skill" placeholder="Skill"/>
+									<input group="skills" type="text" id="skillName{counter}-edit" class="input-box directEdit" maxlength="50" name="{counter}skill" placeholder="Skill"/>
 								</div>
 								<div class="input-block">
 									<br>

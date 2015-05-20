@@ -196,16 +196,14 @@ $(document).ready(function(){
 		var isSlider = $(this).attr('class').split(' ')[1];
 		var iframe = $("#resume, #mobile-resume");
 		
-		var number = $(this).attr('id'); //Last count on "Add-item" link
+		//var number = $(this).attr('id'); //Last count on "Add-item" link
 		
 		// replace this with id from saveResume(Add)
 		var subKey = $(this).attr('group');
-		if (typeof attr == typeof undefined || attr == false) {
+		if (typeof subKey == typeof undefined || subKey == false) {
 			subKey = "None";
 		}
-		
 		obj_id = saveResume("None", "None", subKey, "None", "add");
-		
 		
 		var parentEl = $(this).parent(); // gets div.info-item which is the main container
 		var template = $('#'+parentEl.attr('id')+"-template"); //Selects the appropriate template
@@ -213,13 +211,13 @@ $(document).ready(function(){
 		var searchFor = $(templateClone).find("*[id*='{counter}']");
 		$(searchFor).each(function() { //Replaces id counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', ""+number);
+			var newId = id.replace('{counter}', ""+obj_id);
 			$(this).attr('id', newId);
 		});
 		var searchFor = $(templateClone).find("*[name*='{counter}']");//Replaces name counter with number
 		$(searchFor).each(function() { //Replaces counter with number
 			var nameAttr = $(this).attr('name');
-			var newNameAttr = nameAttr.replace('{counter}', number);
+			var newNameAttr = nameAttr.replace('{counter}', obj_id);
 			$(this).attr('name', newNameAttr);
 		});
 		$(this).before(templateClone.html());//Place into page
@@ -230,14 +228,14 @@ $(document).ready(function(){
 		var searchFor = $(resumeClone).find("*[id*='{counter}']");
 		$(searchFor).each(function() { //Replaces counter with number
 			var id = $(this).attr('id');
-			var newId = id.replace('{counter}', ""+number);
+			var newId = id.replace('{counter}', ""+obj_id);
 			$(this).attr('id', newId);
 		});
 		var blankSpot = iframe.contents().find('#blank-'+parentEl.attr('id'));
 		$(blankSpot).before(resumeClone.html());
 
 		if(isSlider == 'add-slider') {
-			$('#slider'+number+"-edit").noUiSlider({
+			$('#slider'+obj_id+"-edit").noUiSlider({
 				start: [ 0 ],
 				connect: "lower",
 				step: 5,
@@ -247,9 +245,7 @@ $(document).ready(function(){
 				}
 			});
 		}
-		
-		number++;
-		$(this).attr('id', number);
+		$(this).attr('id', obj_id);
 	});
 	
 	$('#full-form').on('keydown', '#new_tag_add',  function(e){ //May be possible to combine with old Add
@@ -312,10 +308,6 @@ $(document).ready(function(){
 	});
 	
 	$('#full-form').on('click', '.delete-item', function(){
-		var subKey = $(this).attr('group');
-		if (typeof attr == typeof undefined || attr == false) {
-			subKey = "None";
-		}
 		var itemID = $(this).attr('id');
 		splitID = itemID.split("_");
 		var iframe = $("#resume, #mobile-resume");
