@@ -508,6 +508,7 @@ def saveResume(request):
                 except:
                     obj = model.objects.get(pk=pk, user=request.user)
                 obj.delete()
+                isSet=-1
                 request.user.modified_date=now()
                 request.user.save()
                 return HttpResponse(isSet)
