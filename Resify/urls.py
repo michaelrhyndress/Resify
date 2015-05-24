@@ -17,3 +17,7 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
     url(r'^', include('ATS.urls')),
 )
+
+urlpatterns += patterns('',
+    url(r'^', include('Business.urls')),
+)

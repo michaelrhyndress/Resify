@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'Registration',
     'ATS',
+    'Business',
 )
 
 MIDDLEWARE_CLASSES = (
