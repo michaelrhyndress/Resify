@@ -27,8 +27,8 @@
 			<a href="#" id="menu-toggle" class="menu-toggle badge menu-x menu-x-close mobile-only visible"><span></span></a>
 			
 			<div class="Top-menu">
-				<i id="resify" class="resify_icon"></i>
-				<i id="personal" class="fa fa-user activeIcon fa-md"></i>
+				<i id="resify" class="resify_icon activeIcon"></i>
+				<i id="personal" class="fa fa-user fa-md"></i>
 				<i id="experience" class="fa fa-briefcase fa-md"></i>
 				<i id="education" class="fa fa-graduation-cap fa-md"></i>
 				<i id="accomplishments" class="fa fa-lightbulb-o fa-lg"></i>
@@ -44,7 +44,19 @@
 					{% csrf_token %}
 					
 <!-- Personal -->
-					<div id="autosaving" class="center"><i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> Saving...</div>
+					<div class="col-md-12 autosaving">
+						<div class="col-md-4"></div>
+						<div class="col-md-4">
+							<div id="autosaving" class="auto-box"><i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> Saving...</div>
+							</div>
+						<div class="col-md-4"></div>
+					</div>
+					
+					<section id="resify-section">
+						
+						
+					</section>
+					
 					<section id="personal-section">
 						<h2 class="fs-title">Personal Details</h2>
 						<hr>
@@ -434,9 +446,29 @@
 					</section> <!-- Preview Section -->
 				
 				</div>				
+				</form>
 				
+			    <footer>
+					<div class="col-md-12">
+			            <div class="row">
+			                <div class="col-md-5">
+			                    <span class="copyright">Copyright &copy; R&#233;sify 2014</span>
+			                </div>
+			                <div class="col-md-3">
+			                    <ul class="list-inline social-buttons">
+			                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+			                        </li>
+			                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+			                        </li>
+			                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+			                        </li>
+			                    </ul>
+			                </div>
+							<div class="col-md-4"><a href="#">Privacy & Terms</a></div>
+						</div>
+			        </div>
+			    </footer>
 			</div><!-- /Left -->
-		</form>
 
         <div id="webView" class="Right">
 			<button id="fullscreen-btn" class="clear-btn">Fullscreen</button>
