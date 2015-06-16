@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User as django_User
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
@@ -7,7 +6,7 @@ from django.views.generic import View
 from django.contrib.auth import login as django_login, authenticate, logout as django_logout
 from django.template import RequestContext, Template, Context
 from django.utils.timezone import now
-from django.db.models import get_model
+#from django.db.models import get_model
 
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
 from Registration.models import Job_History, User, Education_History, User_Skills, SocialMedia
@@ -508,6 +507,7 @@ def saveResume(request):
                 except:
                     obj = model.objects.get(pk=pk, user=request.user)
                 obj.delete()
+                isSet=-1
                 request.user.modified_date=now()
                 request.user.save()
                 return HttpResponse(isSet)

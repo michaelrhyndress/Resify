@@ -144,6 +144,19 @@ a.small-text {
 	   padding: 25px;
 }
 
+.icon {
+	font-family: 'Lobster', cursive;
+	color: #222;
+	text-shadow: 1px 1px #797979;
+   	color: white;
+  	text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}
+
 .field-block{
 	width: 125px;
 	font-family: 'Lato', Arial, Helvetica, sans-serif;
@@ -286,9 +299,15 @@ a:hover {
 
 #register{
 	position:relative;
+	max-width:350px;
+	margin: 0 auto;
 	top:0px;
 	padding:0px;
-	
+}
+
+.half-box{
+	width: 49%;
+	display:inline-block;
 }
 
 section{
@@ -312,14 +331,24 @@ section{
 	.col-md-12{
 		padding:0px;
 	}
+	
 }
 
-@media (max-height: 649px){
+@media (max-height: 670px){
 	section{
 		margin-top: 0px;
 		padding: 0px 0px;
 	}
+	.form-control {
+		font-size: 20px;
+		height: 35px;
+	}
+	
 }
 
-
+@media (max-height: 568px){
+	.header{
+		font-size: 2.5em;
+		padding:10px;
+	}
 
