@@ -102,6 +102,61 @@ WebKit inertia scrolling is being added here for any present/future devices that
 	opacity:1;
 }
 
+
+/* Footer */
+
+footer {
+    padding: 25px 0;
+    text-align: center;
+	line-height: 1.2em;
+	font-size:12px;
+	bottom:0px;
+	margin-top:10px;
+}
+
+footer span.copyright {
+	display: inline-block;
+    text-transform: uppercase;
+    text-transform: none;
+*//*    line-height: 40px;
+*/	color:black;
+}
+
+footer ul.quicklinks {
+	display: inline-block;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    text-transform: none;
+/*    line-height: 40px;*/
+}
+
+/*ul.social-buttons {
+    margin-bottom: 0;
+}*/
+
+/*ul.social-buttons li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    outline: 0;
+    color: #fff;
+    background-color: #222;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+    background-color: #245A7A;
+}*/
+
+
+
 #webView{
 	transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
 }
@@ -192,12 +247,34 @@ WebKit inertia scrolling is being added here for any present/future devices that
 	border:solid 1px black;
 }
 
-.center {
+.auto-container{
+    display: table;
+    vertical-align: middle;
+}
+.auto-center{
+    display: table-cell;
+       vertical-align: middle;
+}
+
+/* saving btn */
+.auto-box{
+	bottom: 15px;
+    background-color:rgba(255,255,255,.9);
+    border: solid 1px #377091;
+    color: #377091;
+    text-align: center;
+    width: 90px;
+    height: 35px;
+    line-height: 35px;
+    position: fixed;
+}
+
+/*.center {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
     background-color:rgba(255,255,255,0);
-}
+}*/
 
 .tag{
 	background-color: rgb(63, 138, 255);
@@ -434,6 +511,9 @@ a.add-item, .collapse-toggle{
 		opacity:1;
 	}
 	
+	footer{
+		width:90%;
+	}
 }
 
 @media (max-width: 1000px){

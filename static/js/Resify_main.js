@@ -67,7 +67,7 @@ $(document).ready(function(){
 	/* /TOGGLE MENU BAR */
 	
 	/* MENU BAR */
-	var last="personal";
+	var last="resify";
 	var next;		
 	$("section").hide();
 	$('.collapsable-item').slideUp();
