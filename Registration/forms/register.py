@@ -1,7 +1,6 @@
 from django.forms import ModelForm
 from django import forms
 from Registration.models import User
-from django.db.models.signals import post_save
 # from django.dispatch import receiver
 
 
@@ -9,8 +8,6 @@ class RegistrationForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     password2 = forms.CharField(widget=forms.PasswordInput())
 
-    
-    
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'password', 'password2', 'accept_terms']
@@ -42,16 +39,5 @@ class RegistrationForm(ModelForm):
         user.set_password(self.cleaned_data["password"])
         if commit:
             user.save()
-        return user
-        
-    # @receiver(post_save, sender=User)
-    # def create_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         UserProfile.objects.create(user=instance)
-
-                
-                
-                
-                
-                
+        return user                
     

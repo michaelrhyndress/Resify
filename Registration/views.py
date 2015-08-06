@@ -1,5 +1,4 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User as django_User
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import View

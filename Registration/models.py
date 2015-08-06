@@ -6,7 +6,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-    
+
 class UserManager(BaseUserManager):
     def create_user(self, email, accept_terms, first_name, last_name, password=None):#date_of_birth
         """
