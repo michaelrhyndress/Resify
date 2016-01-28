@@ -1,12 +1,13 @@
 from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
 
 from django.utils.encoding import python_2_unicode_compatible
+
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 
-    
 class UserManager(BaseUserManager):
     def create_user(self, email, accept_terms, first_name, last_name, password=None):#date_of_birth
         """
@@ -58,13 +59,16 @@ class User(AbstractBaseUser):
     accept_terms = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
     passed_setup = models.BooleanField(default=False)
-    created_date = models.DateField(auto_now_add=True, default=timezone.now())
-    modified_date = models.DateField(auto_now=True, default=timezone.now())
+    created_date = models.DateField(auto_now_add=True)
+    modified_date = models.DateField(auto_now=True)
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'accept_terms']#date_of_birth
 
+    class Meta:
+        app_label = 'Registration'
+    
     def get_full_name(self):
         # The user is identified by their email address
         return self.first_name + " " +self.last_name
@@ -98,7 +102,9 @@ class User(AbstractBaseUser):
 class Tag(models.Model):
     ''' Purpose is still up in the air... Maybe connect to Categories? '''
     name=models.CharField(max_length=50, unique=True)
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='tag'
         verbose_name_plural='tags'
         ordering = ['name']
@@ -110,10 +116,13 @@ class Template(models.Model):
     template_name=models.CharField(max_length=50, unique=True, default="Template0")
     readable_name=models.CharField(max_length=50, default="", blank=True)
     is_public_template = models.BooleanField(default=False)
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='template'
         verbose_name_plural='templates'
         ordering = ['template_name']
+        
     def __str__(self):
         return self.template_name
         
@@ -121,6 +130,7 @@ class User_Template(models.Model):
     user=models.OneToOneField(User)
     template_name=models.ForeignKey(Template)
     class Meta:
+        app_label = 'Registration'
         verbose_name='user template'
         verbose_name_plural='user templates'
         ordering = ['user']
@@ -134,6 +144,10 @@ class UserProfile(models.Model):
     phone_number = models.CharField(max_length=30, blank=True, default="")
     statement = models.TextField(blank=True, default="")
     tags = models.ManyToManyField(Tag, blank=True)
+    
+    class Meta:
+        app_label = 'Registration'
+        
     def __str__(self):
         return self.user.email
         
@@ -143,10 +157,13 @@ class SocialMedia(models.Model):
     twitter=models.URLField(max_length=200, blank=True, default="")
     gplus = models.URLField(max_length=200, blank=True, default="")
     linkedIn = models.URLField(max_length=200, blank=True, default="")
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='social media'
         verbose_name_plural='social media'
         ordering = ['user']
+        
     def __str__(self):
         return self.user.email
 
@@ -157,10 +174,13 @@ class Job_History(models.Model):
     job_from_date=models.CharField(max_length=4, blank=True, default="")
     job_to_date=models.CharField(max_length=7, blank=True, default="")
     job_about=models.TextField(blank=True, default="")
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='job history'
         verbose_name_plural='job history'
         ordering = ['-job_from_date']
+
     def __str__(self):
         return self.position
         
@@ -168,11 +188,14 @@ class Job_History(models.Model):
 class User_Skills(models.Model):
     user = models.ForeignKey(User)
     skill = models.CharField(max_length=30, default="New Record")
-    percentage=models.PositiveSmallIntegerField(max_length=100, default=0)
+    percentage=models.PositiveSmallIntegerField(default=0, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='user skill'
         verbose_name_plural='user skills'
         ordering = ['-percentage']
+        
     def __str__(self):
         return self.user.email
         
@@ -190,10 +213,13 @@ class Education_History(models.Model):
     Education_to_date=models.CharField(blank=True, max_length=7, default="")
     degree=models.CharField(blank=True, max_length=100, default="")
     about=models.TextField(blank=True, default="")
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='education history'
         verbose_name_plural='education history'
         ordering = ['-Education_from_date']
+
     def __str__(self):
         return self.school
         
@@ -203,9 +229,12 @@ class Accomplishments(models.Model):
     Accomplishment_from_date=models.CharField(blank=True, max_length=4, default="")
     Accomplishment_to_date=models.CharField(blank=True, max_length=7, default="")
     about=models.TextField(blank=True, default="")
+    
     class Meta:
+        app_label = 'Registration'
         verbose_name='accomplishment'
         verbose_name_plural='accomplishments'
         ordering = ['-Accomplishment_from_date']
+        
     def __str__(self):
         return self.user.email

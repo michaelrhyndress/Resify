@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "registration_base.html" %}
 
 {% block title %}Create account{% endblock %}
 
@@ -9,24 +9,24 @@
 {% endblock %}
 
 {% block content %}
+
 	<form action="{% url 'register' %}" name="register" id="register" method="post" accept-charset="utf-8"> {% csrf_token %}
+		<input class="form-control half-box" name="first_name" placeholder="First name" type="text" id="first_name" name="first_name" pattern=".{1,35}" maxlength="35" required  autofocus/>
+		
+		<input class="form-control half-box" name="last_name" placeholder="Last name" type="text" id="last_name" name="last_name" pattern=".{1,35}" maxlength="35" required />
 
-			<input class="form-control half-box" name="first_name" placeholder="First name" type="text" id="first_name" name="first_name" pattern=".{1,35}" maxlength="35" required  autofocus/>
+		<input class="form-control" name="email" placeholder="Email address" type="email" id="email" name="email" maxlength="255" required />
 
-			<!-- LAST NAME -->
-			<input class="form-control half-box" name="last_name" placeholder="Last name" type="text" id="last_name" name="last_name" pattern=".{1,35}" maxlength="35" required />
+		<input class="form-control" name="password" placeholder="Password" type="password" id="password" pattern=".{6,}" required autocomplete="off"/>
 
-	
-			<input class="form-control" name="email" placeholder="Email address" type="email" id="email" name="email" maxlength="255" required />
-
-			<input class="form-control" name="password" placeholder="Password" type="password" id="password" pattern=".{6,}" required autocomplete="off"/>
-
-			<input class="form-control" name="password2" placeholder="Password repeat" type="password" id="passwordRepeat" pattern=".{6,}" required autocomplete="off" />
+		<input class="form-control" name="password2" placeholder="Password repeat" type="password" id="passwordRepeat" pattern=".{6,}" required autocomplete="off" />
 
 		<div class="input-group checkbox-input">
 			<div class="checkbox">
 				<input type="checkbox" id="termsAgree" name="accept_terms"/>
-				<label for="termsAgree" class="tick"><span>I agree with the <a href="#">Terms &amp; Conditions</a></span></label>
+				<label for="termsAgree" class="tick">
+					<span>I agree with the <a href="#">Terms &amp; Conditions</a></span>
+				</label>
 			</div>
 		</div> <!-- CHECKBOX -->
 
@@ -35,7 +35,9 @@
 			<button type="submit" id="register-submit" class="">Register</button>
 		</div>
 	</form>
+	
 	<div class="field-block">
 		<a href="/login" class="button no-border small-text" id="register">Have an account?</a>
 	</div>
+	
 {% endblock %}

@@ -1,0 +1,243 @@
+{% load render_bundle from webpack_loader %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+
+	<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta charset="utf-8">
+		<title>R&#233;sify | R&#233;sum&#233;s a business can't resist</title>
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+		 <meta name="author" content="Michael Rhyndress">
+		 
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+		{% render_bundle 'homepage' 'css' %}
+		
+	</head>
+	<body id="page-top" class="index">
+	    <!-- Navigation -->
+		<div class="navbar transparent navbar-inverse navbar-static-top">
+		    <nav class="navbar-inner">
+		        <div class="container">
+		            <!-- Collect the nav links, forms, and other content for toggling -->
+		            <div class="collapse navbar-collapse">
+		                <ul class="nav navbar-nav navbar-left">
+		                    <li class="hidden">
+		                        <a href="#page-top"></a>
+		                    </li>
+		                    <li>
+		                        <a class="page-scroll hidden-xs" href="#how">Why R&#233;sify?</a>
+		                    </li>
+		                    <li>
+		                        <a class="page-scroll hidden-xs" href="#services">Services</a>
+		                    </li>
+
+		                </ul>
+		                <ul class="nav navbar-nav navbar-right">
+		                    <li class="hidden">
+		                        <a href="#page-top"></a>
+		                    </li>
+		                    <li>
+		                        <a class="page-scroll" href="business">Business</a>
+		                    </li>
+		                    <li>
+		                        <a href="login">Sign In</a>
+		                    </li>
+		                    <li>
+		                        <a href="register">Sign Up</a>
+		                    </li>
+		                </ul>
+		            </div>
+		            <!-- /.navbar-collapse -->
+		        </div>
+		        <!-- /.container-fluid -->
+		    </nav>
+		</div>
+	    <header>
+			<div id="darken"></div>
+	        <div class="container">
+	            <div class="intro-text">
+					<div class="header">
+						R&#233;sify <font style="font-size:40%">beta</font>
+					</div>
+					
+					<h1 class="fancy"><span>BE RECOGNIZED. <font style="white-space:nowrap">GET HIRED.</font></span></h1>
+	                <div class="intro-heading text-muted">It's Nice To Meet <i class="stand-out">You</i></div>
+					<a href="#how" class="page-scroll button" id="learn">Learn More</a>
+	            </div>
+	        </div>
+	    </header>
+
+	    <section id="how">
+	        <div class="container">
+				<div class="flip"> 
+			        <div class="card"> 
+			            <div class="face front"> 
+		  		            <div class="row" id="question">
+		  		                <div class="col-lg-12 text-center">
+									<div class="slide1">
+			  		                    <h2 class="section-heading black-text">Ask Yourself.</h2>
+			  		                    <h3 class="section-subheading text-muted">Does your r&#233;sum&#233; represent you well enough?</h3>
+										<a href="" class="plain-button" id="flip">Click Here</a>
+									</div>
+									<div class="slide2">
+			  		                    <h2 class="section-heading black-text">The Sad Truth.. 
+											<span class="fa-stack fa-1x">
+						                        <i class="fa fa-file fa-stack-1x black-text"></i>
+						                        <i style="margin-top:15px;" class="fa fa-trash-o fa-stack-1x white-text"></i>
+						                    </span>
+										</h2>
+			  		                    <h3 class="section-subheading text-muted">Many companies use Applicant Tracking Systems (ATS) to screen resumes. Roughly half are discarded and never seen by the employer.</h3>
+										<a href="" class="plain-button" id="flip">Continue</a>
+									</div> <!-- /SLIDE 2-->
+									<div class="slide4">
+			  		                    <h2 class="section-heading black-text">Sign Up Today! </h2>
+			  		                    <h3 class="section-subheading text-muted">Did we mention it's Free?</h3>
+										<a href="register" class="plain-button" id="signUp">Sign Up</a>
+									</div><!-- END Slide 4-->
+		  		                </div>					
+		  		            </div>
+		  				  </div> <!-- /Front -->
+			              <div class="face back"> 
+ 		  		            <div class="row" id="question">
+ 		  		                <div class="col-lg-12 text-center">
+									<div class="slide1">
+	 		  		                    <h2 class="section-heading black-text">Or is it plain like all the rest...
+										<span class="fa-stack fa-1x">
+					                        <i class="fa fa-file fa-stack-1x black-text"></i>
+					                        <i style="margin-top:10px; font-size:26px" class="fa fa-users fa-stack-1x white-text"></i>
+					                    </span>
+										</h2>
+	 		  		                    <h3 class="section-subheading text-muted">A large percentage of r&#233;sum&#233;s get thrown out because they failed to catch the employer's attention.</h3>
+										<div class="center-on-page">
+											<div class="percent-circle">
+								                <div id="boring-percent" class="c100 p0 large">
+								                    <span>80%</span>
+								                    <div class="slice">
+								                        <div class="bar"></div>
+								                        <div class="fill"></div>
+								                    </div>
+								                </div>
+											</div>
+										</div>
+									</div><!-- END Slide 1-->
+									<div class="slide3">
+			  		                    <h2 class="section-heading black-text">We're Here To Help. 
+										<span class="fa-stack fa-1x">
+					                        <i class="fa fa-file fa-stack-1x black-text"></i>
+					                        <i id="smile-icon" class="fa fa-smile-o fa-stack-1x white-text"></i>
+					                    </span>
+										</h2>
+			  		                    <h3 class="section-subheading text-muted">R&#233;sify your r&#233;sum&#233; to maximize your chances of getting the job. We offer tools to minimize the chance that a Applicant Tracking System will throw your r&#233;sum&#233; in the trash. Mix that with our modest, sleek templates and you have that much less to worry about.</h3>
+										<a href="" class="plain-button" id="flip">Continue</a>
+									</div><!-- END Slide 3-->
+ 		  		                </div>					
+ 		  		            </div>
+			            </div>  <!-- / Back-->
+			        </div> 	<!-- / Card -->	
+				</div>	<!-- / Flip-->			
+			</div>			
+	    </section>
+		
+	    <!-- Services Section -->
+	    <section id="services" class="bg-dark-blue">
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-lg-12 text-center">
+	                    <h2 class="section-heading">What We Do.</h2>
+	                    <h3 class="section-subheading"></h3>
+	                </div>
+	            </div>
+	            <div class="row text-center">
+					
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x white-text"></i>
+	                        <i class="fa fa-cubes fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Structure</h4>
+	                    <p class="">The most important part of your r&#233;sum&#233; is the content. That's why we handle the structure so that you can concentrate on making your r&#233;sum&#233; perfect. Need to add something? No worries. Edit and save knowing that we will take care of the rest.</p>
+	                </div>
+					
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+							<i class="fa fa-circle fa-stack-2x white-text"></i>
+ 	                        <i class="fa fa-cloud fa-stack-1x fa-inverse"></i>
+ 	                        <i id="lightning-bolt" class="fa fa-bolt fa-xsm fa-stack-1x  white-text pull-left"></i>
+ 	                    </span>
+	                    <h4 class="service-heading">Intuitive Design</h4>
+	                    <p class="">Your resume is hosted on the cloud so you can update, edit, or print anytime, anywhere, from any device. Edit your resume in real time so that you know exactly how it will look to employers.</p>
+	                </div>
+					
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x white-text"></i>
+	                        <i class="fa fa-lock fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Privacy</h4>
+	                    <p class="">With other free services, you're the product that's being bought and sold. Our intent is to provide an easier way for you to improve your r&#233;sum&#233; and hopefully obtain a job or career. NOT to data mine or steal your information for unethical companies to feed you advertisements every second of every day.</p>
+	                </div>
+
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x white-text"></i>
+	                        <i class="fa fa-usd fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Our Price</h4>
+	                    <p class="">R&#233;sify is, and will remain, a free service. Everything we do is for you.</p>
+	                </div>
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x white-text"></i>
+	                        <i class="fa fa-file-pdf-o  fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Export to PDF</h4>
+	                    <p class="">You can export your r&#233;sum&#233; to PDF format or even send a copy as an attachment via our website from any device. It's that easy.</p>
+	                </div>
+	                <div class="col-md-4">
+	                    <span class="fa-stack fa-4x">
+	                        <i class="fa fa-circle fa-stack-2x white-text"></i>
+	                        <i class="fa fa-briefcase fa-stack-1x fa-inverse"></i>
+	                    </span>
+	                    <h4 class="service-heading">Careers</h4>
+	                    <p class="">Businesses are looking for you! By using our advanced r&#233;sum&#233; search employers can find the professional they have been looking for with ease.</p>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+
+
+	    <footer>
+	        <div class="container">
+	            <div class="row">
+	                <div class="col-md-4">
+	                    <span class="copyright">Copyright &copy; R&#233;sify 2014</span>
+	                </div>
+	                <div class="col-md-4">
+	                    <ul class="list-inline social-buttons">
+	                        <li><a href="#" class="social-tw"><i class="fa fa-twitter"></i></a>
+	                        </li>
+	                        <li><a href="#" class="social-fb"><i class="fa fa-facebook"></i></a>
+	                        </li>
+	                        <li><a href="#" class="social-in"><i class="fa fa-linkedin"></i></a>
+	                        </li>
+	                    </ul>
+	                </div>
+	                <div class="col-md-4">
+	                    <ul class="list-inline quicklinks">
+	                        <li><a href="#">Privacy Policy</a>
+	                        </li>
+	                        <li><a href="#">Terms of Use</a>
+	                        </li>
+	                    </ul>
+	                </div>
+	            </div>
+	        </div>
+	    </footer>
+	</body>
+	{% render_bundle 'base' 'js' %}
+	{% render_bundle 'homepage' 'js' %}
+</html>

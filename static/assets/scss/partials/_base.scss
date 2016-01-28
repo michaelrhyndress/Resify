@@ -1,0 +1,302 @@
+@import "_variables.scss";
+@import "mixins/_toolkit.scss";
+
+@import "../vendor/_bootstrap.scss";
+
+//Page init
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 100%;
+	font-family: $main-font-stack; /* Edit this if you want to match the font with your template design. IF you change it to your font, don't forget to delete the @import above */
+	vertical-align: baseline;
+	line-height: normal;
+	@include box-sizing(border-box);
+}
+
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+//input overrides
+input:-webkit-autofill {
+	@include box-shadow(0 0 0 50px $cyan-blue inset);
+    @include text-fill-color(white);
+}
+input:-webkit-autofill:focus {
+    @include box-shadow(0 0 0 50px $cyan-blue inset);
+    @include text-fill-color(white);
+}
+
+
+#main{
+    position:relative;
+	height:100%;
+    z-index:1;
+    background: rgba(0,0,0,0.8);
+	@include box-shadow(0, 3px, 3px, rgba(0,0,0,0.2));
+	width:100%;
+}
+
+//Buttons
+button, a.button {
+	cursor:pointer;
+	display: inline-block;
+	width: 100%;
+	height:50px;
+	line-height:50px;
+	font-family: $main-font-stack;
+	font-size: 16px;
+	background-color: $cyan-blue;
+	border: solid 2px white;
+	color: #fff;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+
+button:hover, a.button:hover {
+	background: #fff;
+	color: $deep-space-gray;
+	text-decoration:none;
+}
+
+a.invert-button {
+	cursor:pointer;
+	display: inline-block;
+	width: 49%;
+	height:50px;
+	line-height:50px;
+	font-family: $main-font-stack;
+	font-size: 16px;
+	background: #fff;
+	border: solid 2px $deep-space-gray;
+	color: $deep-space-gray;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+
+a.invert-button:hover {
+	background: $deep-space-gray;
+	color: #fff;
+}
+
+a.plain-button {
+	cursor:pointer;
+	display: inline-block;
+	width: 49%;
+	height:50px;
+	line-height:50px;
+	font-family: $main-font-stack;
+	font-size: 16px;
+	background: transparent;
+	border: solid 2px transparent;
+	color: $deep-space-gray;
+	margin: 10px auto;
+	text-decoration: none;
+	text-transform: uppercase;
+	text-align: center;
+	z-index:1000;
+}
+
+a.plain-button{
+	border-color: $deep-space-gray;
+	background: transparent;
+	color: $deep-space-gray;
+}
+
+a.plain-button:hover{
+	text-decoration: none;
+}
+
+a.no-border {
+	border: solid 2px transparent;
+	
+}
+
+a.no-border:hover {
+	background-color:transparent;
+	color:white;
+}
+
+//Text options
+a.small-text {
+	font-size:12px;
+}
+
+.black-text {
+	color:black;
+}
+
+.white-text{
+	color:white;
+}
+
+.text-muted {
+    color: #888787;
+}
+
+///////////// Uncat
+.header {
+	font-family: $logo-font-stack;
+	padding: 0 0 50px 0;
+	text-align: center;
+	color: $deep-space-gray;
+	font-size: 3em;
+	width: auto;
+	position: relative;
+	margin: 0 auto;
+	text-shadow: 1px 1px #797979;
+	color: white;
+	text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+	   padding: 0px;
+}
+
+.icon {
+	font-family: $logo-font-stack;
+	color: $deep-space-gray;
+	text-shadow: 1px 1px #797979;
+   	color: white;
+  	text-shadow:
+       3px 3px 0 #000,
+     -1px -1px 0 #000,  
+      1px -1px 0 #000,
+      -1px 1px 0 #000,
+       1px 1px 0 #000;
+}
+
+//Controls and alerts
+ul.errorlist{
+	display:inline-block;
+	font-size:16px;
+	list-style: none;
+}
+
+.close {
+	float: right;
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 1;
+	color: #000;
+	/* text-shadow: 0 1px 0 #fff; */
+	opacity: .2;
+}
+
+.error-container{
+	display: inline-block;
+	text-align: center;
+}
+
+.alert-error{
+	@include box-shadow(inset 0px 0px 10px 0px #ABABAB,3px 5px 5px -100px #DDDDDD);
+	padding:5px;
+	border:solid 2px white;
+	max-width: 400px;
+	margin:15px auto 0 auto;
+}
+
+
+//other
+a {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+#register{
+	position:relative;
+	max-width:350px;
+	margin: 0 auto;
+	top:0px;
+	padding:0px;
+}
+
+section{
+	padding-top: 50%;
+	min-height:100%;
+}
+
+//icons
+.fa-inverse {
+	color: $cyan-blue !important;
+}
+
+//positioning
+.img-centered {
+    margin: 0 auto;
+}
+
+.center-on-page{
+	position:absolute;
+	margin: 0 auto;
+	width: 100%;
+}
+
+
+//backgrounds
+
+.bg-light-gray {
+    background-color: #f7f7f7;
+}
+
+.bg-darkest-gray {
+    background-color: $deep-space-gray;
+}
+
+.bg-dark-blue {
+	background-color: $cyan-blue;
+	color:white;
+}
+
+.bg-light-blue {
+	background-color: #e9f0f5;
+	color:black;
+}
+
+//Media
+@media (max-width: 992px) {
+	.container{
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+}
+@media (min-height: 650px) {
+	.col-md-12{
+		padding:0px;
+	}
+	
+}
+
+@media (max-height: 670px){
+	section{
+		margin-top: 0px;
+		padding: 0px 0px;
+	}
+}
+
+@media (max-height: 568px){
+	.header{
+		font-size: 2.5em;
+		padding:10px;
+	}
+}
+

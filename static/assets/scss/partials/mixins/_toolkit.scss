@@ -1,0 +1,156 @@
+@mixin box-shadow($values...) {
+    -webkit-box-shadow: $values;
+    -moz-box-shadow: $values;
+    box-shadow: $values;
+}
+
+@mixin background-size($size){
+ -webkit-background-size: $size;
+    -moz-background-size: $size;
+	  -o-background-size: $size;
+    	 background-size: $size;
+}
+
+@mixin text-fill-color($color){
+ -webkit-text-fill-color: $color;
+	-moz-text-fill-color: $color;
+	 -ms-text-fill-color: $color;
+	  -o-text-fill-color: $color;
+		 text-fill-color: $color;
+}
+
+@mixin text-field {
+ display: inline-block;
+  outline: none;
+  text-decoration: none;
+  font: 14px/100% Arial, Helvetica, sans-serif;
+  padding: .5em;
+  text-shadow: 0 1px 1px rgba(0,0,0,.3);
+  @include rounded();
+  @include box-shadow(0, 1px, 2px, rgba(0, 0, 0, 0.2));
+}
+
+@mixin rounded($radius: 0.5em) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin gradient($from, $to) {
+  background: -webkit-gradient(linear, left top, left bottom, from($from), to($to));
+  background: -moz-linear-gradient(top,  $from, $to);
+  filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$from}', endColorstr='#{$to}');
+}
+
+@mixin box-sizing($box-model) {
+  -webkit-box-sizing: $box-model;
+     -moz-box-sizing: $box-model;
+          box-sizing: $box-model;
+}
+
+//Background
+@mixin background-size($value) {
+ -webkit-background-size: $value;
+	-moz-background-size: $value;
+	  -o-background-size: $value;
+	  	 background-size: $value;
+}
+
+//Animation
+@mixin animation($values...){
+ -webkit-animation: $values;
+ 	-moz-animation: $values;
+	 -ms-animation: $values;
+	  -o-animation: $values;
+	  	 animation: $values;
+}
+
+
+//Transform
+@mixin rotate($degrees, $axis: ""){
+	@if $axis != ""{
+		@if $axis == "X"{
+		 -webkit-transform: rotateX($degrees);
+		 	 -ms-transform: rotateX($degrees);
+			  -o-transform: rotateX($degrees);
+			  	 transform: rotateX($degrees);
+		}
+		@if $axis == "Y"{
+   		 -webkit-transform: rotateY($degrees);
+   		 	 -ms-transform: rotateY($degrees);
+   			  -o-transform: rotateY($degrees);
+   			  	 transform: rotateY($degrees);
+		}
+	} @else {
+	 -webkit-transform: rotate($degrees);
+	 	 -ms-transform: rotate($degrees);
+		  -o-transform: rotate($degrees);
+		  	 transform: rotate($degrees);
+	}	
+}
+
+@mixin transform-style($value){
+ -webkit-transform-style: $value;
+	 -ms-transform-style: $value;
+	  -o-transform-style: $value;
+	  	 transform-style: $value;
+}
+
+
+//Transitions
+@mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+}
+
+@mixin transition-property($property...) {
+    -moz-transition-property:    $property;
+    -o-transition-property:      $property;
+    -webkit-transition-property: $property;
+    transition-property:         $property;
+}
+
+@mixin transition-duration($duration...) {
+    -moz-transition-property:    $duration;
+    -o-transition-property:      $duration;
+    -webkit-transition-property: $duration;
+    transition-property:         $duration;
+}
+
+@mixin transition-timing-function($timing...) {
+    -moz-transition-timing-function:    $timing;
+    -o-transition-timing-function:      $timing;
+    -webkit-transition-timing-function: $timing;
+    transition-timing-function:         $timing;
+}
+
+@mixin transition-delay($delay...) {
+    -moz-transition-delay:    $delay;
+    -o-transition-delay:      $delay;
+    -webkit-transition-delay: $delay;
+    transition-delay:         $delay;
+}
+
+//Perspective
+@mixin perspective($value) {
+ -webkit-perspective: $value;
+	 -ms-perspective: $value;
+	  -o-perspective: $value;
+	  	 perspective: $value;
+}
+
+@mixin backface-visibility($value) {
+ -webkit-backface-visibility: $value;
+	 -ms-backface-visibility: $value;
+	  -o-backface-visibility: $value;
+	  	 backface-visibility: $value;
+}
+
+
+//Tap
+@mixin tap-highlight-color($color){
+ -webkit-tap-highlight-color: $color;
+		 tap-highlight-color: $color;
+}

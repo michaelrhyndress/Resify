@@ -1,0 +1,64 @@
+@import "_variables";
+@import "mixins/_toolkit";
+
+.field-block{
+	width: 125px;
+	font-family: $main-font-stack;
+	margin: 10px auto;
+	cursor: auto;
+}
+
+.field-block input{
+	color:white;
+	background-color:$cyan-blue;
+	font-size:16px;
+}
+
+.field-block .field {
+	position: relative;
+	width: 100%;
+	clear: both;
+	float: left;
+}
+
+.form-control{
+	-webkit-appearance: none; 
+	max-width: 450px;
+	outline: none;
+	font-size: 24px;
+	@include rounded(0px);
+	border-left:0px;
+	border: 1px solid $cyan-blue;
+	margin:0 auto;
+	text-align:center;
+	background-color: $cyan-blue;
+	color:white;
+	height: 45px;
+	box-shadow: none;
+}
+.form-control:focus{
+	-webkit-appearance: none; 
+	outline: none;
+}
+
+.checkbox-input{
+	position:relative;
+	width: 250px;
+	font-family: $main-font-stack;
+	margin: 10px auto;
+	cursor: auto;
+	color:white;
+	margin:0 auto;
+}
+
+.half-box{
+	width: 49%;
+	display:inline-block;
+}
+
+@media (max-height: 670px){
+	.form-control {
+		font-size: 20px;
+		height: 35px;
+	}
+}

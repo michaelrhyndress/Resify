@@ -1,0 +1,43 @@
+@import "../../partials/_variables.scss";
+@import "../../partials/mixins/_toolkit.scss";
+
+@import "../../partials/_base.scss";
+@import "../../partials/_form-controls.scss";
+@import "../../partials/_social-buttons.scss";
+@import "../../partials/_footer.scss";
+
+
+$homepage-font-stack: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+
+body {
+	background-color: $cyan-blue;
+    padding-top: 50px;
+    padding-bottom: 20px;
+	height:100%;
+	color: white;
+}
+
+a {
+	color: white;
+}
+
+a:hover {
+	color: white;
+}
+
+footer span.copyright {
+	color: white;
+}
+
+footer ul.quicklinks{
+	li {
+		a {
+			color: white;
+		}
+	}
+}
+
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] {
+    margin-left: 0px;
+}

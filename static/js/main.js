@@ -48,8 +48,8 @@ $( function() {
 							}, (i * 25));  
 						}
 						setTimeout(function(){
-							$(".slide1").first().hide();
-							$(".slide2").first().show();
+							$("#how .slide1").first().hide();
+							$("#how .slide2").first().show();
 						}, 500);
 						setTimeout(function(){
 							$("#boring-percent > span").text("Click");
@@ -58,15 +58,15 @@ $( function() {
 				} //if flip == 1
 				if(flips == 2){
 					setTimeout(function(){
-						$(".slide1").hide();
-						$(".slide2").show();
-						$(".slide3").show();
+						$("#how .slide1").hide();
+						$("#how .slide2").show();
+						$("#how .slide3").show();
 					}, 500);  	
 				}
 				if(flips == 3){
 					setTimeout(function(){
-						$(".slide2").hide();
-						$(".slide4").show(); 
+						$("#how .slide2").hide();
+						$("#how .slide4").show(); 
 					}, 500);  
 	
 				}

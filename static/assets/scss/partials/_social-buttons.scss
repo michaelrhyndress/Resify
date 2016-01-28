@@ -1,0 +1,48 @@
+@import "_variables";
+@import "mixins/_toolkit";
+
+ul.social-buttons {
+    margin-bottom: 0;
+}
+
+ul.social-buttons li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+	@include rounded(100%);
+	border:solid 1px white;
+    font-size: 20px;
+    line-height: 40px;
+    outline: 0;
+    color: #fff;
+    background-color: black;
+    @include transition(all .3s);
+}
+
+// Social Media colors
+ul.social-buttons li a{
+	
+	&:active, &:focus, &:hover {
+		background-color: $cyan-blue; //Default
+		@include transition(background-color .2s ease);
+	}
+	
+	&.social-fb {
+		&:active, &:focus, &:hover {
+			background-color: $color-logo-facebook;
+		}
+	}
+	
+	&.social-tw{
+		&:active, &:focus, &:hover{
+			background-color: $color-logo-twitter;
+		}
+	}
+	
+	&.social-in{
+		&:active, &:focus, &:hover{
+			background-color: $color-logo-linkedin;
+		}
+	}
+	
+}

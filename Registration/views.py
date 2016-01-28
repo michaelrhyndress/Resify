@@ -9,9 +9,10 @@ from django.utils.timezone import now
 #from django.db.models import get_model
 
 from Registration.forms import AuthenticationForm, RegistrationForm, UserForm
+from Registration.forms import UserProfileForm, JobHistoryForm, EducationHistoryForm, AccomplishmentForm, SocialMediaForm, UserTemplateForm
+
 from Registration.models import Job_History, User, Education_History, User_Skills, SocialMedia
 from Registration.models import Accomplishments, Template, UserProfile, User_Template, Tag
-from Registration.forms import UserProfileForm, JobHistoryForm, EducationHistoryForm, AccomplishmentForm, SocialMediaForm, UserTemplateForm
 
 import os, re, datetime
 
