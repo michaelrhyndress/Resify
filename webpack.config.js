@@ -2,9 +2,9 @@ var path = require("path")
 var webpack = require('webpack')
 var BundleTracker = require('webpack-bundle-tracker')
 
-var atImport = require('postcss-import');
-var bemLinter = require('postcss-bem-linter');
-var autoprefixer = require('autoprefixer');
+// var atImport = require('postcss-import');
+// var bemLinter = require('postcss-bem-linter');
+// var autoprefixer = require('autoprefixer');
 
 var __staticDir = path.join(__dirname, "static/assets")
 
@@ -71,11 +71,11 @@ module.exports = {
 				loader: "imports?this=>window!exports?window.Modernizr" 
 			}
 		],
-		postcss: [
-		    atImport(),
-		    autoprefixer(),
-		    bemLinter('bem')
-		  ],
+		// postcss: [
+		//     atImport(),
+		//     autoprefixer(),
+		//     bemLinter('bem')
+		//   ],
 	},
 	
 	sassLoader: {

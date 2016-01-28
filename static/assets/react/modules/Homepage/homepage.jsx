@@ -11,8 +11,8 @@ require('../../../scss/modules/Homepage/HowSection.scss')
 
 // Video
 $("header").vide({
-    webm: '/static/assets/bundles/'		+ 	require('./media/video/interview.webm'),
-    poster: '/static/assets/bundles/'	+	require('./media/img/interview.jpg'),
+    webm: require('./media/video/interview.webm'),
+    poster: require('./media/img/interview.jpg'),
 }, {
 	loop: false,
 	posterType: "jpg"
