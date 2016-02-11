@@ -1,0 +1,612 @@
+span.descriptive-text{
+	font-size: 12px;
+	color: #BABABA;
+	font-weight: 300;
+}
+
+/*span.large-label{
+	position:relative;
+	font-size: 26px;
+	color: #3D3D3D;
+	font-weight: 300;
+	padding:25px 0px;
+}*/
+.checkbox-label{
+	text-align:center !important;
+}
+/*Flexbox gives us the flexiness we need. The top just stays put as there is no scrolling on the body due to the page never exceeding viewport height*/
+
+/*This is our main wrapping element, it's made 100vh high to ensure it is always the correct size and then moved into place and padded with negative margin and padding*/
+.Container {
+	display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+	display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+	display: -ms-flexbox;      /* TWEENER - IE 10 */
+	display: -webkit-flex;     /* NEW - Chrome */
+	display: flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+    overflow: scroll;
+    height: 100vh;
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+/*All the scrollable sections should overflow and be whatever height they need to be. As they are flex-items (due to being inside a flex container) they could be made to stretch full height at all times if needed.
+WebKit inertia scrolling is being added here for any present/future devices that are able to make use of it.
+*/
+.Left,
+.Middle,
+.Right {
+    overflow: auto;
+    height: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+	transition: all .25s cubic-bezier(.165,.84,.44,1),color .7s ease-out,opacity 1ms linear;
+}
+.Right {
+    padding:0px;
+	height:100%;
+	box-shadow: 0px 0px 20px black; 
+}
+.Left-content {
+	margin-top:60px;
+	padding:15px;
+}
+
+.Top-menu{
+	background-color:#1f2126;
+	width:40%;
+	color:#fff;
+	font-size: 18px;
+	height:50px;
+	position:fixed;
+	z-index:1000;
+	text-align: center;
+}
+.Top-menu>i{
+	float: left;
+	color: #464A51;
+	padding:15px;
+	height:50px;
+	width:50px;
+	cursor:pointer;
+	
+	-webkit-transition: -webkit-transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
+	-ms-transition: -ms-transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
+	transition: transform 0.3s, opacity 0.2s, visibility 0s 0.3s;
+}
+.Top-menu>i:hover{
+	background-color: #464A51;
+	color:white;
+	opacity:1;
+}
+.Top-menu>.activeIcon{
+	border-bottom:solid 3px rgb(63, 138, 255);
+	color: white;
+	opacity:1;
+}
+
+
+/* Footer */
+
+footer {
+    padding: 25px 0;
+    text-align: center;
+	line-height: 1.2em;
+	font-size:12px;
+	bottom:0px;
+	margin-top:10px;
+}
+
+footer span.copyright {
+	display: inline-block;
+    text-transform: uppercase;
+    text-transform: none;
+	color: black;
+}
+
+footer ul.quicklinks {
+	display: inline-block;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    text-transform: none;
+}
+
+#webView{
+	transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+}
+
+#webView>iframe{
+   	top:0;
+   	left: 0;
+   	width: 100%;
+   	height: 100%;
+	border:none;
+	padding:0px;
+	margin:0px;
+}
+
+/*Entirely optional – just wanted to remove the scrollbar on WebKit browsers as I find them ugly*/
+.Left::-webkit-scrollbar,
+.Middle::-webkit-scrollbar,
+.Right::-webkit-scrollbar {
+    display: none;
+}
+/*  Left and Right are set sizes while the Middle is set to flex one so it occupies all remaining space. This could be set as a width too if prefereable, perhaps using calc.*/
+.Left {
+    width: 40%;
+}
+
+.Right {
+    width: 60%;
+}
+
+.input-label{
+	float: left;
+	display: inline-block;
+	font-size: 12px;
+	color: #BABABA;
+	font-weight: 300;
+	padding:12px 0px;
+	width:70px;
+	text-align:left;
+}
+.input-box{
+	border: solid 1px white;
+/*	border-bottom: solid 1px #464A51;
+*/	padding:10px;
+	width:80%;
+}
+.tag-box{
+	width:110%;
+}
+.input-fieldset{
+	border:solid 1px white;
+	padding:0px;
+	margin-bottom: 10px;
+}
+
+.textarea-box{
+	border: solid 1px white;
+	padding:10px;
+	width:80%;
+	max-width:550px;
+	padding-bottom:20px;
+	resize: none;
+}
+.form-inline>.half-box{
+	width:40%;
+}
+.form-control{
+	width:70%;
+}
+.content-divider{
+	border: solid 1px white;
+}
+.half-box{
+	width:40%;
+}
+.clear-btn{
+	position:absolute;
+	right:10px;
+	top:10px;
+	background-color:rgba(255,255,255,.3);
+	border:solid 1px white;
+	color: #444;
+	width:90px;
+	height:35px;
+}
+.clear-btn:hover{
+	transition: all 1s ease;
+	background-color:rgba(255,255,255,.6);
+	border:solid 1px black;
+}
+
+.auto-container{
+    display: table;
+    vertical-align: middle;
+}
+.auto-center{
+    display: table-cell;
+       vertical-align: middle;
+}
+
+/* saving btn */
+.auto-box{
+	bottom: 15px;
+    background-color:rgba(255,255,255,.9);
+    border: solid 1px #377091;
+    color: #377091;
+    text-align: center;
+    width: 90px;
+    height: 35px;
+    line-height: 35px;
+    position: fixed;
+}
+
+/*.center {
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    background-color:rgba(255,255,255,0);
+}*/
+
+.tag{
+	background-color: rgb(63, 138, 255);
+	color:white;
+    border: rgb(63, 138, 255) 1px solid;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    display: inline-block;
+    border-radius: 3px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    margin: 0 5px 5px 0;
+    padding: 4px;
+    text-decoration: none;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    -moz-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    -webkit-transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    vertical-align: middle;
+}
+
+.inline{
+	display: inline;
+}
+
+.tag_new{
+	background-color: rgb(0, 181, 37);
+    border: rgb(0, 181, 37) 1px solid;
+}
+
+.tagIcon{
+	cursor:pointer;
+	color:white;
+}
+
+.hint{
+	color:grey;
+}
+
+/* btn */
+.menu-toggle {
+	position: fixed;
+	display:  inline-block;
+	width: 30px;
+	height: 30px;
+	right: 65px;
+	bottom:15px;
+	z-index: 10000;
+	width:50px;
+	height:50px;
+}
+
+.menu-toggle.badge{
+	background-color:rgba(255,255,255,.7);
+	border: solid 1px #444;
+	border-radius:50px;
+	-moz-box-shadow: 10px 10px 5px #888;
+	-o-box-shadow: 10px 10px 5px #888;
+	-webkit-box-shadow: 10px 10px 5px #888;
+	box-shadow: 2px 2px 5px #4F4F4F;
+}
+
+.menu-toggle span {
+	margin:0 auto;
+	position: relative;
+	top: 19px; /* set lower if no badge*/
+}
+.menu-toggle span:before, .menu-toggle span:after {
+	position: absolute;
+	content: '';
+}
+.menu-toggle span, .menu-toggle span:before, .menu-toggle span:after {
+	width: 30px;
+	height: 6px;
+	background-color: #444;
+	display: block;
+}
+.menu-toggle span:before {
+	margin-top: -8px;
+}
+.menu-toggle span:after {
+	margin-top: 8px;
+}
+
+/* example 5 */
+.menu-x span {
+	-webkit-transition-duration: 0s;
+	-webkit-transition-delay: .2s;
+	-ms-transition-duration: 0s;
+	-ms-transition-delay: .2s;
+	-o-transition-duration: 0s;
+	-o-transition-delay: .2s;
+	transition-duration: 0s;
+	transition-delay: .2s;
+}
+.menu-x-close span {
+	background-color: rgba(0,0,0,0.0);
+	-webkit-transition-delay: .2s;
+}
+.menu-x span:before {
+	-ms-transition-property: margin, -ms-transform;
+	-ms-transition-duration: .2s;
+	-ms-transition-delay: .2s, 0;
+	-webkit-transition-property: margin, -webkit-transform;
+	-webkit-transition-duration: .2s;
+	-webkit-transition-delay: .2s, 0;
+	-o-transition-property: margin, -o-transform;
+	-o-transition-duration: .2s;
+	-o-transition-delay: .2s, 0;
+	transition-property: margin, transform;
+	transition-duration: .2s;
+	transition-delay: .2s, 0;
+}
+.menu-x-close span:before {
+	margin-top: 0;
+	-webkit-transform: rotate(45deg);
+	-webkit-transition-delay: 0, .2s;
+	-ms-transform: rotate(45deg);
+	-ms-transition-delay: 0, .2s;
+	-o-transition-property: margin, transform;
+	-o-transition-duration: .2s;
+	transition-delay: .2s, 0;
+	transform: rotate(45deg);
+	transition-delay: 0, .2s;
+}
+.menu-x span:after {
+	-webkit-transition-property: margin, -webkit-transform;
+	-webkit-transition-duration: .2s;
+	-webkit-transition-delay: .2s, 0;
+	-ms-transition-property: margin, -ms-transform;
+	-ms-transition-duration: .2s;
+	-ms-transition-delay: .2s, 0;
+	-o-transition-property: margin, -o-transform;
+	-o-transition-duration: .2s;
+	-o-transition-delay: .2s, 0;
+	transition-property: margin, transform;
+	transition-duration: .2s;
+	transition-delay: .2s, 0;
+}
+.menu-x-close span:after {
+	margin-top: 0;
+	-webkit-transform: rotate(-45deg);
+	-webkit-transition-delay: 0, .2s;
+	-ms-transform: rotate(-45deg);
+	-ms-transition-delay: 0, .2s;
+	-o-transform: rotate(-45deg);
+	-o-transition-delay: 0, .2s;
+	transform: rotate(-45deg);
+	transition-delay: 0, .2s;
+}
+/* / Menu X Transition */
+
+.cancelInputAfter{
+	cursor:pointer;
+}
+.mobile-only{
+	display:none;
+}
+
+.panelIcon{
+	cursor:pointer;
+	padding-right:20px;
+	height:50px;
+	width:50px;
+}
+
+.panel-body {
+	padding: 5px;
+}
+
+a.add-item, .collapse-toggle{
+	text-decoration:none;
+	cursor:pointer;
+}
+
+.template{
+	display:none;
+}
+
+@media (min-width: 1130px){
+	.Top-menu{
+		left: 0px;
+	}
+}
+
+/* SPECIAL CASE FOR EXTRA ICON*/
+@media (min-width: 1000px) and (max-width: 1129px){
+	.Left-content {
+	  margin-top: 0px;
+  	}
+	.Top-menu{
+		position: fixed;
+		left: 40%;
+		background-color:#1f2126;
+		width:40px;
+		height:100%;
+		color:#fff;
+		font-size: 14px;
+		z-index:1000;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	.Top-menu>i{
+		float: left;
+		color: #464A51;
+		padding:10px;
+		height:40px;
+		width:40px;
+		cursor:pointer;
+	}
+	.Left {
+	  width: 45%;
+	}
+	
+	.fa.fa-trash-o.fa-lg{
+		padding-right: 20px;
+	}
+	
+	.input-label{
+		  display: none;
+	}
+	.textarea-box, .input-box{
+		width:90%;
+	}
+	.half-box{
+		width:49%
+	}
+	.Top-menu> i:hover{
+		border:0px;
+		color: white;	
+		opacity:1;
+	}
+	.Top-menu>.activeIcon{
+		border:0px;
+		color: white;	
+		opacity:1;
+	}
+	
+	footer{
+		width:90%;
+	}
+}
+
+@media (max-width: 1000px){
+	
+	h2, .h2{
+		font-size:1.4em;
+	}
+	
+	.Right{
+		display:none;
+	}
+	
+	.Left{
+		width:100%;
+	}
+	.Left-content{
+		margin:0px;
+	}
+	
+	.Container {
+		display:block;
+	}
+	
+	.input-label{
+		float: left;
+	}
+	.half-box{
+
+	}
+	
+	.Top-menu{
+		position: fixed;
+		right:0px;
+		background-color:#1f2126;
+		width:50px;
+		height:100%;
+		color:#fff;
+		font-size: 18px;
+		z-index:1000;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	.Top-menu>i{
+		float: left;
+		color: #464A51;
+		padding:15px;
+		height:50px;
+		width:50px;
+		cursor:pointer;
+		margin-top:7%;
+	}
+
+	.Top-menu>i:hover{
+		background-color: #464A51;
+		color:white;
+		opacity:1;
+	}
+	.Top-menu>.activeIcon{
+		border:0px;
+		color: white;	
+		opacity:1;
+	}
+	.mobile-only{
+		display:block;
+	}
+	.textarea-box{
+		text-align: normal;
+		width: calc(100%-70px);
+	}
+	.input-box{
+		width: calc(100%-70px);
+	}
+	#mobile-resume{
+	    padding:0px;
+		height:100%;
+		box-shadow: 0px 0px 20px black; 
+		width:100%;
+		height:100%;
+	}
+	#preview-section{
+		transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+		position:absolute;
+		width: 100%;
+		height:100%;
+		left:0px;
+		top:0px;
+	}
+
+	#preview-section>iframe{
+	   	top:0;
+	   	left: 0;
+	   	width: 100%;
+	   	height: 100%;
+		border:none;
+		padding:0px;
+		margin:0px;
+	}
+	
+	.menu-toggle.invisible  {
+		-webkit-transform: translate3d(0,96px,0);
+		-moz-transform: translate3d(0,96px,0);
+		-o-transform: translate3d(0,96px,0);
+		transform: translate3d(0,96px,0);
+		-webkit-transition: -webkit-transform .4s,opacity 3s;
+		-moz-transition: -moz-transform .4s,opacity 3s;
+		-o-transition: -o-transform .4s,opacity 3s;
+		transition: transform .4s,opacity 3s;
+		opacity: 0;
+		overflow: hidden;
+	}
+
+	.menu-toggle.visible {
+		-webkit-transform: translate3d(0, -15px,0);
+		-moz-transform: translate3d(0,-15px,0);
+		-o-transform: translate3d(0,-15px,0);
+		transform: translate3d(0,-15px,0);
+		-webkit-transition: -webkit-transform .3s,opacity .3s;
+		-moz-transition: -moz-transform .3s,opacity .3s;
+		-o-transition: -o-transform .3s,opacity .3s;
+		 transition: transform .3s,opacity .3s;
+	}
+	
+}
+
+@media (max-width: 450px){
+	.input-label{
+		  display: none;
+	}
+	.textarea-box, .input-box{
+		width:100%;
+	}
+	.half-box{
+		width:49%
+	}
+}
+
+@media (min-width: 0px){
+	.form-inline .form-control {
+	  display: inline-block;
+	  vertical-align: middle;
+	}
+}

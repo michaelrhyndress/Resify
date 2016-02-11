@@ -2,4 +2,8 @@ db.sqlite3
 *.pyc
 webpack-stats.json
 bundles/
+<<<<<<< HEAD
 node_modules/
+=======
+node_modules/
+>>>>>>> oldish-state
