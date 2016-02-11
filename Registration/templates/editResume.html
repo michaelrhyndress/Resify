@@ -1,15 +1,14 @@
 {% extends "base_dashboard.html" %}
 {% block content %} 
 
-	{% url "save_resume" as action_url %}
-
-
 <html class="no-js">
     <head>
         <meta charset="utf-8">
         <title>Edit Resume</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-		<script>
+		
+		
+		<!-- <script>
 		$(document).ready(function(){
 			var db_tag_list = [];
 			 //Makes the tag list from db for tab complete
@@ -17,16 +16,19 @@
 				db_tag_list[{{forloop.counter0}}]="{{tag}}";
 				{%if forloop.last%}$('#new_tag_add').tabcomplete(db_tag_list);{%endif%}
 			{% endfor %}
-			});
-		</script>
+		});
+		</script> -->
+			
     </head>
     <body>
     {# <div class="Top">{{ s_user.first_name }} {{ s_user.last_name }}</div> #}
     <div class="Container">
         <div class="Left">
 			<a href="#" id="menu-toggle" class="menu-toggle badge menu-x menu-x-close mobile-only visible"><span></span></a>
+			
 			<div class="Top-menu">
-				<i id="personal" class="fa fa-user activeIcon fa-md"></i>
+				<i id="resify" class="resify_icon activeIcon"></i>
+				<i id="personal" class="fa fa-user fa-md"></i>
 				<i id="experience" class="fa fa-briefcase fa-md"></i>
 				<i id="education" class="fa fa-graduation-cap fa-md"></i>
 				<i id="accomplishments" class="fa fa-lightbulb-o fa-lg"></i>
@@ -42,7 +44,24 @@
 					{% csrf_token %}
 					
 <!-- Personal -->
-					<div id="autosaving" class="center"><i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> Saving...</div>
+					<div class="auto-container">
+					    <div class="auto-center">
+					        <div id="autosaving" class="auto-box"><i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> Saving...</div>
+					    </div>
+					</div>
+					
+<!--						<div class="col-md-4"></div>
+						<div class="col-md-4">
+							<div id="autosaving" class="auto-box"><i id="autosaving" class="fa fa-spinner fa-spin fa-md"></i> Saving...</div>
+							</div>
+						<div class="col-md-4"></div>
+					</div> -->
+					
+					<section id="resify-section">
+						
+						
+					</section>
+					
 					<section id="personal-section">
 						<h2 class="fs-title">Personal Details</h2>
 						<hr>
@@ -115,10 +134,13 @@
 															<option value="{{x}}">{{x}}</option>
 															{% endfor %}
 														</select>
-														<script>
+														
+															<!-- <script>
 															$("#job_from_date{{forloop.counter}}-edit").val("{{job.job_from_date}}");
 															$("#job_to_date{{forloop.counter}}-edit").val("{{job.job_to_date}}");
-														</script>
+														</script> -->
+															
+															
 														<br>
 													</div>
 												</div>
@@ -189,11 +211,13 @@
 																<option value="{{x}}">{{x}}</option>
 																{% endfor %}
 															</select>
-															<script>
+															
+															<!-- <script>
 																$("#status{{forloop.counter}}-edit").val("{{ed.status}}");
 																$("#Education_from_date{{forloop.counter}}-edit").val("{{ed.Education_from_date}}");
 																$("#Education_to_date{{forloop.counter}}-edit").val("{{ed.Education_to_date}}");
-															</script>
+															</script> -->
+																
 															<br>
 														</div>
 													</div>
@@ -245,11 +269,13 @@
 																<option value="{{x}}">{{x}}</option>
 																{% endfor %}
 															</select>
-															<script>
+																														
+															<!-- <script>
 																$("#title{{forloop.counter}}-edit").val("{{accomp.title}}");
 																$("#Accomplishment_from_date{{forloop.counter}}-edit").val("{{accomp.Accomplishment_from_date}}");
 																$("#Accomplishment_to_date{{forloop.counter}}-edit").val("{{accomp.Accomplishment_to_date}}");
-															</script>
+															</script> -->
+																
 															<br>
 														</div>
 														<hr>
@@ -294,7 +320,10 @@
 														<div id="slider{{forloop.counter}}-edit" class="slider animateSlide" style="background-color:rgb(63, 138, 255)"></div>
 														<input group="skills" type="hidden" id="form_percentage{{forloop.counter}}" class="directEdit" name="{{skill.id}}_percentage" value="{{skill.percentage}}"/>
 															<font id="percentage{{forloop.counter}}-edit" class="pull-right">{{skill.percentage}}%</font>
-															<script>
+															
+															
+														
+															<!-- <script>
 															$('#slider{{forloop.counter}}-edit').noUiSlider({
 																start: [ {{skill.percentage}} ],
 																connect: "lower",
@@ -304,7 +333,10 @@
 																'max': 100
 																}
 															});
-															</script>
+															</script> -->
+															
+															
+															
 														</div>
 													</div>
 								                </div>
@@ -405,9 +437,12 @@
 						<div class="input-block" id="tags-info">
 							{% if s_user.userprofile.tags.all %}
 								{% for tag in s_user.userprofile.tags.all %}
-									<script>
+									
+									
+															<!-- <script>
 										tag_list("{{tag}}", {{forloop.counter}});
-									</script>
+									</script> -->
+										
 									<span class="info-item tag" id="tag{{forloop.counter}}">{{tag}}&nbsp;<a class="delete-item" id="tags_{{tag.id}}"><font class="tagIcon"><i class="fa fa-times fa-lg"></i></font></a></span>
 								{% endfor %}
 							{% endif %}
@@ -432,9 +467,29 @@
 					</section> <!-- Preview Section -->
 				
 				</div>				
+				</form>
 				
+			    <footer>
+					<div class="col-md-12">
+			            <div class="row">
+			                <div class="col-md-5">
+			                    <span class="copyright">Copyright &copy; R&#233;sify 2014</span>
+			                </div>
+			                <div class="col-md-3">
+			                    <ul class="list-inline social-buttons">
+			                        <li><a href="#"><i class="fa fa-twitter"></i></a>
+			                        </li>
+			                        <li><a href="#"><i class="fa fa-facebook"></i></a>
+			                        </li>
+			                        <li><a href="#"><i class="fa fa-linkedin"></i></a>
+			                        </li>
+			                    </ul>
+			                </div>
+							<div class="col-md-4"><a href="#">Privacy & Terms</a></div>
+						</div>
+			        </div>
+			    </footer>
 			</div><!-- /Left -->
-		</form>
 
         <div id="webView" class="Right">
 			<button id="fullscreen-btn" class="clear-btn">Fullscreen</button>
@@ -646,165 +701,22 @@
 			
 			
 	<!-- / TEMPLATES -->
-    </body>
-		<script>
-		
-		var lastHandle = "{{s_user.userprofile.handle}}";
-		
-		
-		$("#handle").change(function() {
-			var handle = slugify($('#handle').val());
-			$('#handle').val(handle);
-			if(lastHandle !== handle){
-				checkHandle(slugify(handle))
-				lastHandle=slugify(handle)
-			}
-			else{
-				$('#handle').css("border",'solid 1px white');
-			}
-		});
-		
-		function checkHandle(handle, flag) {
-			handle=handle.replace(/\s/g,''); 
-
-			$.ajax({
-				async : true,
-		        url : "/check_handle", // the endpoint
-		        type : "POST", // http method
-		        data : {
-					handle : handle,
-					'csrfmiddlewaretoken': '{{csrf_token}}'
-				},
-		        // handle a successful response
-		        success : function(json) {
-					if(json == 0){
-						$('#handle').css("border",'solid 1px green');
-						$('#resume').attr("src", handle);
-						$('#mobile-resume').attr("src", handle);
-						saveResume("handle", handle, "None",-1, "update");
-						//Success: 0
-					}else{
-						$('#handle').css("border",'solid 1px red');
-						// alert("That URL is taken");
-						//Failed: 1
-					}
-		        }
-			});
-		};
-		
-		function saveResume(key, value, sub, pk, option) {
-			// This API is made to save info based on key and sub key.
-				var data = 0;
-				$.ajax({
-					async : (option != "add") ? true : false, //(true, false)
-			        url : "{{action_url}}", // the endpoint
-			        type : "POST", // http method
-			        data : {
-						key : key,  // field name
-						value : value,  //Value of field
-						sub : sub,  //header of field (ex education)
-						pk : pk,  //pk of object, if exists
-						option : option,  // add, delete, update
-						'csrfmiddlewaretoken': '{{csrf_token}}'
-					},
-			        // handle a successful response
-			        success : function(json) {
-						if(json != 0){
-							show_saving(1000);
-							if(key == "template"){
-								document.getElementById('resume').contentWindow.location.reload(true);
-								document.getElementById('mobile-resume').contentWindow.location.reload(true);
-							}
-							if(option == "add"){
-								data=json;
-							}
-							//Success: 0
-						}else{
-							$('[name="'+key+'"]').css("border",'solid 1px red');
-							// alert("Save failed, please refresh the page and try again");
-							//Failed: 1
-						}
-			        }
-				});
-				if(option == "add"){
-					return data;
-				}
-		};
-		
-  		// This is called with the results from from FB.getLoginStatus().
-  		  function statusChangeCallback(response) {
-  		    console.log('statusChangeCallback');
-  		    console.log(response);
-  		    // The response object is returned with a status field that lets the
-  		    // app know the current login status of the person.
-  		    // Full docs on the response object can be found in the documentation
-  		    // for FB.getLoginStatus().
-  		    if (response.status === 'connected') {
-  		      // Logged into your app and Facebook.
-  		      testAPI();
-  		    } else if (response.status === 'not_authorized') {
-  		      // The person is logged into Facebook, but not your app.
-  		      document.getElementById('status').innerHTML = 'Please log ' +
-  		        'into this app.';
-  		    } else {
-  		      // The person is not logged into Facebook, so we're not sure if
-  		      // they are logged into this app or not.
-  		      document.getElementById('status').innerHTML = 'Please log ' +
-  		        'into Facebook.';
-  		    }
-  		  }
-
-  		  // This function is called when someone finishes with the Login
-  		  // Button.  See the onlogin handler attached to it in the sample
-  		  // code below.
-  		  function checkLoginState() {
-  		    FB.getLoginStatus(function(response) {
-  		      statusChangeCallback(response);
-  		    });
-  		  }
-
-  		  window.fbAsyncInit = function() {
-			  FB.init({
-			    appId      : '1551034371776291',
-			    cookie     : true,  // enable cookies to allow the server to access 
-			                        // the session
-			    xfbml      : true,  // parse social plugins on this page
-			    version    : 'v2.1' // use version 2.1
-			  });
-			  // FB.getLoginStatus(function(response) {
-			  //   statusChangeCallback(response);
-			  // });
-  		  };
-
-  		  // Load the SDK asynchronously
-  		  (function(d, s, id) {
-  		    var js, fjs = d.getElementsByTagName(s)[0];
-  		    if (d.getElementById(id)) return;
-  		    js = d.createElement(s); js.id = id;
-  		    js.src = "//connect.facebook.net/en_US/sdk.js";
-  		    fjs.parentNode.insertBefore(js, fjs);
-  		  }(document, 'script', 'facebook-jssdk'));
-
-  		  // Here we run a very simple test of the Graph API after login is
-  		  // successful.  See statusChangeCallback() for when this call is made.
-  		  function testAPI() {
-		    document.getElementById('facebookCheck').innerHTML =
-		        'loading...';
-  		    FB.api('/me', function(response) {
-		    	document.getElementById('facebookCheck').innerHTML =
-		        '';
-				document.getElementById('facebookCheck').className += " fa-check-circle-o";
-				$(".fb_iframe_widget").hide();
-				$(".cancelInputAfter").removeAttr("style");
-				$("#facebookCheck").removeAttr("style");
-				$("#facebookLink").val(response.link);
-				//response.link gets URL
-  		    });
-			
-  		  }
-		  
-		
+	
+	
+	<script>
+	var globalJSON = {
+		"form": {
+			"actionUrl": "{{save_resume}}",
+			"csrfToken": "{{csrf_token}}"
+		},
+		"data": {
+			"lastHandle": "{{s_user.userprofile.handle}}"
+		}
+	
+	}
 	</script>
+	
+    </body>		
 </html>
 
 {% endblock %}

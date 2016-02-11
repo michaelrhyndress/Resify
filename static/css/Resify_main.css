@@ -1,5 +1,4 @@
 
-
 /*I love me some border-box*/
 * {
     box-sizing: border-box;
@@ -21,6 +20,7 @@ span.descriptive-text{
 	color: #BABABA;
 	font-weight: 300;
 }
+
 /*span.large-label{
 	position:relative;
 	font-size: 26px;
@@ -94,11 +94,68 @@ WebKit inertia scrolling is being added here for any present/future devices that
 .Top-menu>i:hover{
 	background-color: #464A51;
 	color:white;
+	opacity:1;
 }
 .Top-menu>.activeIcon{
 	border-bottom:solid 3px rgb(63, 138, 255);
-	color: white;	
+	color: white;
+	opacity:1;
 }
+
+
+/* Footer */
+
+footer {
+    padding: 25px 0;
+    text-align: center;
+	line-height: 1.2em;
+	font-size:12px;
+	bottom:0px;
+	margin-top:10px;
+}
+
+footer span.copyright {
+	display: inline-block;
+    text-transform: uppercase;
+    text-transform: none;
+*//*    line-height: 40px;
+*/	color:black;
+}
+
+footer ul.quicklinks {
+	display: inline-block;
+    margin-bottom: 0;
+    text-transform: uppercase;
+    text-transform: none;
+/*    line-height: 40px;*/
+}
+
+/*ul.social-buttons {
+    margin-bottom: 0;
+}*/
+
+/*ul.social-buttons li a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    font-size: 20px;
+    line-height: 40px;
+    outline: 0;
+    color: #fff;
+    background-color: #222;
+    -webkit-transition: all .3s;
+    -moz-transition: all .3s;
+    transition: all .3s;
+}
+
+ul.social-buttons li a:hover,
+ul.social-buttons li a:focus,
+ul.social-buttons li a:active {
+    background-color: #245A7A;
+}*/
+
+
 
 #webView{
 	transition: margin 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
@@ -190,12 +247,34 @@ WebKit inertia scrolling is being added here for any present/future devices that
 	border:solid 1px black;
 }
 
-.center {
+.auto-container{
+    display: table;
+    vertical-align: middle;
+}
+.auto-center{
+    display: table-cell;
+       vertical-align: middle;
+}
+
+/* saving btn */
+.auto-box{
+	bottom: 15px;
+    background-color:rgba(255,255,255,.9);
+    border: solid 1px #377091;
+    color: #377091;
+    text-align: center;
+    width: 90px;
+    height: 35px;
+    line-height: 35px;
+    position: fixed;
+}
+
+/*.center {
     margin-left: auto;
     margin-right: auto;
     width: 100%;
     background-color:rgba(255,255,255,0);
-}
+}*/
 
 .tag{
 	background-color: rgb(63, 138, 255);
@@ -373,9 +452,67 @@ a.add-item, .collapse-toggle{
 	display:none;
 }
 
-@media (min-width: 1001px){
+@media (min-width: 1130px){
 	.Top-menu{
 		left: 0px;
+	}
+}
+
+/* SPECIAL CASE FOR EXTRA ICON*/
+@media (min-width: 1000px) and (max-width: 1129px){
+	.Left-content {
+	  margin-top: 0px;
+  	}
+	.Top-menu{
+		position: fixed;
+		left: 40%;
+		background-color:#1f2126;
+		width:40px;
+		height:100%;
+		color:#fff;
+		font-size: 14px;
+		z-index:1000;
+		overflow-y: scroll;
+		overflow-x: hidden;
+	}
+	.Top-menu>i{
+		float: left;
+		color: #464A51;
+		padding:10px;
+		height:40px;
+		width:40px;
+		cursor:pointer;
+	}
+	.Left {
+	  width: 45%;
+	}
+	
+	.fa.fa-trash-o.fa-lg{
+		padding-right: 20px;
+	}
+	
+	.input-label{
+		  display: none;
+	}
+	.textarea-box, .input-box{
+		width:90%;
+	}
+	.half-box{
+		width:49%
+	}
+	.Top-menu> i:hover{
+		border:0px;
+		color: white;	
+		opacity:1;
+	}
+	.Top-menu>.activeIcon{
+		border:0px;
+		color: white;	
+		opacity:1;
+	}
+	
+	footer{
+		width:90%;
 	}
 }
 
@@ -390,7 +527,6 @@ a.add-item, .collapse-toggle{
 	}
 	
 	.Left{
-		width:90%;
 		width:100%;
 	}
 	.Left-content{
@@ -433,10 +569,12 @@ a.add-item, .collapse-toggle{
 	.Top-menu>i:hover{
 		background-color: #464A51;
 		color:white;
+		opacity:1;
 	}
 	.Top-menu>.activeIcon{
 		border:0px;
 		color: white;	
+		opacity:1;
 	}
 	.mobile-only{
 		display:block;
@@ -498,4 +636,23 @@ a.add-item, .collapse-toggle{
 		 transition: transform .3s,opacity .3s;
 	}
 	
+}
+
+@media (max-width: 450px){
+	.input-label{
+		  display: none;
+	}
+	.textarea-box, .input-box{
+		width:100%;
+	}
+	.half-box{
+		width:49%
+	}
+}
+
+@media (min-width: 0px){
+	.form-inline .form-control {
+	  display: inline-block;
+	  vertical-align: middle;
+	}
 }

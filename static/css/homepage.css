@@ -328,36 +328,17 @@ section h3.section-subheading {
     section {
         padding: 100px 0;
     }
-	.navbar{
-		position:fixed;
-	}
-	.navbar-header, .navbar-inverse, .navbar-inner, .navbar-form {
-		background-color: rgba(0,0,0,.6) !important;
-	}
-	
-	.navbar-inverse, .navbar-collapse, .navbar-inner, .navbar-form {
-		font-size:16px;
-		color:white;
-		text-align:center;
-	}
-	.navbar-inner{
-		background-color: rgba(0,0,0,.6);
-	}
-	.navbar-collapse{
-		background-color: rgba(0,0,0,.8);
-		max-height:100% !important;
-		min-height: 100%;
-		width: 100%;
-		position: fixed;
-	}
-	.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
-		border-color: #245A7A;
-	}
 	li{
 		border-color: #245A7A;
 	}
-	.navbar-inverse .navbar-nav>li>a {
-		color: white;
+	header .intro-text {
+	  padding-top: 80px;
+	}
+	header .intro-text .intro-heading {
+		font-size:3em;
+	}
+	header .fancy {
+	  font-size: 1.2em;
 	}
 }
 
@@ -539,6 +520,22 @@ p{
 	transform: rotate(-35deg);
 }
 
+/* override collapse */
 
+.navbar-collapse.collapse {
+display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+margin-right: -15px !important;
+}
+
+.navbar-right {
+float: right!important;
+}
 
 

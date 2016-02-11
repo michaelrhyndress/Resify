@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block heading %}
+	<div class="header">
+		Sign In
+	</div>
+{% endblock %}
+
+{% block content %}
+		<form action="{% url 'resify_login' %}" name="login" id="login" method="post" accept-charset="utf-8">
+			
+				<input name="username" type="text" class="form-control" type="email" id="email" placeholder="Email Address" required autofocus/>
+
+				<input name="password" class="form-control" placeholder="Password" type="password" id="password" required />
+
+			{% csrf_token %}
+			<div class="field-block">
+				<button type="submit" id="login" class="login">Login</button>
+			</div>
+		</form>
+		<div class="field-block">
+			<a href="/register" class="button no-border small-text" id="register">Need an account?</a>
+		</div>
+{% endblock %}

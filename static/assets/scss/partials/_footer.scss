@@ -1,0 +1,40 @@
+footer {
+    padding: 25px 0;
+    text-align: center;
+	
+	span.copyright {
+	    text-transform: uppercase;
+	    text-transform: none;
+	    font-family: $alt-font-stack;
+	    line-height: 40px;
+		color:black;
+	}
+	
+	ul.quicklinks{
+		text-align:right;
+	    margin-bottom: 0;
+	    text-transform: none;
+	    font-family: $alt-font-stack;
+	    line-height: 40px;
+		li {
+			a {
+				color: black;
+			}
+		}
+	
+	}
+	
+}
+
+@media (min-height: 650px) {
+	footer{
+		width:100%;
+		bottom:0px;
+	}
+}
+
+@media (max-width: 992px) {
+	footer ul.quicklinks{
+		text-align:center;
+	}
+}

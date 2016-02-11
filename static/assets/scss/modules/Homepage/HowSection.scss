@@ -1,0 +1,65 @@
+@import "../../partials/mixins/_toolkit.scss";
+
+//For percentage circles
+@import "../../partials/_percentage-circle.css";
+
+//Flip
+.flip {
+	@include perspective(800);
+	width: 100%;
+	height:100%;
+	
+	.card.flipped {
+		@include rotate(180deg, "X");
+	}
+	
+	.card {
+	    width: 100%;
+	    height: 100%;
+	    @include transform-style(preserve-3d);
+		@include transition(0.5s);
+		backface-visibility:hidden;
+		
+		.face {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			padding:0px;
+			margin:0px;
+			@include backface-visibility(hidden);
+			z-index: 2;
+			font-family: Georgia;
+			font-size: 3em;
+			text-align: center;
+			line-height: 200px;
+		}
+		
+		.front {
+		  	position: relative;
+		  	z-index: 1;
+		    color: white;
+		    cursor: pointer;
+		}
+		
+		.back {
+			position: relative;
+			@include backface-visibility(hidden);
+			@include rotate(-180deg, "X");
+		    background: white;
+		    color: black;
+		    cursor: pointer;
+		}
+		
+	}
+}
+
+#smile-icon{
+	margin-top:10px;
+	font-size:26px;
+	@include rotate(35deg);
+}
+
+.percent-circle{
+	width: 150px;
+	margin: 0 auto;
+}

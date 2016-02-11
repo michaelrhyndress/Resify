@@ -1,0 +1,258 @@
+@import "../../partials/_variables.scss";
+@import "../../partials/mixins/_toolkit.scss";
+
+@import "../../partials/_base.scss";
+@import "../../partials/_form-controls.scss";
+@import "../../partials/_social-buttons.scss";
+@import "../../partials/_footer.scss";
+
+
+$homepage-font-stack: "Droid Serif","Helvetica Neue",Helvetica,Arial,sans-serif;
+
+/** MAINLY HOMEPAGE CSS **/
+.navbar-default{
+	background-color:transparent;
+	border-color:transparent;
+	color:white;
+}
+
+header {
+	height: 100%;
+	z-index:3;
+    text-align: center;
+    color: #fff;
+    background-attachment: scroll;
+	background-position: center center;
+    background-repeat: none;
+    @include background-size(cover);
+	
+	.stand-out{
+		color:#e9f0f5;
+		font-size:1.1em;
+	}
+
+	.fancy{
+		font-size:1.5em;
+	}
+	
+	.intro-text {
+	    padding-bottom: 50px;
+		padding-top: 50px;
+		position: relative;
+		
+		.intro-lead-in {
+		    margin-bottom: 25px;
+		    font-size: 22px;
+		    font-style: italic;
+		    line-height: 22px;
+		}
+		
+		.intro-heading {
+		    margin-bottom: 25px;
+		    text-transform: uppercase;
+		    font-size: 50px;
+		    font-weight: 700;
+		    line-height: 50px;
+			padding-top:20px;
+		}
+	}
+}
+
+#darken{
+	@include background-size(cover);
+    position: absolute;
+	height:100%;
+	width:100%;
+    background-color: #000;
+    top: 0;
+    left: 0;
+	opacity: 0.7;
+	z-index: 0;
+}
+
+.navbar-inverse{
+    background-color: transparent;
+	
+	.navbar-toggle {
+		border-color: #ccc;
+		width: auto;
+		height: auto;
+	}
+	
+}
+
+.navbar{
+	background-color: transparent;
+	position: absolute;
+	width: 100%;
+	margin-bottom:0px;
+	border-color: transparent;
+	
+	.transparent .navbar-inverse .navbar-inner{
+	   background-color: transparent;
+	   position: absolute;
+	}
+}
+
+.navbar-nav>li>a {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+
+/* override collapse */
+.navbar-collapse.collapse {
+display: block!important;
+}
+
+.navbar-nav>li, .navbar-nav {
+float: left !important;
+}
+
+.navbar-nav.navbar-right:last-child {
+margin-right: -15px !important;
+}
+
+.navbar-right {
+float: right!important;
+}
+
+
+.container{
+	top: 50%;
+}
+
+
+@media(min-width:768px) {
+    header{
+		.intro-text {
+        	padding-top: 100px;
+			
+			.intro-lead-in {
+		        margin-bottom: 25px;
+		        font-family: $homepage-font-stack;
+		        font-size: 40px;
+		        font-style: italic;
+		        line-height: 40px;
+		    }
+			
+			.intro-heading {
+		        margin-bottom: 50px;
+		        text-transform: uppercase;
+		        font-family: $main-font-stack;
+		        font-size: 65px;
+		        font-weight: 700;
+		        line-height: 75px;
+				padding-top:30px;
+		    }
+    	}
+		
+		.stand-out{
+			font-size:1.1em;
+		}
+		
+	}
+}
+
+
+
+section{
+	
+	h2.section-heading {
+	    margin-top: 0;
+	    margin-bottom: 15px;
+	    font-size: 40px;
+	}
+	
+	h3.section-subheading {
+	    margin-bottom: 75px;
+	    text-transform: none;
+	    font-family: $homepage-font-stack;
+	    font-size: 16px;
+	    font-style: italic;
+	    font-weight: 400;
+		line-height:1.3;
+	}
+	
+}
+.service-heading {
+    margin: 15px 0;
+    text-transform: none;
+}
+
+body {
+    @include tap-highlight-color($cyan-blue);
+}	
+
+a#learn{
+	position: relative;
+	margin-top:200px;
+	opacity:0;
+	background-color: initial;
+}
+
+a#learn:hover {
+	color: white;
+	background-color:black;
+}
+
+a.button, a.invert-button, a.plain-button{
+	max-width: 150px;
+}
+
+p{
+	font-size: 13px;
+	color: rgba(255, 255, 255, 0.9);
+	line-height: 22px;
+	letter-spacing: 1.2px;
+	max-width: 350px;
+	margin: 0 auto;
+	padding-bottom: 30px;
+}
+
+.row {
+ margin-left: 0px;
+ margin-right: 0px;
+}
+
+.bar{
+	@include transition(all 1s ease-in);
+}
+
+#lightning-bolt{
+	@include rotate(30deg);
+	top: 6px;
+	left: 19px;
+	font-size:25px;
+}
+
+
+@media(min-width:768px) {
+    section {
+        padding: 150px 0;
+    }
+	.navbar-default{
+		background-color:black;
+		border-color:black;
+		color:white;
+	}
+}
+
+@media(max-width:768px) {
+    section {
+        padding: 100px 0;
+    }
+	li{
+		border-color: $cyan-blue;
+	}
+	header .intro-text {
+	  padding-top: 80px;
+	}
+	header .intro-text .intro-heading {
+		font-size:3em;
+	}
+	header .fancy {
+	  font-size: 1.2em;
+	}
+}
+
