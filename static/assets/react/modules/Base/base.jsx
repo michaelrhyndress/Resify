@@ -1,13 +1,4 @@
-<<<<<<< HEAD
-var React = require('react')
-var ReactDOM = require('react-dom')
-
-var $ = require('jquery');
-window.jQuery = $;
-window.$ = $;
-=======
 require("font-awesome-sass-loader");
->>>>>>> oldish-state
 
 //easy scroll
 $(function() {
