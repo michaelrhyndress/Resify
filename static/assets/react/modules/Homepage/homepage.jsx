@@ -1,15 +1,6 @@
-<<<<<<< HEAD
-var React = require('react')
-var ReactDOM = require('react-dom')
-
-var $ = require('jquery');
-window.jQuery = $;
-window.$ = $;
-=======
 // var React = require('react')
 // var ReactDOM = require('react-dom')
 
->>>>>>> oldish-state
 
 require('vide');
 require('../../../scss/modules/Homepage/homepage.scss')
@@ -17,13 +8,8 @@ require('../../../scss/modules/Homepage/HowSection.scss')
 
 // Video
 $("header").vide({
-<<<<<<< HEAD
-    webm: '/static/assets/bundles/'		+ 	require('./media/video/interview.webm'),
-    poster: '/static/assets/bundles/'	+	require('./media/img/interview.jpg'),
-=======
     webm: require('./media/video/interview.webm'),
     poster: require('./media/img/interview.jpg'),
->>>>>>> oldish-state
 }, {
 	loop: false,
 	posterType: "jpg"

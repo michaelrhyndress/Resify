@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-var React = require('react')
-var ReactDOM = require('react-dom')
-
-var $ = require('jquery');
-window.jQuery = $;
-window.$ = $;
-
-//image-picker
-require('../../../js/vendor/image-picker.js');
-require('../../../scss/vendor/image-picker/image-picker.scss')
-
-//
-=======
 'use strict';
 
 // var React = require('react')
@@ -85,4 +71,3 @@ $(function(){
 // 	{%if forloop.last%}$('#new_tag_add').tabcomplete(db_tag_list);{%endif%}
 // {% endfor %}
 
->>>>>>> oldish-state
